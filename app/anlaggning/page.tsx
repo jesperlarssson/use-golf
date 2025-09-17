@@ -5,7 +5,7 @@ export default function Page() {
       <ul className="space-y-2">
         <li>Yta & kapacitet: ~500–600 kvm, 6–8 bays, lounge 30+ platser</li>
         <li>Utrustning: TrackMan, puttinggreen, hyra klubbor</li>
-        <li>Konferens: Rum "{{namn}}", x platser, skärm, Wi-Fi</li>
+        <li>Konferens: Rum "{"}namn{"}" , x platser, skärm, Wi-Fi</li>
         <li>Mat & dryck: Serveringstillstånd, lättare rätter/snacks</li>
         <li>Parkering & tillgänglighet: Gratis p-platser, ramp/hiss vid behov</li>
       </ul>
