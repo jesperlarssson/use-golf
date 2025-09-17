@@ -1,0 +1,75 @@
+{
+    "orientation": "portrait",
+    "camera": {
+    "position": "straight-on, eye-level",
+    "angle": "direct, frontal",
+    "depth_of_field": "shallow (golfball out of focus, flash aesthetic)",
+    "focus": "sharp on subjects (female) with background visible",
+    "motion_blur": "slight, on arms or legs to show casual movement",
+    "camera_type": "35mm film camera",
+    "film_stock": "Kodak Gold 200",
+    "lens_characteristics": "direct flash look, slight overexposure on highlights, visible grain"
+    },
+    "lighting": {
+    "type": "on-camera flash",
+    "source": "single flash, frontal",
+    "quality": "harsh, direct, flat",
+    "direction": "front-lit with strong shadow drop-off behind subjects",
+    "shadows": "sharp-edged, falling on wall/floor behind",
+    "reflections": "slight highlights on polished surfaces (wood, glass, fabric)",
+    "flash": {
+    "used": true,
+    "reasoning": "to create raw, documentary-style atmosphere with high grain and pop"
+    }
+    },
+    "lens": {
+    "type": "standard prime",
+    "focal_length_estimate_mm": "35-50",
+    "aperture_estimate_f": "f/5.6",
+    "compression": "minimal, flat documentary perspective"
+    },
+    "style": {
+    "aesthetic": "retro candid flash with lifestyle editorial edge",
+    "color_palette": ["warm wood tones", "soft beige fabric", "concrete gray", "pale skin tones", "occasional red accents"],
+    "mood": "casual, authentic, slightly cinematic",
+    "tone": "raw yet sophisticated, playful luxury",
+    "composition": "golf people standing or walking in groups, framed mid-body or full-body, straight flash aesthetic",
+    "texture": ["grainy film", "wood paneling", "curtains", "polished tables", "fabric chairs", "concrete surfaces"]
+    },
+    "subject": {
+    "primary_focus": "close-up of female with sunglasses showing a golfball",
+    "secondary_elements": ["wood furniture", "fabric curtains", "concrete floor", "warm light fixtures"],
+    "action": "confident face expression showing an overexposed golfball",
+    "fashion": {
+    "footwear": "golf shoes or casual sneakers",
+    "pants": "chinos, tailored trousers, or golf slacks",
+    "tops": "polos, light sweaters, blazers",
+    "gesture": "natural, slightly in motion, some holding golf accessories"
+    }
+    },
+    "environment": {
+    "location_type": "modern lobby inspired by Nordic design",
+    "floor_type": "polished concrete or wood",
+    "interior_details": [
+    "sculptural wood panel walls",
+    "textured curtains with soft ceiling lights",
+    "mid-century style wooden chairs and tables"
+    ],
+    "language_on_signs": "neutral or Swedish",
+    "extra_reference": "mix between high-end golf clubhouse and Porsche lifestyle garage aesthetic"
+    },
+    "brand_aesthetic_reference": {
+    "likely_brands": ["Porsche", "J.Lindeberg Golf", "COS", "Totême"],
+    "visual_style_similarity": ["retro flash photography", "documentary fashion shoots", "luxury lifestyle editorials with candid vibe"]
+    },
+    "post_processing": {
+    "color_grading": "slightly warm, flat tones with lifted blacks",
+    "contrast": "high flash contrast, raw look",
+    "sharpness": "grainy but sharp on faces",
+    "retouching": "minimal, natural skin tones kept raw",
+    "grain": "pronounced, analog style",
+    "vignette": "none",
+    "fade": "slight shadow fade to soften harsh flash edges",
+    "white_balance_shift": "warm, leaning toward amber/brown tones"
+    }
+    }
