@@ -97,7 +97,7 @@ export default function PreAccessPage() {
                     </>
                 )}
             </div>
-            <div className="absolute top-0 left-0 right-0 h-full pointer-events-none bg-black/20"></div>
+            <div className="absolute top-0 left-0 right-0 h-full pointer-events-none bg-black/20 backdrop-blur-xs"></div>
 
             <div className="relative z-10 max-w-xl mx-auto">
                 <h1 className="text-5xl md:text-7xl font-bold tracking-tight font-horus">USE GOLF</h1>
