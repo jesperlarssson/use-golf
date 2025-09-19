@@ -5,6 +5,11 @@ export function middleware(request: NextRequest) {
   const isLaunched = (process.env.LAUNCHED ?? "false").toLowerCase() === "true";
   const { pathname } = request.nextUrl;
 
+  // Tillåt alltid API-routes att passera middleware orörda
+  if (pathname.startsWith("/api")) {
+    return NextResponse.next();
+  }
+
   const isAssetRequest =
     pathname.startsWith("/_next") ||
     pathname.startsWith("/images") ||

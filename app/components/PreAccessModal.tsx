@@ -35,6 +35,7 @@ function EmailModal({ onClose }: { onClose: () => void }) {
   const [email, setEmail] = useState("");
   const [submitState, setSubmitState] = useState<SubmitState>("idle");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const closeTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
@@ -75,15 +76,16 @@ function EmailModal({ onClose }: { onClose: () => void }) {
       }
 
       setSubmitState("success");
-      setTimeout(() => {
+      if (closeTimerRef.current) {
+        clearTimeout(closeTimerRef.current);
+      }
+      closeTimerRef.current = window.setTimeout(() => {
         onClose();
-      }, 1200);
+      }, 2500);
     } catch (err: unknown) {
       setSubmitState("error");
       const message = err instanceof Error ? err.message : "Tekniskt fel";
       setErrorMessage(message);
-    } finally {
-      setTimeout(() => setSubmitState("idle"), 1500);
     }
   }
 
@@ -105,7 +107,12 @@ function EmailModal({ onClose }: { onClose: () => void }) {
           Get used to it.
         </p>
 
-        <form onSubmit={onSubmit} className="mt-6 space-y-4">
+        <form
+          onSubmit={onSubmit}
+          className={`mt-6 space-y-4 transition-all duration-500 ${
+            submitState === "success" ? "opacity-0 -translate-y-2 pointer-events-none" : "opacity-100 translate-y-0"
+          }`}
+        >
           <div className="space-y-2">
             <label htmlFor="email" className="text-sm uppercase tracking-wide mb-1">
               Din e-postadress
@@ -129,7 +136,7 @@ function EmailModal({ onClose }: { onClose: () => void }) {
             </p>
           )}
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 pt-2">
             <button
               type="submit"
               disabled={submitState === "loading"}
@@ -137,19 +144,23 @@ function EmailModal({ onClose }: { onClose: () => void }) {
             >
               {submitState === "loading" ? "Skickar…" : "Bekräfta"}
             </button>
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-4 py-3 border border-olive-700 hover:bg-foreground/5"
-            >
-              Avbryt
-            </button>
+           
           </div>
-
-          {submitState === "success" && (
-            <p className="text-olive-900 text-sm">Tack! Du är registrerad.</p>
-          )}
         </form>
+
+        {/* Success-overlay */}
+        <div
+          className={`absolute inset-0 flex items-center justify-center p-6 transition-opacity duration-500 ${
+            submitState === "success" ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
+          aria-live="polite"
+        >
+          <div className="w-full h-full bg-brand-secondary flex items-center justify-center">
+            <p className="text-2xl md:text-3xl text-brand-primary font-horus tracking-wide">
+              Du är nu registrerad
+            </p>
+          </div>
+        </div>
 
         <button
           onClick={onClose}
