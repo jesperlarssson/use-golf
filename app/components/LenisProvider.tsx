@@ -7,8 +7,7 @@ export default function LenisProvider({ children }: { children: React.ReactNode 
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.1,
-      smooth: true,
-      smoothTouch: false,
+      smoothWheel: true
     });
 
     let rafId = 0;
@@ -26,10 +25,9 @@ export default function LenisProvider({ children }: { children: React.ReactNode 
     return () => {
       window.removeEventListener("wheel", onScroll);
       cancelAnimationFrame(rafId);
-      // @ts-expect-error lenis har destroy i runtime
-      if (typeof lenis.destroy === "function") lenis.destroy();
+      if (typeof (lenis as any).destroy === "function") (lenis as any).destroy();
     };
   }, []);
 
-  return <>{children}</>;
+  return <>{children}</>; 
 }

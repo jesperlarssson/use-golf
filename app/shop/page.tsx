@@ -12,7 +12,7 @@ export default function Page() {
         ))}
       </div>
       <div className="mt-8 p-4 border rounded">
-        <p className="font-semibold">Limited – släpps {'{{datum}}'}</p>
+        <p className="font-semibold">Limited – släpps {"{"}{"{"}datum{"}"}{"}"}</p>
         <a href="#" className="mt-2 inline-block rounded bg-[var(--brand-secondary)] text-[var(--brand-primary)] px-4 py-2">Handla nu</a>
       </div>
     </div>

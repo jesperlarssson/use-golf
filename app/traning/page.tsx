@@ -1,7 +1,7 @@
 export default function Page() {
   const trainers = [
-    { name: "{{Tränare 1}}", bio: "PGA-pro, fokus sving/approach/putt" },
-    { name: "{{Tränare 2}}", bio: "Custom fitting & dataanalys" },
+    { name: "{" + "{" + "Tränare 1" + "}" + "}" , bio: "PGA-pro, fokus sving/approach/putt" },
+    { name: "{" + "{" + "Tränare 2" + "}" + "}" , bio: "Custom fitting & dataanalys" },
   ];
 
   return (
