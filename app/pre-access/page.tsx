@@ -101,7 +101,7 @@ export default function PreAccessPage() {
 
             <div className="relative z-10 max-w-xl mx-auto">
                 <h1 className="text-5xl md:text-7xl font-bold tracking-tight font-horus">USE GOLF</h1>
-                <p className="mt-2 text-lg md:text-2xl uppercase tracking-widest">INDOOR</p>
+       
                 <p className="mt-8 text-base md:text-lg tracking-normal leading-relaxed">
                     USE Golf är Göteborgs nya hem för inomhusgolf. Vi öppnar hösten 2025 i Hovås -
                     välkommen till en ny typ av golfupplevelse.
