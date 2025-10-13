@@ -80,8 +80,13 @@ export default function CustomCursor() {
 
       // Hitta närmaste target med tydlig typning
       let nearest: { rect: DOMRect; el: HTMLElement; dist: number } | null = null;
-      const nodeList = document.querySelectorAll<HTMLElement>("[data-cursor-target]");
-      for (const t of Array.from(nodeList)) {
+      // Om overlay-meny är öppen, begränsa targets till overlayn
+      const overlayEl = document.querySelector<HTMLElement>('[data-overlay-menu]');
+      const menuOpen = document.documentElement.getAttribute("data-menu-open") === "true";
+      let candidates = menuOpen
+        ? Array.from(document.querySelectorAll<HTMLElement>('[data-overlay-menu] [data-cursor-target]'))
+        : Array.from(document.querySelectorAll<HTMLElement>('[data-cursor-target]')).filter((el) => !overlayEl || !overlayEl.contains(el));
+      for (const t of candidates) {
         const r = t.getBoundingClientRect();
         const d = distancePointToRect(mouseX, mouseY, r);
         if (!nearest || d < nearest.dist) nearest = { rect: r, el: t, dist: d };
@@ -125,7 +130,7 @@ export default function CustomCursor() {
           targetX = centerX;
           targetY = centerY;
           el.style.backgroundColor = "transparent";
-          el.style.borderColor = "#fff";
+          el.style.borderColor = "#FFFFFF";
         } else if (dist < attractRadius) {
           // Magnet-läge
           isRing = false;
@@ -139,7 +144,7 @@ export default function CustomCursor() {
           targetY = mouseY + (dy / len) * pull;
           targetW = 18 + 10 * strength;
           targetH = 18 + 10 * strength;
-          el.style.backgroundColor = "#fff";
+          el.style.backgroundColor = "#FFFFFF";
           el.style.borderColor = "transparent";
         } else {
           // Dot-läge
@@ -149,7 +154,7 @@ export default function CustomCursor() {
           targetY = mouseY;
           targetW = 10;
           targetH = 10;
-          el.style.backgroundColor = "#fff";
+          el.style.backgroundColor = "#FFFFFF";
           el.style.borderColor = "transparent";
         }
       } else {
@@ -160,7 +165,7 @@ export default function CustomCursor() {
         targetY = mouseY;
         targetW = 10;
         targetH = 10;
-        el.style.backgroundColor = "#fff";
+        el.style.backgroundColor = "#FFFFFF";
         el.style.borderColor = "transparent";
       }
 
@@ -200,8 +205,8 @@ export default function CustomCursor() {
         width: 10,
         height: 10,
         borderRadius: 9999,
-        backgroundColor: "#fff",
-        border: "0px solid #fff",
+        backgroundColor: "#FFFFFF",
+        border: "0px solid #FFFFFF",
         opacity: 0,
         willChange: "transform, width, height, border-width, border-radius, background-color, border-color",
         transition: "background-color 120ms ease, border-color 120ms ease, opacity 180ms ease",
