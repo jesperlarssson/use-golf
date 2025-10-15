@@ -6,7 +6,7 @@ export default function CustomFittingPage() {
   return (
     <Page>
       <Section className="py-24">
-        <div className="text-center px-4 sm:px-6">
+        <div className="text-center">
         
           <Lead className="mt-2">Kommer snart</Lead>
         </div>

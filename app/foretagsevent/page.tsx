@@ -9,7 +9,7 @@ export default function ForetagseventPage() {
     <Page>
       <Section className="pt-16">
         <div className="grid grid-cols-1 gap-8">
-          <div className="space-y-4 max-w-3xl px-4 sm:px-6">
+          <div className="space-y-4 max-w-3xl">
             <Heading as={2}>Företagsevent</Heading>
             <Lead className="text-[var(--brand-olive-900)]">Kickoff, kundevent eller teamdag – vi skräddarsyr helheten: spel, tävlingar, mat och dryck.</Lead>
             <Text>
@@ -20,14 +20,15 @@ export default function ForetagseventPage() {
       </Section>
 
       {/* Företagstävlingar (torsdagar) i medlemskaps-stil (bild + overlay + text) */}
-      <Section>
-        <div className="mx-auto max-w-screen-2xl px-4 sm:px-6">
+      <Section className="-mt-16">
+        <div className="mx-auto max-w-screen-2xl">
           <div className="rounded-none overflow-hidden border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)]">
             <div className="relative h-44 border-b-2 border-[var(--brand-secondary)]">
               <Image src="/images/render2.PNG" alt="Företagstävlingar (torsdagar)" fill className="object-cover blur-sm scale-105 brightness-90" />
               <div className="absolute inset-0 bg-black/20" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <h3 className="font-horus text-3xl sm:text-4xl text-[var(--brand-primary)]">Företagstävlingar (torsdagar)</h3>
+              <div className="absolute inset-0 flex items-center justify-center flex-col">
+                <h3 className="font-horus text-3xl sm:text-4xl text-[var(--brand-primary)]">Företagstävlingar</h3>
+                <p className="text-md text-[var(--brand-primary)]/80 uppercase tracking-wider">Torsdagar</p>
               </div>
             </div>
             <div className="p-6 space-y-4">
@@ -51,8 +52,8 @@ export default function ForetagseventPage() {
       </Section>
 
       {/* Förfrågan */}
-      <Section id="forfragan" className="pb-16">
-        <div className="mx-auto max-w-screen-2xl px-4 sm:px-6">
+      <Section id="forfragan" className="pb-16 -mt-10">
+        <div className="mx-auto max-w-screen-2xl">
           <Heading as={3} className="mb-4">Skicka förfrågan</Heading>
           <InquiryForm subject="Förfrågan Företagstävlingar (torsdagar)" />
         </div>

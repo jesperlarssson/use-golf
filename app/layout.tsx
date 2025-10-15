@@ -27,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased ${robotoFlex.variable}`}>
+      <body className={`antialiased overflow-x-hidden ${robotoFlex.variable}`}>
         <LenisProvider>
           <Noise
             patternSize={50}

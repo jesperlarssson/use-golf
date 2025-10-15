@@ -15,7 +15,7 @@ export default function MedlemskapPage() {
 
          
           {/* Intro med bild + text */}
-          <Section className="pt-16">
+          <Section className="">
             <div className="grid grid-cols-1 gap-8">
               <div className="space-y-4 max-w-3xl">
                 <Heading as={2}>Medlemskap hos USE Golf</Heading>
@@ -31,7 +31,7 @@ export default function MedlemskapPage() {
 
          
 
-          <Section className="pt-2">
+          <Section className="pt-2 -mt-10 sm:-mt-18">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Senior */}
               <div className="rounded-none overflow-hidden border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)]">
@@ -87,7 +87,7 @@ export default function MedlemskapPage() {
 
           
 
-          <Section id="spelpott" className="pt-10 pb-6">
+          <Section id="spelpott" className="pt-10 pb-6 -mt-10 sm:-mt-18">
             <div className="space-y-6">
               <Heading as={2}>Spelpott</Heading>
               <Text>
@@ -103,7 +103,7 @@ export default function MedlemskapPage() {
                     <div className="text-4xl font-semibold ">5&nbsp;000 kr</div>
                   </div>
                   <div>
-                    <a href="/bli-medlem" className="inline-flex w-full items-center justify-center bg-[var(--brand-secondary)] px-5 py-3 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">LADDA SPELPOTT</a>
+                    <span role="link" aria-disabled="true" tabIndex={-1} className="inline-flex w-full items-center justify-center bg-[var(--brand-secondary)] px-5 py-3 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none opacity-60 cursor-not-allowed pointer-events-none transition" data-cursor-target data-cursor-padding="10">SNART TILLGÄNGLIGT</span>
                   </div>
                   <div className="text-sm flex items-start gap-2">
                     <span aria-hidden>▸</span>
@@ -122,7 +122,7 @@ export default function MedlemskapPage() {
                     <div className="text-4xl font-semibold ">10&nbsp;000 kr</div>
                   </div>
                   <div>
-                    <a href="#bli-medlem" className="inline-flex w-full items-center justify-center bg-[var(--brand-secondary)] px-5 py-3 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">LADDA SPELPOTT</a>
+                    <span role="link" aria-disabled="true" tabIndex={-1} className="inline-flex w-full items-center justify-center bg-[var(--brand-secondary)] px-5 py-3 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none opacity-60 cursor-not-allowed pointer-events-none transition" data-cursor-target data-cursor-padding="10">SNART TILLGÄNGLIGT</span>
                   </div>
                   <div className="text-sm flex items-start gap-2">
                     <span aria-hidden>▸</span>
@@ -141,7 +141,7 @@ export default function MedlemskapPage() {
                     <div className="text-4xl font-semibold ">15&nbsp;000 kr</div>
                   </div>
                   <div>
-                    <a href="#bli-medlem" className="inline-flex w-full items-center justify-center bg-[var(--brand-secondary)] px-5 py-3 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">LADDA SPELPOTT</a>
+                    <span role="link" aria-disabled="true" tabIndex={-1} className="inline-flex w-full items-center justify-center bg-[var(--brand-secondary)] px-5 py-3 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none opacity-60 cursor-not-allowed pointer-events-none transition" data-cursor-target data-cursor-padding="10">SNART TILLGÄNGLIGT</span>
                   </div>
                   <div className="text-sm flex items-start gap-2">
                     <span aria-hidden>▸</span>

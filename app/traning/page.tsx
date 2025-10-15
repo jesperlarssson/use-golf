@@ -1,6 +1,5 @@
 import Page from "@/components/ui/Page";
 import Section from "@/components/ui/Section";
-import Container from "@/components/ui/Container";
 import { Heading, Text } from "@/components/ui/Typography";
 
 export default function TraningPage() {
@@ -12,7 +11,6 @@ export default function TraningPage() {
   return (
     <Page variant="subpage">
       <Section>
-        <Container>
           <Heading as={2}>Träning</Heading>
           <Text className="mt-4">Coaching, kurser & custom fitting</Text>
           <div className="grid gap-4 sm:grid-cols-2 mt-6">
@@ -29,7 +27,6 @@ export default function TraningPage() {
             ))}
           </div>
           <p className="mt-8 text-sm opacity-70">Metodik/verktyg: TrackMan-data, videoanalys, övningsprogram</p>
-        </Container>
       </Section>
     </Page>
   );

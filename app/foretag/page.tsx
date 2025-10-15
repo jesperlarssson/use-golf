@@ -1,6 +1,5 @@
 import Page from "@/components/ui/Page";
 import Section from "@/components/ui/Section";
-import Container from "@/components/ui/Container";
 import { Heading } from "@/components/ui/Typography";
 
 export default function ForetagPage() {
@@ -13,7 +12,6 @@ export default function ForetagPage() {
   return (
     <Page variant="subpage">
       <Section>
-        <Container>
           <Heading as={2}>Företag</Heading>
           <div className="grid gap-4 md:grid-cols-3 mt-6">
             {tiers.map((t) => (
@@ -31,7 +29,6 @@ export default function ForetagPage() {
               </div>
             ))}
           </div>
-        </Container>
       </Section>
     </Page>
   );

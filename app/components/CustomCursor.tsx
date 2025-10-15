@@ -207,6 +207,7 @@ export default function CustomCursor() {
         borderRadius: 9999,
         backgroundColor: "#FFFFFF",
         border: "0px solid #FFFFFF",
+        boxShadow: "0 0 0 1px rgba(50,46,44,0.25)",
         opacity: 0,
         willChange: "transform, width, height, border-width, border-radius, background-color, border-color",
         transition: "background-color 120ms ease, border-color 120ms ease, opacity 180ms ease",

@@ -14,6 +14,7 @@ type NavItem = {
 // Primär navigation (mitten på desktop)
 const primaryNav: NavItem[] = [
   { href: "/bokning", label: "Boka simulator" },
+  { href: "/boka-traning", label: "Boka Träning" },
   { href: "/medlemskap", label: "Medlemskap" },
   { href: "/events", label: "Event & Community" },
   { href: "/foretagsevent", label: "Företagsevent" },
@@ -63,6 +64,14 @@ export default function Header() {
         title: "Boka simulator",
         imageSrc: "/images/render2.png",
         marqueeText: "Boka din tid idag — Träna smartare"
+      };
+    }
+    if (path.startsWith("/boka-traning")) {
+      return {
+        title: "Boka träning",
+        imageSrc: "/images/render2.png",
+        marqueeText: "Boka din tid idag — Träna smartare",
+        subTitle: "Kommer snart"
       };
     }
     if (path.startsWith("/medlemskap")) {
@@ -151,6 +160,13 @@ export default function Header() {
         imageSrc: "/images/club hit.png",
         marqueeText: "Personlig utprovning — Anpassa utrustningen efter dig",
         subTitle: "Kommer snart"
+      };
+    }
+    if (path.startsWith("/medlemsvillkor")) {
+      return {
+        title: "Medlemsvillkor",
+        imageSrc: "/images/ball.png",
+        marqueeText: "Kommer snart"
       };
     }
     if (path.startsWith("/bli-medlem")) {
@@ -271,7 +287,7 @@ export default function Header() {
 
   // Dela upp primärmenyn i vänsterlänkar (Boka, Medlemskap) och resten
   const leftNav = primaryNav.filter(
-    (item) => item.href === "/bokning" || item.href === "/medlemskap" || item.href === "/events"
+    (item) => item.href === "/bokning"  || item.href === "/medlemskap" || item.href === "/events"
   );
   const restNav = primaryNav.filter(
     (item) => !leftNav.some((l) => l.href === item.href)
@@ -321,8 +337,8 @@ export default function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 z-50 w-screen  ${headerVariantClass} transition-colors duration-300 text-[var(--brand-secondary)] ${
-          scrolled || menuOpen
+        className={`fixed top-0 inset-x-0 z-50 w-full  ${headerVariantClass} transition-colors duration-300 text-[var(--brand-secondary)] ${
+          scrolled
             ? "bg-[var(--brand-primary)]/90 backdrop-blur border-b border-[var(--brand-secondary)]/20"
             : "bg-transparent"
         }`}
@@ -333,7 +349,7 @@ export default function Header() {
 
    
             <Link href="/" className=" flex flex-col ">
-              <span className={`whitespace-nowrap text-3xl font-horus leading-none transition-colors duration-300 ${scrolled ? "text-[var(--foreground)]" : "text-[var(--brand-primary)]"}`}>USE GOLF</span>
+              <span className={`whitespace-nowrap text-2xl font-horus leading-none transition-colors duration-300 ${scrolled ? "text-[var(--foreground)]" : "text-[var(--brand-primary)]"}`}>USE GOLF</span>
 
             </Link>
 

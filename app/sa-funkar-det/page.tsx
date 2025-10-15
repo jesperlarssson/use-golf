@@ -1,13 +1,11 @@
 import Page from "@/components/ui/Page";
 import Section from "@/components/ui/Section";
-import Container from "@/components/ui/Container";
 import { Heading, Text } from "@/components/ui/Typography";
 
 export default function SaFunkarDetPage() {
   return (
     <Page variant="subpage">
       <Section>
-        <Container>
           <Heading as={2}>Så funkar det</Heading>
           <Text className="mt-4">Spela simulatorgolf i tre steg.</Text>
           <ol className="list-decimal list-inside space-y-2 mt-4">
@@ -20,7 +18,6 @@ export default function SaFunkarDetPage() {
             <p>Avbokning: Gratis fram till xx timmar före; därefter debitering x%.</p>
             <p>FAQ: Utrustning? Hyra klubbor? Handicap?</p>
           </div>
-        </Container>
       </Section>
     </Page>
   );

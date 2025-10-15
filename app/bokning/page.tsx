@@ -1,4 +1,3 @@
-import Container from "@/components/ui/Container";
 import Section from "@/components/ui/Section";
 import Page from "@/components/ui/Page";
 import { Heading, Text, Lead } from "@/components/ui/Typography";
@@ -17,7 +16,6 @@ export default function BookingPage() {
 
 
       <Section className="py-12">
-        <Container>
           <div className="space-y-6">
             <div>
               <Heading as={2}>Bokningsportalen öppnar snart!</Heading>
@@ -49,7 +47,6 @@ export default function BookingPage() {
             </div>
           </div>
            */}
-        </Container>
       </Section>
     </Page>
   );

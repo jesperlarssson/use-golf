@@ -1,13 +1,11 @@
 import Page from "@/components/ui/Page";
 import Section from "@/components/ui/Section";
-import Container from "@/components/ui/Container";
 import { Heading } from "@/components/ui/Typography";
 
 export default function AnlaggningPage() {
   return (
     <Page variant="subpage">
       <Section>
-        <Container>
           <Heading as={2}>Anläggning</Heading>
           <ul className="space-y-2 mt-4">
             <li>Yta & kapacitet: ~500–600 kvm, 6–8 bays, lounge 30+ platser</li>
@@ -21,7 +19,6 @@ export default function AnlaggningPage() {
               <div key={i} className="aspect-[4/3] bg-black/5 rounded" />
             ))}
           </div>
-        </Container>
       </Section>
     </Page>
   );

@@ -45,11 +45,7 @@ body {
   font-family: "Aktiv Grotesk", Arial, Helvetica, sans-serif;
 }
 
-/* Custom cursor enable/disable */
-.custom-cursor-enabled,
-.custom-cursor-enabled * {
-  cursor: none !important;
-}
+/* Custom cursor: behåll systempekaren synlig så båda syns */
 
 /* Tillåt pointer på explicita element om nödvändigt
 .custom-cursor-enabled [data-allow-pointer] {
@@ -92,10 +88,7 @@ body {
 
 .noise-overlay {
   position: fixed;
-  left: 0;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
+  inset: 0;
   pointer-events: none;
   z-index: 1000;
 }

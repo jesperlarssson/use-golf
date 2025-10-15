@@ -24,7 +24,7 @@ export default function LandingHero({
   children,
 }: LandingHeroProps) {
   return (
-    <section className="relative w-full min-h-screen overflow-hidden">
+    <section className="relative w-full min-h-[95vh] overflow-hidden">
       {videoSrc ? (
         <video
           className="absolute inset-0 w-full h-full object-cover"

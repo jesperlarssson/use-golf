@@ -1,6 +1,5 @@
 import Page from "@/components/ui/Page";
 import Section from "@/components/ui/Section";
-import Container from "@/components/ui/Container";
 import FullBleed from "@/components/ui/FullBleed";
 import { Heading, Text } from "@/components/ui/Typography";
 import Banner from "@/components/ui/Banner";
@@ -55,7 +54,8 @@ const eventItems: EventItem[] = [
 export default function EventsPage() {
   const programItems = [
     {
-      title: "Seniorgolf Vardagar",
+      title: "Seniorgolf",
+      subtitle: "Vardagar",
       imageSrc: "/images/club.png",
       content: (
         <Text>
@@ -67,7 +67,8 @@ export default function EventsPage() {
       ctaLabel: "Boka",
     },
     {
-      title: "Onsdagsgolfen (Ligaspelet)",
+      title: "Onsdagsgolfen ",
+      subtitle: "Ligaspelet",
       imageSrc: "/images/club-sticker.png",
       content: (
         <Text>
@@ -78,7 +79,8 @@ export default function EventsPage() {
       ctaLabel: "Boka",
     },
     {
-      title: "Juniorligan (Höst/Vinter)",
+      title: "Juniorligan",
+      subtitle: "Höst/Vinter",
       imageSrc: "/images/club2.png",
       content: (
         <Text>
@@ -86,11 +88,12 @@ export default function EventsPage() {
           Kostnad <strong>1 500 kr</strong> för perioden. Medlemskap Junior krävs.
         </Text>
       ),
-      ctaHref: "mailto:hello@usegolf.se?subject=USE%20Golf%20Juniorligan%20H%C3%B6st%2FVinter&body=Hej%21%20Jag%20vill%20anm%C3%A4la%20mig%20till%20Juniorligan%20%28H%C3%B6st%2FVinter%29.%0ANamn%3A%20%0A%C3%85lder%3A%20",
+      ctaHref: "/bokning",
       ctaLabel: "Boka",
     },
     {
-      title: "Juniorligan (Våren)",
+      title: "Juniorligan",
+      subtitle: "Våren",
       imageSrc: "/images/club2-sticker.png",
       content: (
         <Text>
@@ -98,18 +101,17 @@ export default function EventsPage() {
           3 spelare/simulator, 9 hål + fri lek efteråt. Kostnad <strong>2 500 kr</strong>. Medlemskap Junior krävs.
         </Text>
       ),
-      ctaHref: "mailto:hello@usegolf.se?subject=USE%20Golf%20Juniorligan%20V%C3%A5ren&body=Hej%21%20Jag%20vill%20anm%C3%A4la%20mig%20till%20Juniorligan%20%28V%C3%A5ren%29.%0ANamn%3A%20%0A%C3%85lder%3A%20",
+      ctaHref: "/bokning",
       ctaLabel: "Boka",
     },
-  ];
+  ]; 
   return (
     <FullBleed>
 
       <div className="border-y-2 border-[var(--brand-secondary)]/40">
         <Page variant="subpage">
           {/* Intro – harmoniserad med Medlemskap */}
-          <Section className="pt-16 pb-10">
-            <Container>
+          <Section className="pt-16 ">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
                 <div className="space-y-4 max-w-3xl">
                   <Heading as={2}>Event & Community</Heading>
@@ -130,23 +132,22 @@ export default function EventsPage() {
                   </div>
                 </div>
               </div>
-            </Container>
           </Section>
 
           {/* Program & ligor i medlemskaps-stil (bild + overlay + text) */}
-          <Section className="pt-10">
-            <Container>
+          <Section className="-mt-18">
               <div className="space-y-6">
                 {/** 
                 <Heading as={3}>Program & ligor</Heading> */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {programItems.map((item) => (
-                    <div key={item.title} className="rounded-none overflow-hidden border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)]">
+                    <div key={`${item.title}-${item.subtitle}`} className="rounded-none overflow-hidden border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)]">
                       <div className="relative h-44 border-b-2 border-[var(--brand-secondary)]">
                         <Image src={item.imageSrc} alt={item.title} fill className="object-cover blur-sm scale-105 brightness-90" />
                         <div className="absolute inset-0 bg-black/20" />
-                        <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="absolute inset-0 flex items-center justify-center flex-col">
                           <h3 className="font-horus text-3xl sm:text-4xl text-[var(--brand-primary)]">{item.title}</h3>
+                          <p className="text-sm sm:text-base text-[var(--brand-primary)]/80 uppercase tracking-wider">{item.subtitle}</p>
                         </div>
                       </div>
                       <div className="p-6 space-y-4">
@@ -165,16 +166,14 @@ export default function EventsPage() {
                   ))}
                 </div>
               </div>
-            </Container>
           </Section>
 
           {/* Lördagsscramble – bakgrundsbild med text och CTA */}
-          <Section className="pt-8">
-            <div className="relative border-2 border-[var(--brand-secondary)]/60 rounded-none overflow-hidden min-h-72">
+          <Section className="pt-8 -mt-18">
+            <div className="relative border-2 border-[var(--brand-secondary)]/60 rounded-none overflow-hidden min-h-72 px-8">
               <Image src="/images/render1.PNG" alt="Lördagsscramble" fill priority className="object-cover object-center" />
               <div className="absolute inset-0 bg-black/35" />
               <div className="relative z-10">
-                <Container>
                   <div className="py-14 sm:py-20 max-w-3xl">
                     <h3 className="font-horus text-3xl sm:text-4xl text-[var(--brand-primary)] mb-4">Lördagsscramble</h3>
                     <p className="text-[var(--brand-primary)]/95">
@@ -186,7 +185,6 @@ export default function EventsPage() {
                       </a>
                     </div>
                   </div>
-                </Container>
               </div>
             </div>
           </Section>

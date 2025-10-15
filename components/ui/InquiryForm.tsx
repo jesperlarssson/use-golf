@@ -15,26 +15,41 @@ export default function InquiryForm({ to = "hello@usegolf.se", subject = "Förfr
   const [start, setStart] = useState("");
   const [duration, setDuration] = useState("2 timmar");
   const [message, setMessage] = useState("");
+  const [hp, setHp] = useState("");
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [error, setError] = useState<string>("");
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const bodyLines = [
-      `Företag: ${company}`,
-      `Kontaktperson: ${name}`,
-      `E-post: ${email}`,
-      `Telefon: ${phone}`,
-      `Önskat datum: ${date}`,
-      `Starttid: ${start}`,
-      `Varaktighet: ${duration}`,
-      "",
-      message ? `Önskemål/beskrivning:\n${message}` : "",
-    ].filter(Boolean);
-    const mailto = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join("\n"))}`;
-    window.location.href = mailto;
+    setStatus("submitting");
+    setError("");
+    try {
+      const res = await fetch("/api/inquiry", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ company, name, email, phone, date, start, duration, message, hp }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.ok) throw new Error(data.error || "Kunde inte skicka");
+      setStatus("success");
+      setCompany("");
+      setName("");
+      setEmail("");
+      setPhone("");
+      setDate("");
+      setStart("");
+      setDuration("2 timmar");
+      setMessage("");
+      setHp("");
+    } catch (err: any) {
+      setStatus("error");
+      setError(err?.message || "Något gick fel");
+    }
   };
 
   return (
     <form onSubmit={onSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <input type="text" value={hp} onChange={(e) => setHp(e.target.value)} className="hidden" tabIndex={-1} aria-hidden="true" />
       <div className="sm:col-span-2">
         <label className="block text-sm mb-1">Företag</label>
         <input value={company} onChange={(e) => setCompany(e.target.value)} className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] px-3 py-2 rounded-none" required />
@@ -71,9 +86,11 @@ export default function InquiryForm({ to = "hello@usegolf.se", subject = "Förfr
         <textarea value={message} onChange={(e) => setMessage(e.target.value)} className="w-full min-h-28 border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] px-3 py-2 rounded-none" />
       </div>
       <div className="sm:col-span-2">
-        <button type="submit" className="inline-flex items-center justify-center bg-[var(--brand-secondary)] text-[var(--brand-primary)] px-6 py-3 font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition">
-          Skicka förfrågan
+        <button disabled={status === "submitting"} type="submit" className="inline-flex items-center justify-center bg-[var(--brand-secondary)] text-[var(--brand-primary)] px-6 py-3 font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition disabled:opacity-70">
+          {status === "submitting" ? "Skickar..." : "Skicka förfrågan"}
         </button>
+        {status === "success" ? <span className="ml-3 text-sm">Tack! Din förfrågan är skickad.</span> : null}
+        {status === "error" ? <span className="ml-3 text-sm text-red-500">{error}</span> : null}
       </div>
     </form>
   );
