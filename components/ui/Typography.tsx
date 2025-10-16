@@ -17,7 +17,7 @@ export function Heading({ as = 1, children, className = "" }: HeadingProps) {
       : as === 2
       ? "text-xl sm:text-2xl md:text-3xl font-semibold uppercase text-[var(--brand-secondary)] tracking-wide"
       : as === 3
-      ? "text-xl sm:text-2xl md:text-3xl font-semibold uppercase text-[var(--brand-secondary)] tracking-wide"
+      ? "text-lg md:text-xl  uppercase text-[var(--brand-secondary)] tracking-wide"
       : "text-lg sm:text-xl md:text-2xl font-semibold";
 
   return <Tag className={`${base} ${size} ${className}`}>{children}</Tag>;

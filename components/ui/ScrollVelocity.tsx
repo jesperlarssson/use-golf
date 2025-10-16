@@ -150,7 +150,7 @@ export const ScrollVelocity = ({
         <VelocityText
           key={index}
           className={className}
-          baseVelocity={index % 2 !== 0 ? -velocity : velocity}
+          baseVelocity={index % 2 !== 0 ? velocity : -velocity}
           scrollContainerRef={scrollContainerRef}
           damping={damping}
           stiffness={stiffness}

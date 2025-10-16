@@ -166,7 +166,7 @@ export default function Header() {
       return {
         title: "Medlemsvillkor",
         imageSrc: "/images/ball.png",
-        marqueeText: "Kommer snart"
+        marqueeText: "GET USED TO IT"
       };
     }
     if (path.startsWith("/bli-medlem")) {
