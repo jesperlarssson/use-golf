@@ -8,6 +8,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "@getbrevo/brevo": "^3.0.1",
+    "framer-motion": "^11.18.2",
     "lenis": "1.3.11",
     "mathjs": "^14.7.0",
     "motion": "^12.23.12",

@@ -11,7 +11,7 @@
 :root {
   /* Base colors */
   --background: #F5F2E7;
-  --foreground: #171717;
+  --foreground: #322e2c;
 
   /* Brand palette */
   --brand-primary: #F5F2E7;
@@ -45,11 +45,7 @@ body {
   font-family: "Aktiv Grotesk", Arial, Helvetica, sans-serif;
 }
 
-/* Custom cursor enable/disable */
-.custom-cursor-enabled,
-.custom-cursor-enabled * {
-  cursor: none !important;
-}
+/* Custom cursor: behåll systempekaren synlig så båda syns */
 
 /* Tillåt pointer på explicita element om nödvändigt
 .custom-cursor-enabled [data-allow-pointer] {
@@ -92,10 +88,7 @@ body {
 
 .noise-overlay {
   position: fixed;
-  left: 0;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
+  inset: 0;
   pointer-events: none;
   z-index: 1000;
 }
@@ -141,5 +134,126 @@ body {
 
 .modal-enter {
   animation: modalScaleIn 260ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+/* "Slarvig" ram för knappar/länkar – använder pseudo-element och brusig transform */
+.sketch-button {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0.9rem;
+  color: var(--brand-secondary);
+}
+
+.sketch-button .sketch-sides {
+  position: relative;
+  z-index: 1;
+}
+
+/* En enda ram, men varje sida ritad separat med små offsets */
+.sketch-button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  --c: var(--brand-secondary);
+  --t: 3px; /* tjocklek */
+  /* Variabler för offset och beskärning per sida */
+  --rot: 0.5deg;
+  --l-x: 3px; --l-y: 0px; --l-cut: 9px;
+  --r-x: 2px; --r-y: 2px; --r-cut: 11px;
+  --t-x: 5px; --t-y: 3px; --t-cut: 10px;
+  --b-x: 4px; --b-y: 5px; --b-cut: 8px;
+  /* Fyra linjer (vänster, höger, topp, botten) med olika offset och längd */
+  background:
+    linear-gradient(var(--c), var(--c)) left var(--l-x) top var(--l-y) / var(--t) calc(100% - var(--l-cut)) no-repeat,
+    linear-gradient(var(--c), var(--c)) right var(--r-x) top var(--r-y) / var(--t) calc(100% - var(--r-cut)) no-repeat,
+    linear-gradient(var(--c), var(--c)) left var(--t-x) top var(--t-y) / calc(100% - var(--t-cut)) var(--t) no-repeat,
+    linear-gradient(var(--c), var(--c)) left var(--b-x) bottom var(--b-y) / calc(100% - var(--b-cut)) var(--t) no-repeat;
+  transform: rotate(var(--rot));
+}
+
+/* Variantset – ger olika "imperfections" */
+.sketch-button.sketch-v1::before {
+  --rot: 0.5deg;
+  --l-x: 3px; --l-y: 0px; --l-cut: 9px;
+  --r-x: 2px; --r-y: 2px; --r-cut: 11px;
+  --t-x: 5px; --t-y: 3px; --t-cut: 10px;
+  --b-x: 4px; --b-y: 5px; --b-cut: 8px;
+}
+
+.sketch-button.sketch-v2::before {
+  --rot: 0.3deg;
+  --l-x: 2px; --l-y: 1px; --l-cut: 12px;
+  --r-x: 3px; --r-y: 1px; --r-cut: 9px;
+  --t-x: 6px; --t-y: 4px; --t-cut: 14px;
+  --b-x: 2px; --b-y: 6px; --b-cut: 9px;
+}
+
+.sketch-button.sketch-v3::before {
+  --rot: 0.7deg;
+  --l-x: 4px; --l-y: 0px; --l-cut: 7px;
+  --r-x: 1px; --r-y: 3px; --r-cut: 13px;
+  --t-x: 4px; --t-y: 2px; --t-cut: 9px;
+  --b-x: 5px; --b-y: 3px; --b-cut: 12px;
+}
+
+/* NavCards 3D hover */
+.navcard-3d {
+  perspective: 800px;
+  transform-style: preserve-3d;
+}
+.navcard-3d .navcard-media {
+  transform: translateZ(0);
+  transform-style: preserve-3d;
+}
+.navcard-3d .navcard-img {
+  transition: transform 300ms ease, opacity 300ms ease;
+  transform: translateZ(0) scale(1.1);
+}
+.navcard-3d:hover .navcard-img {
+  transform: translateZ(30px) scale(1.12);
+}
+
+/* Utility: kort med tunn ram och diskret hover */
+.ug-card {
+  border: 2px solid rgba(165, 142, 117, 0.3); /* brand-secondary /30 */
+  background: var(--brand-primary);
+}
+.ug-card:hover {
+  border-color: rgba(165, 142, 117, 0.6);
+}
+
+/* Sned bakgrundsyta längst ned i Hero */
+.hero-angled-footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 32svh;
+  background: transparent;
+  z-index: 1; /* över bakgrundsbilden, under innehållet */
+  pointer-events: none;
+  /* Diagonalt snitt uppåt mot höger */
+  clip-path: polygon(0 14%, 100% 0, 100% 100%, 0% 100%);
+}
+
+/* Header färgvarianter per sida – påverkar endast inom headerns scope */
+.header-variant-amber {
+  --brand-secondary: var(--brand-accent-amber);
+}
+.header-variant-blue {
+  --brand-secondary: var(--brand-accent-blue);
+}
+
+/* Banner in-animation vid sidbyten */
+@keyframes bannerSlideIn {
+  0% { opacity: 0; transform: translateY(-12px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.banner-enter {
+  animation: bannerSlideIn 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
