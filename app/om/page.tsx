@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Page from "@/components/ui/Page";
 import Section from "@/components/ui/Section";
 import FullBleed from "@/components/ui/FullBleed";
@@ -41,5 +42,10 @@ export default function OmPage() {
     </FullBleed>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Om oss",
+  description: "USE Golf – modern golfkultur i Göteborg. Tillgänglig, social och rolig inomhusgolf året runt.",
+};
 
 

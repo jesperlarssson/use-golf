@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Page from "@/components/ui/Page";
 import Section from "@/components/ui/Section";
 import { Heading, Lead, Text } from "@/components/ui/Typography";
@@ -21,6 +22,11 @@ export default function BliMedlemPage() {
     </Page>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Bli medlem",
+  description: "Bli medlem i USE Golf – få rabatt på bokningar, förtur till event och speltid vid registrering.",
+};
 
 
 

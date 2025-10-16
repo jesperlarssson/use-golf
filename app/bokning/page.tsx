@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Section from "@/components/ui/Section";
 import Page from "@/components/ui/Page";
 import { Heading, Text, Lead } from "@/components/ui/Typography";
@@ -6,8 +7,9 @@ import FullBleed from "@/components/ui/FullBleed";
 import Banner from "@/components/ui/Banner";
 import EmailNotifyForm from "@/components/ui/EmailNotifyForm";
 
-export const metadata = {
-  title: "Bokning | USE GOLF",
+export const metadata: Metadata = {
+  title: "Bokning",
+  description: "Boka simulator hos USE Golf. TrackMan, ligor, event och träning.",
 };
 
 export default function BookingPage() {

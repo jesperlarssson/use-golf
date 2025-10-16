@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Page from "@/components/ui/Page";
 import Section from "@/components/ui/Section";
 import FullBleed from "@/components/ui/FullBleed";
@@ -161,5 +162,10 @@ export default function MedlemskapPage() {
     </FullBleed>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Medlemskap",
+  description: "Medlemskap hos USE Golf – rabatt på spel, förtur till event och speltid vid registrering.",
+};
 
 

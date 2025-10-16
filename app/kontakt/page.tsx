@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Page from "@/components/ui/Page";
 import Section from "@/components/ui/Section";
 import { Heading, Text } from "@/components/ui/Typography";
@@ -32,6 +33,11 @@ export default function KontaktPage() {
     </Page>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Kontakt",
+  description: "Kontakta USE Golf i Hovås – adress, e-post och öppettider.",
+};
 
 
 

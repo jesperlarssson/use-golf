@@ -1,5 +1,6 @@
 
 
+import type { Metadata } from "next";
 import Page from "@/components/ui/Page";
 import LandingHero from "@/components/ui/LandingHero";
 import NavCards from "@/components/ui/NavCards";
@@ -270,3 +271,14 @@ export default function Home() {
     </Page>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Inomhusgolf i Göteborg",
+  description: "USE Golf – TrackMan-simulatorer, ligor, event och träning i Hovås.",
+  openGraph: {
+    title: "USE GOLF – Inomhusgolf i Göteborg",
+    description: "TrackMan-simulatorer, ligor, event och träning i Hovås.",
+    url: "/",
+    type: "website",
+  },
+};

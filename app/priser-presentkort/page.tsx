@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Page from "@/components/ui/Page";
 import Section from "@/components/ui/Section";
 import { Heading } from "@/components/ui/Typography";
@@ -17,5 +18,10 @@ export default function PriserPage() {
     </Page>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Priser & presentkort",
+  description: "Se priser för simulatorgolf och information om presentkort hos USE Golf.",
+};
 
 

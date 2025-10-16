@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Page from "@/components/ui/Page";
 import Section from "@/components/ui/Section";
 import { Heading } from "@/components/ui/Typography";
@@ -33,5 +34,10 @@ export default function ForetagPage() {
     </Page>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Företag",
+  description: "Företagslösningar hos USE Golf – medlemskap, events och nätverk.",
+};
 
 

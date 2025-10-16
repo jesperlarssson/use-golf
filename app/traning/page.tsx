@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Page from "@/components/ui/Page";
 import Section from "@/components/ui/Section";
 import { Heading, Text } from "@/components/ui/Typography";
@@ -31,5 +32,10 @@ export default function TraningPage() {
     </Page>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Träning",
+  description: "Coaching, kurser och custom fitting hos USE Golf.",
+};
 
 

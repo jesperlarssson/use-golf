@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Page from "@/components/ui/Page";
 import Section from "@/components/ui/Section";
 import { Heading, Text, Lead } from "@/components/ui/Typography";
@@ -368,5 +369,10 @@ export default function MedlemsvillkorPage() {
     </Page>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Medlemsvillkor",
+  description: "Villkor för medlemskap, partnerportal och simulatorpaket hos USE Golf Göteborg.",
+};
 
 

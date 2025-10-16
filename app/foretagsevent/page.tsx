@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Page from "@/components/ui/Page";
 import Section from "@/components/ui/Section";
 import { Heading, Text, Lead } from "@/components/ui/Typography";
@@ -76,5 +77,10 @@ export default function ForetagseventPage() {
     </Page>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Företagsevent",
+  description: "Skräddarsydda företagsevent hos USE Golf – simulatorpaket, tävlingar, mat och dryck.",
+};
 
 

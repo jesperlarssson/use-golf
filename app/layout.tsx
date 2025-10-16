@@ -16,8 +16,28 @@ const robotoFlex = Roboto_Flex({
 });
 
 export const metadata: Metadata = {
-  title: "USE GOLF",
-  description: "",
+  metadataBase: new URL("https://usegolf.se"),
+  title: {
+    default: "USE GOLF",
+    template: "%s | USE GOLF",
+  },
+  description: "USE Golf – inomhusgolf i Göteborg. TrackMan-simulatorer, ligor, företagsevent och träning. Get used to it.",
+  openGraph: {
+    title: "USE GOLF",
+    description: "Inomhusgolf i Göteborg – TrackMan, ligor, event och träning.",
+    url: "/",
+    siteName: "USE GOLF",
+    locale: "sv_SE",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "USE GOLF",
+    description: "Inomhusgolf i Göteborg – TrackMan, ligor, event och träning.",
+  },
+  icons: {
+    icon: "/icon.svg",
+  },
 };
 
 export default function RootLayout({

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Page from "@/components/ui/Page";
 import Section from "@/components/ui/Section";
 import { Heading } from "@/components/ui/Typography";
@@ -23,5 +24,10 @@ export default function AnlaggningPage() {
     </Page>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Anläggning",
+  description: "USE Golf – ~500–600 kvm, 6–8 bays, lounge, TrackMan och puttinggreen.",
+};
 
 

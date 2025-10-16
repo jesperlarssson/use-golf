@@ -1,11 +1,12 @@
+import type { Metadata } from "next";
 import Section from "@/components/ui/Section";
 import Page from "@/components/ui/Page";
 import { Heading, Text, Lead } from "@/components/ui/Typography";
 import EmailNotifyForm from "@/components/ui/EmailNotifyForm";
 
-export const metadata = {
-  title: "Boka Träning | USE GOLF",
-  description: "PGA Certifierade tränare kommer gå att boka inom kort.",
+export const metadata: Metadata = {
+  title: "Boka träning",
+  description: "Boka tränare hos USE Golf. PGA-certifierad coaching och kurser.",
 };
 
 export default function TrainingBookingPage() {

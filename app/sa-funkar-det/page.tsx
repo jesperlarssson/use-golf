@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Page from "@/components/ui/Page";
 import Section from "@/components/ui/Section";
 import { Heading, Text } from "@/components/ui/Typography";
@@ -22,5 +23,10 @@ export default function SaFunkarDetPage() {
     </Page>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Så funkar det",
+  description: "Så funkar simulatorgolf hos USE Golf – boka, kom in, spela.",
+};
 
 

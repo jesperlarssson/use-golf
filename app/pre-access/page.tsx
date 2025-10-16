@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import PreAccessCTA from "@/app/components/PreAccessModal";
 import Container from "@/components/ui/Container";
+import type { Metadata } from "next";
 
 export const dynamic = "force-static";
 
@@ -124,5 +125,10 @@ export default function PreAccessPage() {
         </div>
     );
 }
+
+export const metadata: Metadata = {
+  title: "Pre-access",
+  description: "USE Golf – nyetablering i Hovås. Få early access och nyheter först.",
+};
 
 
