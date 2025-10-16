@@ -1,11 +1,12 @@
 "use client";
 import { motion, Variants } from "framer-motion";
 import { PropsWithChildren } from "react";
+import type { JSX as ReactJSX } from "react";
 
 type FadeInProps = PropsWithChildren<{
   delay?: number;
   className?: string;
-  as?: keyof JSX.IntrinsicElements;
+  as?: keyof ReactJSX.IntrinsicElements;
 }>;
 
 const variants: Variants = {
@@ -14,7 +15,8 @@ const variants: Variants = {
 };
 
 export default function FadeIn({ children, delay = 0, className, as = "div" }: FadeInProps) {
-  const Component: any = motion[as as any] ?? motion.div;
+  const motionComponents = motion as unknown as Record<string, any>;
+  const Component: any = motionComponents[as] ?? motion.div;
   return (
     <Component
       className={className}
