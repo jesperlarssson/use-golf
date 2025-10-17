@@ -44,7 +44,11 @@ export default function MedlemskapPage() {
                   </div>
                 </div>
                 <div className="p-6 space-y-4">
-                  <p className="text-lg font-semibold uppercase tracking-wider">600 kr/år <span className="opacity-60">eller</span> 50 kr/mån i 12 mån</p>
+                  <div>
+                  <p className="text-lg font-semibold uppercase tracking-wider ">600 kr/år </p>
+                  <span className="opacity-60 text-xs ">Betalningen kan även delas upp månadsvis.</span>
+                  </div>
+
                   <ul className="list-disc pl-5 space-y-1 text-sm">
                     <li>10% rabatt på alla bokade tider</li>
                     <li>10% rabatt på USE Golf merch</li>
@@ -68,7 +72,10 @@ export default function MedlemskapPage() {
                   </div>
                 </div>
                 <div className="p-6 space-y-4">
+                  <div>
                   <p className="text-lg font-semibold uppercase tracking-wider">400 kr/år</p>
+                  <span className="opacity-60 text-xs ">Betalningen kan även delas upp månadsvis.</span>
+                  </div>
                   <ul className="list-disc pl-5 space-y-1 text-sm">
                     <li>10% rabatt på alla bokade tider</li>
                     <li>10% rabatt på USE Golf merch</li>

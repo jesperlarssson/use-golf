@@ -20,7 +20,7 @@ export default function MedlemsvillkorPage() {
               <li>Gäster får delta under medlemmens bokade timmar utan extra kostnad.</li>
               <li>Det är inte tillåtet att ta med egen mat eller dryck (undantaget vatten) i lokalerna.</li>
               <li>USE Golf har rätt att tillfälligt eller permanent avsluta medlemskap vid brott mot dessa villkor.</li>
-              <li>Samtliga medlemskap är giltiga fram till den <strong>1 september varje år</strong>, då de nollställs inför ny säsong.</li>
+              <li>Samtliga medlemskap är giltiga under <strong>12 månader</strong>, då de nollställs inför ny säsong.</li>
               <li>All verksamhet sker på egen risk. USE Golf ansvarar inte för personliga tillhörigheter eller skador.</li>
             </ul>
           </div>
@@ -57,7 +57,7 @@ export default function MedlemsvillkorPage() {
             </div>
 
             <ul className="list-disc pl-5 space-y-2">
-              <li>Giltigt till och med <strong>1 september varje år</strong>.</li>
+              <li>Giltigt i <strong>12 månader</strong>.</li>
               <li>Gäller endast på <strong>USE Golf Göteborg</strong>.</li>
               <li>Avbokning ska ske senast <strong>3 timmar före speltid</strong>.</li>
               <li>
