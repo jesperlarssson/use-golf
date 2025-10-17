@@ -62,14 +62,14 @@ export default function Header() {
     if (path.startsWith("/bokning")) {
       return {
         title: "Boka simulator",
-        imageSrc: "/images/render2.png",
+        imageSrc: "/images/render2.PNG",
         marqueeText: "Boka din tid idag — Träna smartare"
       };
     }
     if (path.startsWith("/boka-traning")) {
       return {
         title: "Boka träning",
-        imageSrc: "/images/render2.png",
+        imageSrc: "/images/render2.PNG",
         marqueeText: "Boka din tid idag — Träna smartare",
         subTitle: "Kommer snart"
       };
