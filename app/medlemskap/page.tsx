@@ -23,8 +23,7 @@ export default function MedlemskapPage() {
                 <Lead className="text-[var(--brand-olive-900)]">Välj ett medlemskap – spela mer, betala mindre, och bli en del av vårt community.</Lead>
                 <Text>
                   Som medlem får du alltid rabatt på bokningar och merch, förtur till event och ligor samt 1 timmes speltid när du
-                  registrerar dig. Juniorer och Seniorer har dessutom <strong>15% rabatt på bokningar mellan 06–16</strong>.
-                  Bollar och inomhuspegg ingår.
+                  registrerar dig. Bollar och inomhuspegg ingår.
                 </Text>
               </div>
             </div>
@@ -114,7 +113,7 @@ export default function MedlemskapPage() {
                   </div>
                   <div className="text-sm flex items-start gap-2">
                     <span aria-hidden>▸</span>
-                    <span>Spelpott: 6&nbsp;000 kr (17% rabatt)</span>
+                    <span>10% rabatt vid bokning som medlem</span>
                   </div>
                   <div>
                     <a href="#villkor" className="underline text-sm">Medlemskapsvillkor</a>
@@ -133,7 +132,7 @@ export default function MedlemskapPage() {
                   </div>
                   <div className="text-sm flex items-start gap-2">
                     <span aria-hidden>▸</span>
-                    <span>Spelpott: 12&nbsp;500 kr (20% rabatt)</span>
+                    <span>10% rabatt vid bokning som medlem</span>
                   </div>
                   <div>
                     <a href="#villkor" className="underline text-sm">Medlemskapsvillkor</a>
@@ -152,7 +151,7 @@ export default function MedlemskapPage() {
                   </div>
                   <div className="text-sm flex items-start gap-2">
                     <span aria-hidden>▸</span>
-                    <span>Spelpott: 20&nbsp;000 kr (25% rabatt)</span>
+                    <span>10% rabatt vid bokning som medlem</span>
                   </div>
                   <div>
                     <a href="#villkor" className="underline text-sm">Medlemskapsvillkor</a>
