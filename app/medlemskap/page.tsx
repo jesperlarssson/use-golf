@@ -116,7 +116,7 @@ export default function MedlemskapPage() {
                     <span>10% rabatt vid bokning som medlem</span>
                   </div>
                   <div>
-                    <a href="#villkor" className="underline text-sm">Medlemskapsvillkor</a>
+                    <a href="/medlemsvillkor" className="underline text-sm">Medlemskapsvillkor</a>
                   </div>
                 </div>
 
@@ -135,7 +135,7 @@ export default function MedlemskapPage() {
                     <span>10% rabatt vid bokning som medlem</span>
                   </div>
                   <div>
-                    <a href="#villkor" className="underline text-sm">Medlemskapsvillkor</a>
+                    <a href="/medlemsvillkor" className="underline text-sm">Medlemskapsvillkor</a>
                   </div>
                 </div>
 
@@ -154,7 +154,7 @@ export default function MedlemskapPage() {
                     <span>10% rabatt vid bokning som medlem</span>
                   </div>
                   <div>
-                    <a href="#villkor" className="underline text-sm">Medlemskapsvillkor</a>
+                    <a href="/medlemsvillkor" className="underline text-sm">Medlemskapsvillkor</a>
                   </div>
                 </div>
               </div>
