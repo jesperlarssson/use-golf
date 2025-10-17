@@ -104,7 +104,7 @@ export default function MedlemskapPage() {
                 {/* Spelpott Small */}
                 <div className="border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] p-6 flex flex-col gap-6">
                   <div className="space-y-4">
-                    <h3 className="font-horus text-2xl">Small</h3>
+                    <h3 className="font-horus text-2xl">Small Use:r</h3>
                     <hr className="border-[var(--brand-secondary)]/40" />
                     <div className="text-4xl font-semibold ">5&nbsp;000 kr</div>
                   </div>
@@ -123,7 +123,7 @@ export default function MedlemskapPage() {
                 {/* Medium */}
                 <div className="border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] p-6 flex flex-col gap-6">
                   <div className="space-y-4">
-                    <h3 className="font-horus text-2xl">Medium</h3>
+                    <h3 className="font-horus text-2xl">Medium Use:r</h3>
                     <hr className="border-[var(--brand-secondary)]/40" />
                     <div className="text-4xl font-semibold ">10&nbsp;000 kr</div>
                   </div>
@@ -142,7 +142,7 @@ export default function MedlemskapPage() {
                 {/* Large */}
                 <div className="border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] p-6 flex flex-col gap-6">
                   <div className="space-y-4">
-                    <h3 className="font-horus text-2xl">Large</h3>
+                    <h3 className="font-horus text-2xl">Large Use:r</h3>
                     <hr className="border-[var(--brand-secondary)]/40" />
                     <div className="text-4xl font-semibold ">15&nbsp;000 kr</div>
                   </div>
