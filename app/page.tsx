@@ -75,8 +75,8 @@ export default function Home() {
           title="USE GOLF"
           heroText="Get used to it"
           videoSrc="/use_hero.mp4"
-          videoPoster="/images/wall.png"
-          imageSrc="/images/wall.png"
+          videoPoster="/images/placeholder.png"
+          imageSrc="/images/placeholder.png"
         />
 
         <div className=" w-full bg-[var(--brand-olive-700)] text-[var(--brand-primary)] border-y-2 border-[var(--brand-secondary)]">
