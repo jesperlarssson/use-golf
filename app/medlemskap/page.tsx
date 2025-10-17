@@ -54,7 +54,6 @@ export default function MedlemskapPage() {
                     <li>10% rabatt på USE Golf merch</li>
                     <li>Förtur till event & ligor</li>
                     <li>1 timmes speltid ingår vid registrering</li>
-                    <li>+ 15% rabatt på bokningar mellan 06–16</li>
                   </ul>
                   <div>
                     <a href="/bli-medlem" className="inline-flex items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">Bli medlem</a>
@@ -82,7 +81,7 @@ export default function MedlemskapPage() {
                     <li>Förtur till event & ligor</li>
                     <li>1 timmes speltid ingår vid registrering</li>
                     <li>Kvalificering till Juniorligan*</li>
-                    <li>+ 15% rabatt på bokningar mellan 06–16</li>
+
                   </ul>
                   <p className="text-xs opacity-80">*För att kunna anmäla sig till Juniorligan måste man vara medlem i USE Golf (Junior).</p>
                   <div>
