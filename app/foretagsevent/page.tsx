@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import Page from "@/components/ui/Page";
 import Section from "@/components/ui/Section";
 import { Heading, Text, Lead } from "@/components/ui/Typography";
@@ -177,7 +178,9 @@ export default function ForetagseventPage() {
       <Section id="forfragan" className="pb-16 -mt-10">
         <div className="mx-auto max-w-screen-2xl">
           <Heading as={3} className="mb-4">Skicka förfrågan</Heading>
-          <InquiryForm subject="Förfrågan Företagspaket" defaultType="paket" />
+          <Suspense fallback={<div className="text-sm opacity-70">Laddar formulär…</div>}>
+            <InquiryForm subject="Förfrågan Företagspaket" defaultType="paket" />
+          </Suspense>
         </div>
       </Section>
     </Page>
