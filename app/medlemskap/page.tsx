@@ -104,16 +104,13 @@ export default function MedlemskapPage() {
                 {/* Spelpott Small */}
                 <div className="border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] p-6 flex flex-col gap-6">
                   <div className="space-y-4">
-                    <h3 className="font-horus text-2xl">Small Use:r</h3>
+                    <h3 className="font-horus text-2xl">Small User</h3>
                     <hr className="border-[var(--brand-secondary)]/40" />
                     <div className="text-4xl font-semibold ">5&nbsp;000 kr</div>
+                    <div className="text-sm">Spelvärde 6&nbsp;000 kr <span className="opacity-80">(17 % bonus)</span></div>
                   </div>
                   <div>
                     <span role="link" aria-disabled="true" tabIndex={-1} className="inline-flex w-full items-center justify-center bg-[var(--brand-secondary)] px-5 py-3 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none opacity-60 cursor-not-allowed pointer-events-none transition" data-cursor-target data-cursor-padding="10">SNART TILLGÄNGLIGT</span>
-                  </div>
-                  <div className="text-sm flex items-start gap-2">
-                    <span aria-hidden>▸</span>
-                    <span>10% rabatt vid bokning som medlem</span>
                   </div>
                   <div>
                     <a href="/medlemsvillkor" className="underline text-sm">Medlemskapsvillkor</a>
@@ -123,16 +120,13 @@ export default function MedlemskapPage() {
                 {/* Medium */}
                 <div className="border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] p-6 flex flex-col gap-6">
                   <div className="space-y-4">
-                    <h3 className="font-horus text-2xl">Medium Use:r</h3>
+                    <h3 className="font-horus text-2xl">Medium User</h3>
                     <hr className="border-[var(--brand-secondary)]/40" />
-                    <div className="text-4xl font-semibold ">10&nbsp;000 kr</div>
+                    <div className="text-4xl font-semibold ">9&nbsp;000 kr</div>
+                    <div className="text-sm">Spelvärde 10&nbsp;800 kr <span className="opacity-80">(20 % bonus)</span></div>
                   </div>
                   <div>
                     <span role="link" aria-disabled="true" tabIndex={-1} className="inline-flex w-full items-center justify-center bg-[var(--brand-secondary)] px-5 py-3 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none opacity-60 cursor-not-allowed pointer-events-none transition" data-cursor-target data-cursor-padding="10">SNART TILLGÄNGLIGT</span>
-                  </div>
-                  <div className="text-sm flex items-start gap-2">
-                    <span aria-hidden>▸</span>
-                    <span>10% rabatt vid bokning som medlem</span>
                   </div>
                   <div>
                     <a href="/medlemsvillkor" className="underline text-sm">Medlemskapsvillkor</a>
@@ -142,16 +136,13 @@ export default function MedlemskapPage() {
                 {/* Large */}
                 <div className="border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] p-6 flex flex-col gap-6">
                   <div className="space-y-4">
-                    <h3 className="font-horus text-2xl">Large Use:r</h3>
+                    <h3 className="font-horus text-2xl">Large User</h3>
                     <hr className="border-[var(--brand-secondary)]/40" />
-                    <div className="text-4xl font-semibold ">15&nbsp;000 kr</div>
+                    <div className="text-4xl font-semibold ">14&nbsp;000 kr</div>
+                    <div className="text-sm">Spelvärde 17&nbsp;500 kr <span className="opacity-80">(25 % bonus)</span></div>
                   </div>
                   <div>
                     <span role="link" aria-disabled="true" tabIndex={-1} className="inline-flex w-full items-center justify-center bg-[var(--brand-secondary)] px-5 py-3 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none opacity-60 cursor-not-allowed pointer-events-none transition" data-cursor-target data-cursor-padding="10">SNART TILLGÄNGLIGT</span>
-                  </div>
-                  <div className="text-sm flex items-start gap-2">
-                    <span aria-hidden>▸</span>
-                    <span>10% rabatt vid bokning som medlem</span>
                   </div>
                   <div>
                     <a href="/medlemsvillkor" className="underline text-sm">Medlemskapsvillkor</a>

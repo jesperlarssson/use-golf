@@ -17,7 +17,7 @@ const primaryNav: NavItem[] = [
   { href: "/boka-traning", label: "Boka Träning" },
   { href: "/medlemskap", label: "Medlemskap" },
   { href: "/events", label: "Event & Community" },
-  { href: "/foretagsevent", label: "Företagsevent" },
+  { href: "/foretagsevent", label: "Företagspaket" },
   { href: "/om", label: "Om oss" },
   { href: "/kontakt", label: "Kontakt" },
 ];
@@ -91,11 +91,11 @@ export default function Header() {
     }
     if (path.startsWith("/foretagsevent")) {
       return {
-        title: "Företagsevent",
+        title: "Företagspaket",
         imageSrc: "/images/baller2-back.png",
         marqueeText: "Skräddarsydda upplevelser — För team och kunder",
         subTitle: "Kickoff, kundevent eller teamdag – vi fixar helheten",
-        actionButton: { label: "Förfrågan", href: "/kontakt" }
+        actionButton: { label: "Skicka förfrågan", href: "/foretagsevent#forfragan" }
       };
     }
     if (path.startsWith("/om")) {

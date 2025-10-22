@@ -1,12 +1,26 @@
 "use client";
-import { useState } from "react";
+
+import { useState, useMemo } from "react";
+import { useSearchParams } from "next/navigation";
+
+type InquiryType = "paket" | "event" | "partner";
+type PartnerLevel = "UsePartner" | "Premier User";
 
 type InquiryFormProps = {
   to?: string;
   subject?: string;
+  defaultType?: InquiryType;
+  defaultPartnerLevel?: PartnerLevel;
 };
 
-export default function InquiryForm({ to = "hello@usegolf.se", subject = "Förfrågan Företagsevent" }: InquiryFormProps) {
+export default function InquiryForm({ to = "hello@usegolf.se", subject = "Förfrågan Företagsevent", defaultType, defaultPartnerLevel }: InquiryFormProps) {
+  const searchParams = useSearchParams();
+  const typeFromQuery = (searchParams.get("type") as InquiryType | null) || null;
+  const levelFromQuery = (searchParams.get("level") as PartnerLevel | null) || null;
+
+  const initialType: InquiryType = useMemo(() => typeFromQuery || defaultType || "paket", [typeFromQuery, defaultType]);
+  const initialLevel: PartnerLevel | "" = useMemo(() => levelFromQuery || defaultPartnerLevel || "", [levelFromQuery, defaultPartnerLevel]);
+
   const [company, setCompany] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -16,6 +30,8 @@ export default function InquiryForm({ to = "hello@usegolf.se", subject = "Förfr
   const [duration, setDuration] = useState("2 timmar");
   const [message, setMessage] = useState("");
   const [hp, setHp] = useState("");
+  const [inquiryType, setInquiryType] = useState<InquiryType>(initialType);
+  const [partnerLevel, setPartnerLevel] = useState<PartnerLevel | "">(initialLevel);
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [error, setError] = useState<string>("");
 
@@ -27,7 +43,7 @@ export default function InquiryForm({ to = "hello@usegolf.se", subject = "Förfr
       const res = await fetch("/api/inquiry", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ company, name, email, phone, date, start, duration, message, hp }),
+        body: JSON.stringify({ company, name, email, phone, date, start, duration, message, hp, type: inquiryType, partnerLevel: partnerLevel || undefined, subject }),
       });
       const data = await res.json();
       if (!res.ok || !data.ok) throw new Error(data.error || "Kunde inte skicka");
@@ -41,6 +57,8 @@ export default function InquiryForm({ to = "hello@usegolf.se", subject = "Förfr
       setDuration("2 timmar");
       setMessage("");
       setHp("");
+      setInquiryType(initialType);
+      setPartnerLevel(initialLevel);
     } catch (err: any) {
       setStatus("error");
       setError(err?.message || "Något gick fel");
@@ -50,6 +68,26 @@ export default function InquiryForm({ to = "hello@usegolf.se", subject = "Förfr
   return (
     <form onSubmit={onSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       <input type="text" value={hp} onChange={(e) => setHp(e.target.value)} className="hidden" tabIndex={-1} aria-hidden="true" />
+      <div>
+        <label className="block text-sm mb-1">Ärende</label>
+        <select value={inquiryType} onChange={(e) => setInquiryType(e.target.value as InquiryType)} className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] px-3 py-2 rounded-none">
+          <option value="paket">Simulatorpaket</option>
+          <option value="event">Event (hela lokalen)</option>
+          <option value="partner">Partnernivå</option>
+        </select>
+      </div>
+      {inquiryType === "partner" ? (
+        <div>
+          <label className="block text-sm mb-1">Partnernivå</label>
+          <select value={partnerLevel} onChange={(e) => setPartnerLevel(e.target.value as PartnerLevel)} className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] px-3 py-2 rounded-none">
+            <option value="">Välj nivå</option>
+            <option value="UsePartner">UsePartner</option>
+            <option value="Premier User">Premier User</option>
+          </select>
+        </div>
+      ) : (
+        <div />
+      )}
       <div className="sm:col-span-2">
         <label className="block text-sm mb-1">Företag</label>
         <input value={company} onChange={(e) => setCompany(e.target.value)} className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] px-3 py-2 rounded-none" required />
@@ -66,21 +104,31 @@ export default function InquiryForm({ to = "hello@usegolf.se", subject = "Förfr
         <label className="block text-sm mb-1">Telefon</label>
         <input value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] px-3 py-2 rounded-none" />
       </div>
-      <div>
-        <label className="block text-sm mb-1">Önskat datum</label>
-        <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] px-3 py-2 rounded-none" />
-      </div>
-      <div>
-        <label className="block text-sm mb-1">Starttid</label>
-        <input type="time" value={start} onChange={(e) => setStart(e.target.value)} className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] px-3 py-2 rounded-none" />
-      </div>
-      <div>
-        <label className="block text-sm mb-1">Varaktighet</label>
-        <select value={duration} onChange={(e) => setDuration(e.target.value)} className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] px-3 py-2 rounded-none">
-          <option>2 timmar</option>
-          <option>3 timmar</option>
-        </select>
-      </div>
+      {inquiryType !== "partner" ? (
+        <>
+          <div>
+            <label className="block text-sm mb-1">Önskat datum</label>
+            <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] px-3 py-2 rounded-none" />
+          </div>
+          <div>
+            <label className="block text-sm mb-1">Starttid</label>
+            <input type="time" value={start} onChange={(e) => setStart(e.target.value)} className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] px-3 py-2 rounded-none" />
+          </div>
+          <div>
+            <label className="block text-sm mb-1">Varaktighet</label>
+            <select value={duration} onChange={(e) => setDuration(e.target.value)} className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] px-3 py-2 rounded-none">
+              <option>2 timmar</option>
+              <option>3 timmar</option>
+            </select>
+          </div>
+        </>
+      ) : (
+        <>
+          <div />
+          <div />
+          <div />
+        </>
+      )}
       <div className="sm:col-span-2">
         <label className="block text-sm mb-1">Önskemål/beskrivning</label>
         <textarea value={message} onChange={(e) => setMessage(e.target.value)} className="w-full min-h-28 border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] px-3 py-2 rounded-none" />

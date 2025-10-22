@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { company, name, email, phone, date, start, duration, message, hp } = body || {};
+    const { company, name, email, phone, date, start, duration, message, hp, type, partnerLevel, subject: subjectFromClient } = body || {};
 
     // Honeypot
     if (typeof hp === "string" && hp.trim() !== "") {
@@ -60,8 +60,11 @@ export async function POST(req: NextRequest) {
     const client = new Brevo.TransactionalEmailsApi();
     client.setApiKey(Brevo.TransactionalEmailsApiApiKeys.apiKey, apiKey);
 
-    const subject = `Förfrågan Företagsevent: ${company || name}`;
+    const typeLabel = typeof type === "string" && type ? type : "paket";
+    const subject = subjectFromClient || `Förfrågan (${typeLabel}): ${company || name}`;
     const htmlLines = [
+      type ? `<p><strong>Ärende:</strong> ${type}</p>` : "",
+      partnerLevel ? `<p><strong>Partnernivå:</strong> ${partnerLevel}</p>` : "",
       `<p><strong>Företag:</strong> ${company}</p>`,
       `<p><strong>Kontaktperson:</strong> ${name}</p>`,
       `<p><strong>E-post:</strong> ${email}</p>`,

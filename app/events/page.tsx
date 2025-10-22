@@ -60,12 +60,12 @@ export default function EventsPage() {
       imageSrc: "/images/club.png",
       content: (
         <Text>
-          Måndag–torsdag kl <strong>09–12</strong> och <strong>12–15</strong>. Pris <strong>250 kr/person</strong> när man bokar en simulator för 4 personer – först till kvarn.
+          Måndag–torsdag kl <strong>09–12</strong> och <strong>12–15</strong>. Pris <strong>300 kr per person</strong> (vid bokning av simulator för fyra personer) – först till kvarn.
           Vi kör en Order of Merit som leder till slutspel i slutet av säsongen.
         </Text>
       ),
-      ctaHref: "/bokning",
-      ctaLabel: "Boka",
+      ctaHref: "/events/seniorgolf",
+      ctaLabel: "Läs mer",
     },
     {
       title: "Onsdagsgolfen ",
@@ -169,20 +169,21 @@ export default function EventsPage() {
               </div>
           </Section>
 
-          {/* Lördagsscramble – bakgrundsbild med text och CTA */}
+          {/* Veckoscramble – bakgrundsbild med text och CTA */}
           <Section className="pt-8 -mt-18">
             <div className="relative border-2 border-[var(--brand-secondary)]/60 rounded-none overflow-hidden min-h-72 px-8">
-              <Image src="/images/render1.PNG" alt="Lördagsscramble" fill priority className="object-cover object-center" />
+              <Image src="/images/render2.PNG" alt="Veckoscramble" fill priority className="object-cover object-center blur-sm scale-105 brightness-90" />
               <div className="absolute inset-0 bg-black/35" />
               <div className="relative z-10">
                   <div className="py-14 sm:py-20 max-w-3xl">
-                    <h3 className="font-horus text-3xl sm:text-4xl text-[var(--brand-primary)] mb-4">Lördagsscramble</h3>
+                    <h3 className="font-horus text-3xl sm:text-4xl text-[var(--brand-primary)] ">Veckoscramble</h3>
+                    <p className="text-md text-[var(--brand-primary)]/80 uppercase tracking-wider mb-4">2-mannascramble</p>
                     <p className="text-[var(--brand-primary)]/95">
-                      Spelas <strong>en gång i månaden</strong>. Tre grupper: Morgon <strong>09–12</strong>, Lunch <strong>13–16</strong>, Kväll <strong>17–20</strong>. Pris <strong>500 kr/person</strong>. Fint prisbord utlovas!
+                      Ny bana <strong>varje vecka</strong>. Spelas <strong>mån–sön</strong>, valfri tid. Kostnad <strong>200 kr/lag</strong> + simulatorhyra.
                     </p>
                     <div className="mt-6">
-                      <a href="/bokning" className="sketch-button sketch-v1 text-[var(--brand-primary)]" data-cursor-target data-cursor-padding="8">
-                        <span className="sketch-sides py-2 px-3 uppercase tracking-widest">Boka</span>
+                      <a href="/events/veckoscramble" className="sketch-button sketch-v1 text-[var(--brand-primary)]" data-cursor-target data-cursor-padding="8">
+                        <span className="sketch-sides py-2 px-3 uppercase tracking-widest">Läs mer</span>
                       </a>
                     </div>
                   </div>
@@ -190,6 +191,8 @@ export default function EventsPage() {
             </div>
           </Section>
 
+          {/* Seniorgolf – detaljerad sektion flyttad till egen sida */}
+ 
           {/* Eventkalender 
           <Section>
             <Container>
