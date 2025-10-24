@@ -30,28 +30,28 @@ export default function Home() {
       ctaLabel: "Läs mer",
     },
     {
-      title: "Onsdagsgolfen ",
-      subtitle: "Ligaspelet",
-      imageSrc: "/images/club-sticker.png",
+      title: "Företagsevent",
+      subtitle: "Boka hela lokalen",
+      imageSrc: "/images/render2.PNG",
       content: (
         <Text>
-          Planerad start senast i januari. Spelas onsdagar (em/kväll) – lag eller individuellt, 1 gång i veckan över säsongen. Mer info kommer.
+          Hyr hela lokalen (6 simulatorer) för kickoff, kundkväll eller teambuilding. Anpassade upplägg med tävlingar, mat och dryck – kontakta oss för offert.
         </Text>
       ),
-      ctaHref: "/bokning",
-      ctaLabel: "Boka",
+      ctaHref: "/partner",
+      ctaLabel: "Läs mer",
     },
+    // Onsdagsgolfen pausad tills vidare
     {
       title: "Juniorligan",
-      subtitle: "Höst/Vinter",
+      subtitle: "Hösten",
       imageSrc: "/images/club2.png",
       content: (
         <Text>
-          Tisdagar <strong>15–17</strong> följande datum: <strong>11, 18, 25 nov</strong> och <strong>2, 9, 16 dec</strong>. 3 spelare/simulator, 9 hål + fri lek efteråt.
-          Kostnad <strong>1 500 kr</strong> för perioden. Medlemskap Junior krävs.
+          Start <strong>18 november</strong>. 3 spelare/simulator, 9 hål + fri lek efteråt. Kostnad <strong>1 250 kr</strong> per person. Medlemskap <strong>Junior User</strong> krävs.
         </Text>
       ),
-      ctaHref: "mailto:hello@usegolf.se?subject=USE%20Golf%20Juniorligan%20H%C3%B6st%2FVinter&body=Hej%21%20Jag%20vill%20anm%C3%A4la%20mig%20till%20Juniorligan%20%28H%C3%B6st%2FVinter%29.%0ANamn%3A%20%0A%C3%85lder%3A%20",
+      ctaHref: "mailto:hello@usegolf.se?subject=USE%20Golf%20Juniorligan%20H%C3%B6sten&body=Hej%21%20Jag%20vill%20anm%C3%A4la%20mig%20till%20Juniorligan%20%28H%C3%B6sten%29.%0ANamn%3A%20%0A%C3%85lder%3A%20",
       ctaLabel: "Boka",
     },
     {
@@ -61,7 +61,7 @@ export default function Home() {
       content: (
         <Text>
           Tisdagar <strong>15–17</strong> följande datum: <strong>20, 27 jan</strong>, <strong>3, 17, 24 feb</strong>, <strong>3, 10, 17, 24 mars</strong> (avslutning).
-          3 spelare/simulator, 9 hål + fri lek efteråt. Kostnad <strong>2 500 kr</strong>. Medlemskap Junior krävs.
+          3 spelare/simulator, 9 hål + fri lek efteråt. Kostnad <strong>2 500 kr</strong>. Medlemskap <strong>Junior User</strong> krävs.
         </Text>
       ),
       ctaHref: "mailto:hello@usegolf.se?subject=USE%20Golf%20Juniorligan%20V%C3%A5ren&body=Hej%21%20Jag%20vill%20anm%C3%A4la%20mig%20till%20Juniorligan%20%28V%C3%A5ren%29.%0ANamn%3A%20%0A%C3%85lder%3A%20",
@@ -151,10 +151,10 @@ export default function Home() {
             <FadeIn>
               <div className="rounded-none flex flex-col sm:flex-row overflow-hidden border-1 border-[var(--brand-secondary)] bg-[var(--brand-primary)]">
                 <div className="relative h-44 sm:h-64 w-full sm:w-1/2 border-b-2 border-[var(--brand-secondary)] overflow-hidden">
-                  <Image src="/images/club.png" alt="Senior" fill className="object-cover blur-sm scale-105 brightness-90" />
+                  <Image src="/images/club.png" alt="User" fill className="object-cover blur-sm scale-105 brightness-90" />
                   <div className="absolute inset-0 bg-black/20" />
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <h3 className="font-horus text-3xl text-[var(--brand-primary)]">Senior</h3>
+                    <h3 className="font-horus text-3xl sm:text-4xl text-[var(--brand-primary)]">Use:r</h3>
                   </div>
                 </div>
                 <div className="p-6 space-y-3 sm:pl-10">
@@ -175,10 +175,10 @@ export default function Home() {
             <FadeIn delay={0.05}>
               <div className="rounded-none flex flex-col sm:flex-row overflow-hidden border-1 border-[var(--brand-secondary)] bg-[var(--brand-primary)]">
                   <div className="relative h-44 sm:h-64 w-full sm:w-1/2 border-b-2 border-[var(--brand-secondary)] overflow-hidden">
-                  <Image src="/images/club2.png" alt="Junior" fill className="object-cover blur-sm scale-105 brightness-90" />
+                  <Image src="/images/club2.png" alt="Junior User" fill className="object-cover blur-sm scale-105 brightness-90" />
                   <div className="absolute inset-0 bg-black/20" />
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <h3 className="font-horus text-3xl text-[var(--brand-primary)]">Junior</h3>
+                    <h3 className="font-horus text-3xl sm:text-4xl text-[var(--brand-primary)]">Junior Use:r</h3>
                   </div>
                 </div>
                 <div className="p-6 space-y-3 sm:pl-10">
@@ -200,7 +200,7 @@ export default function Home() {
         {/* Program & ligor i medlemskaps-stil (bild + overlay + text) */}
         <Section className="pt-10 -mt-10">
           <div className="space-y-2">
-            <Heading as={2}>Program & ligor</Heading>
+            <Heading as={2}>Event & ligor</Heading>
             <Text className="pb-2 max-w-xl">Återkommande aktiviteter och ligor för alla nivåer – häng med!</Text>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
               {programItems.map((item) => (

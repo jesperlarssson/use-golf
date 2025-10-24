@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 
 type InquiryType = "paket" | "event" | "partner";
-type PartnerLevel = "UsePartner" | "Premier User";
+type PartnerLevel = "Partner" | "Official Partner";
 
 type InquiryFormProps = {
   to?: string;
@@ -81,8 +81,8 @@ export default function InquiryForm({ to = "hello@usegolf.se", subject = "Förfr
           <label className="block text-sm mb-1">Partnernivå</label>
           <select value={partnerLevel} onChange={(e) => setPartnerLevel(e.target.value as PartnerLevel)} className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] px-3 py-2 rounded-none">
             <option value="">Välj nivå</option>
-            <option value="UsePartner">UsePartner</option>
-            <option value="Premier User">Premier User</option>
+            <option value="Partner">Partner</option>
+            <option value="Official Partner">Official Partner</option>
           </select>
         </div>
       ) : (

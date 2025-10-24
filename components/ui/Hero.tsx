@@ -87,7 +87,7 @@ export default function Hero({
               { href: "/bokning", title: "Boka Simulator", description: "Välj tid och bana – kom igång direkt.", image: "/images/club-hit-sticker.png" },
               { href: "/medlemskap", title: "Medlemskap", description: "Mer golf. Mer fördelar. Upptäck nivåerna.", image: "/images/baller2-sticker.png" },
               { href: "/events", title: "Event", description: "Häng med på nästa event och träffa communityt.", image: "/images/club2-sticker.png" },
-              { href: "/foretagsevent", title: "Företagsevent", description: "Kickoff eller kundevent? Vi skräddarsyr upplevelsen.", image: "/images/club-sticker.png" },
+              { href: "/partner", title: "Företagsevent", description: "Kickoff eller kundevent? Vi skräddarsyr upplevelsen.", image: "/images/club-sticker.png" },
             ]}
           />
         </div>

@@ -43,12 +43,12 @@ export default function MedlemsvillkorPage() {
                 </thead>
                 <tbody>
                   <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2 align-top font-semibold">Junior</td>
+                    <td className="px-3 py-2 align-top font-semibold">Junior Use:r</td>
                     <td className="px-3 py-2 align-top">400 kr</td>
                     <td className="px-3 py-2 align-top">10 % rabatt på allt spel + 1 timmes spel inkluderad</td>
                   </tr>
                   <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2 align-top font-semibold">Senior</td>
+                    <td className="px-3 py-2 align-top font-semibold">Use:r</td>
                     <td className="px-3 py-2 align-top">600 kr</td>
                     <td className="px-3 py-2 align-top">10 % rabatt på allt spel + 1 timmes spel inkluderad</td>
                   </tr>
@@ -57,7 +57,7 @@ export default function MedlemsvillkorPage() {
             </div>
 
             <ul className="list-disc pl-5 space-y-2">
-              <li>Giltigt till och med <strong>1 september</strong> varje år.</li>
+              <li>Giltigt i <strong>12 månader</strong> från det att det tecknas.</li>
               <li>Gäller endast på <strong>USE Golf Göteborg</strong>.</li>
               <li>Avbokning ska ske senast <strong>3 timmar före speltid</strong>.</li>
               <li>
@@ -76,78 +76,61 @@ export default function MedlemsvillkorPage() {
               <li>Förvaringen sker som en garderobslösning i ett låst utrymme med kameraövervakning.</li>
               <li>Du ansvarar själv för din utrustning.</li>
               <li>USE Golf ansvarar inte för förlorade eller skadade tillhörigheter.</li>
-              <li>Maxantal: <strong>80 baggar totalt</strong>, varav <strong>50 reserveras för juniorer</strong>.</li>
+              <li>Maxantal: <strong>80 bagar totalt</strong>, varav <strong>50 reserveras för juniorer</strong>.</li>
             </ul>
           </div>
 
-          {/* 4. Simulatorpaket – Företagsevent & Gruppspel */}
+          {/* 4. Företagsevent & Gruppspel */}
           <div className="space-y-4">
-            <Heading as={2}>4. Simulatorpaket – Företagsevent & Gruppspel</Heading>
-            <Text>Alla paket inkluderar:</Text>
+            <Heading as={2}>4. Företagsevent & Gruppspel</Heading>
+            <Text>Alla företagsevent bokas för <strong>hela lokalen (6 simulatorer)</strong> med en <strong>minsta speltid på 2 timmar</strong>. I bokningen ingår:</Text>
             <ul className="list-disc pl-5 space-y-2">
-              <li>2 timmar spel i våra TrackMan-simulatorer</li>
-              <li>Hjälp med uppstart och introduktion</li>
-              <li>Tävlingsupplägg anpassat för sällskapet</li>
-              <li>Klubbhyra ingår</li>
+              <li>Förberedelse och uppstart av eventet</li>
+              <li>Hjälp med tävlingsupplägg, loggor och presentationer</li>
+              <li>Uppvärmning och introduktion för spelare</li>
+              <li>Priser (från)</li>
             </ul>
-
-            <Heading as={3}>Priser</Heading>
+            <Heading as={3}>Priser (från)</Heading>
             <div className="overflow-x-auto">
               <table className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] text-sm">
                 <thead>
                   <tr className="bg-[var(--brand-secondary)] text-[var(--brand-primary)] uppercase tracking-wide">
                     <th className="px-3 py-2 text-left">Period</th>
-                    <th className="px-3 py-2 text-left">Simulatorpaket (2 h)</th>
-                    <th className="px-3 py-2 text-left">Extra timme</th>
-                    <th className="px-3 py-2 text-left">Hela lokalen / h</th>
+                    <th className="px-3 py-2 text-left">Hela lokalen (minst 2 h)</th>
+                    <th className="px-3 py-2 text-left">Extra timmar</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr className="border-t border-[var(--brand-secondary)]/40">
                     <td className="px-3 py-2">Måndag–Tisdag</td>
-                    <td className="px-3 py-2">1 300 kr</td>
-                    <td className="px-3 py-2">600 kr</td>
-                    <td className="px-3 py-2">8 000 kr</td>
+                    <td className="px-3 py-2">från 16 000 kr</td>
+                    <td className="px-3 py-2">På förfrågan</td>
                   </tr>
                   <tr className="border-t border-[var(--brand-secondary)]/40">
                     <td className="px-3 py-2">Onsdag–Torsdag</td>
-                    <td className="px-3 py-2">1 500 kr</td>
-                    <td className="px-3 py-2">650 kr</td>
-                    <td className="px-3 py-2">10 000 kr</td>
+                    <td className="px-3 py-2">från 20 000 kr</td>
+                    <td className="px-3 py-2">På förfrågan</td>
                   </tr>
                   <tr className="border-t border-[var(--brand-secondary)]/40">
                     <td className="px-3 py-2">Fredag–Söndag</td>
-                    <td className="px-3 py-2">1 800 kr</td>
-                    <td className="px-3 py-2">700 kr</td>
-                    <td className="px-3 py-2">12 000 kr</td>
+                    <td className="px-3 py-2">från 24 000 kr</td>
+                    <td className="px-3 py-2">På förfrågan</td>
                   </tr>
                 </tbody>
               </table>
             </div>
-
-            <Heading as={3}>Tillval för en komplett upplevelse</Heading>
+            <Heading as={3}>Tillval</Heading>
             <ul className="list-disc pl-5 space-y-2">
-              <li><strong>Snackspaket – 110 kr/person</strong><br/>Chips med dipp, oliver, mandlar och chark.</li>
-              <li><strong>Matpaket – på förfrågan</strong><br/>Ett enkelt och gott paket som mättar under spelet.</li>
+              <li>Snackspaket – på förfrågan</li>
+              <li>Matpaket – på förfrågan</li>
+              <li>Dryck – enligt meny på plats</li>
             </ul>
-
+            <Text className="mt-2">När ni bokar hela lokalen står vi för att sätta upp eventet, skapa tävlingar och koordinera upplevelsen för era spelare.</Text>
             <Heading as={3}>Bokningsinformation</Heading>
             <ul className="list-disc pl-5 space-y-2">
-              <li>Paketet måste beställas för hela sällskapet. Inte möjligt att beställa till enstaka personer.</li>
-              <li>För skräddarsydda upplägg eller specialönskemål, kontakta oss på: <a href="mailto:hello@usegolf.se" className="underline">hello@usegolf.se</a></li>
-            </ul>
-          </div>
-
-          {/* 5. Bagförvaring */}
-          <div className="space-y-4">
-            <Heading as={2}>5. Bagförvaring</Heading>
-            <ul className="list-disc pl-5 space-y-2">
-              <li>Bagförvaring finns under vintersäsongen till en kostnad av <strong>500 kr per säsong</strong> för seniorer.</li>
-              <li>Juniorer har förtur till bagförvaring till priset av <strong>700 kr per säsong</strong>.</li>
-              <li>Förvaring sker i låst utrymme med kameraövervakning.</li>
-              <li>Förvaringen fungerar som en garderob – du ansvarar själv för din utrustning.</li>
-              <li>USE Golf ansvarar inte för förlorade eller skadade tillhörigheter.</li>
-              <li>Maxantal: <strong>80 baggar totalt</strong>, varav <strong>50 reserveras för juniorer</strong>.</li>
+              <li>Paketet måste bokas för hela sällskapet.</li>
+              <li>Tillägg som snacks, mat och dryck beställs separat.</li>
+              <li>För offert eller skräddarsytt upplägg, kontakta oss på: <a href="mailto:hello@usegolf.se" className="underline">hello@usegolf.se</a></li>
             </ul>
           </div>
 
@@ -252,8 +235,8 @@ export default function MedlemsvillkorPage() {
 
           {/* 6. Spelpass – Förbetalda spelpotter */}
           <div className="space-y-4">
-            <Heading as={2}>6. Spelpass – Förbetalda spelpotter</Heading>
-            <Text>Tre nivåer av spelpass för dig som spelar ofta.</Text>
+            <Heading as={2}>6. User Passes – Förbetalda spelvärden</Heading>
+            <Text>Tre nivåer av spelpass för dig som spelar ofta och vill få mer värde för pengarna.</Text>
             <div className="overflow-x-auto">
               <table className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] text-sm">
                 <thead>
@@ -266,19 +249,19 @@ export default function MedlemsvillkorPage() {
                 </thead>
                 <tbody>
                   <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2 font-semibold">Small User</td>
+                    <td className="px-3 py-2 font-semibold">User Pass – Small</td>
                     <td className="px-3 py-2">5 000 kr</td>
                     <td className="px-3 py-2">6 000 kr</td>
                     <td className="px-3 py-2">+17 %</td>
                   </tr>
                   <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2 font-semibold">Medium User</td>
+                    <td className="px-3 py-2 font-semibold">User Pass – Medium</td>
                     <td className="px-3 py-2">9 000 kr</td>
                     <td className="px-3 py-2">10 800 kr</td>
                     <td className="px-3 py-2">+20 %</td>
                   </tr>
                   <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2 font-semibold">Large User</td>
+                    <td className="px-3 py-2 font-semibold">User Pass – Large</td>
                     <td className="px-3 py-2">14 000 kr</td>
                     <td className="px-3 py-2">17 500 kr</td>
                     <td className="px-3 py-2">+25 %</td>
@@ -286,12 +269,17 @@ export default function MedlemsvillkorPage() {
                 </tbody>
               </table>
             </div>
-            <Heading as={3}>Villkor för spelpass</Heading>
+            <Heading as={3}>Villkor för User Passes</Heading>
             <ul className="list-disc pl-5 space-y-2">
+              <li>Du behöver inte vara medlem för att kunna fylla och använda din spelpott.</li>
               <li>Gäller alla tider, alla dagar.</li>
               <li>Spelvärdet laddas på ditt konto i Sweetspot.</li>
               <li>Giltigt i <strong>12 månader</strong> från inköpsdatum.</li>
               <li>Ej personligt – kan användas för flera spelare på samma bokning.</li>
+              <li>Kan <strong>inte</strong> kombineras med medlemsrabatten på 10 %.</li>
+              <li>Vid stående bokningar under säsong måste samtliga spelare vara medlemmar.</li>
+              <li>Spelpotten används som betalning för de bokade tiderna.</li>
+              <li>De första <strong>två veckorna</strong> gäller ordinarie pris. Från och med <strong>tredje veckan</strong> tillkommer en <strong>bokningsavgift på 50 kr/h och simulator</strong> för stående tider.</li>
             </ul>
           </div>
 
@@ -303,20 +291,20 @@ export default function MedlemsvillkorPage() {
             </Text>
 
             <div className="space-y-4">
-              <Heading as={3}>UsePartner</Heading>
+              <Heading as={3}>Partner</Heading>
               <Text><strong>Pris: 35 000 kr / år</strong> – Perfekt för företag som vill ha återkommande tider för kunder, personal eller nätverk.</Text>
               <ul className="list-disc pl-5 space-y-2">
-                <li>30 timmars speltid per år</li>
-                <li>Exponering av företagsnamn på vår UsePartner-tavla i entrén</li>
+                <li>30 voucher-timmar per år</li>
+                <li>Exponering av företagsnamn på vår partner-tavla i entrén</li>
                 <li>Företagsnamn på hemsidan under våra partners</li>
-                <li>2 baggar i förvaring</li>
-                <li>Möjlighet att boka en stående tid varje vecka</li>
-                <li>Kaffe, dryck och snacks vid varje speltillfälle</li>
+                <li>2 bagar i förvaring</li>
+                <li>Möjlighet att boka en stående tid varje vecka. De första <strong>två veckorna</strong> gäller ordinarie pris. Från och med <strong>tredje veckan</strong> tillkommer en <strong>bokningsavgift på 50 kr/h och simulator</strong> för stående tider.</li>
+                <li>Möjlighet att beställa kaffe, dryck och snacks som tillägg vid varje speltillfälle</li>
               </ul>
             </div>
 
             <div className="space-y-4">
-              <Heading as={3}>Premier User</Heading>
+              <Heading as={3}>Official Partner</Heading>
               <Text><strong>Pris: 60 000 kr / år</strong> – För företag som vill ha en större närvaro, exponering och tillgång till fler möjligheter hos USE Golf.</Text>
               <ul className="list-disc pl-5 space-y-2">
                 <li>Företagstävling med hela lokalen i 2 timmar (6 simulatorer)
@@ -325,11 +313,12 @@ export default function MedlemsvillkorPage() {
                     <li>Möjlighet till unikt upplägg med Hole-in-One-priser och företagsbranding</li>
                   </ul>
                 </li>
-                <li>40 timmars speltid per år utöver företagseventet</li>
-                <li>2 baggar i förvaring</li>
+                <li>40 voucher-timmar per år utöver företagseventet</li>
+                <li>2 bagar i förvaring</li>
                 <li>Tillgång till fria låneklubbor för gäster</li>
-                <li>Kaffe, dryck och snacks vid varje speltillfälle</li>
-                <li>Möjlighet att lägga till matpaket (t.ex. ciabatta, pizza eller chark) som tillval</li>
+                <li>Möjlighet att boka en stående tid varje vecka. De första <strong>två veckorna</strong> gäller ordinarie pris. Från och med <strong>tredje veckan</strong> tillkommer en <strong>bokningsavgift på 50 kr/h och simulator</strong> för stående tider.</li>
+                <li>Möjlighet att beställa kaffe, dryck och snacks som tillägg vid varje speltillfälle</li>
+                <li>Möjlighet att lägga till matpaket (t.ex. ciabatta eller chark) som tillval</li>
               </ul>
             </div>
 

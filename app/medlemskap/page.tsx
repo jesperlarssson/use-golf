@@ -39,7 +39,7 @@ export default function MedlemskapPage() {
                   <Image src="/images/club.png" alt="Senior" fill className="object-cover blur-sm scale-105 brightness-90" />
                   <div className="absolute inset-0 bg-black/20" />
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <h3 className="font-horus text-3xl sm:text-4xl text-[var(--brand-primary)]">Senior</h3>
+                    <h3 className="font-horus text-3xl sm:text-4xl text-[var(--brand-primary)]">Use:r</h3>
                   </div>
                 </div>
                 <div className="p-6 space-y-4">
@@ -66,7 +66,7 @@ export default function MedlemskapPage() {
                   <Image src="/images/club2.png" alt="Junior" fill className="object-cover blur-sm scale-105 brightness-90" />
                   <div className="absolute inset-0 bg-black/20" />
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <h3 className="font-horus text-3xl sm:text-4xl text-[var(--brand-primary)]">Junior</h3>
+                    <h3 className="font-horus text-3xl sm:text-4xl text-[var(--brand-primary)]">Junior Use:r</h3>
                   </div>
                 </div>
                 <div className="p-6 space-y-4">
@@ -95,8 +95,8 @@ export default function MedlemskapPage() {
 
           <Section id="spelpott" className="pt-10 pb-6 -mt-10 sm:-mt-18">
             <div className="space-y-6">
-              <Heading as={2}>Spelpott</Heading>
-              <Text>
+              <Heading as={2}>User Passes</Heading>
+              <Text className="max-w-3xl">
                 För dig som vill spela ofta under säsongen. Välj nivå efter hur mycket du tror du kommer spela. Du kan ta med gäster utan extra kostnad och allt gäller i 12 månader från inköp. Se villkor nedan.
               </Text>
 
@@ -104,7 +104,7 @@ export default function MedlemskapPage() {
                 {/* Spelpott Small */}
                 <div className="border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] p-6 flex flex-col gap-6">
                   <div className="space-y-4">
-                    <h3 className="font-horus text-2xl">Small User</h3>
+                    <h3 className="font-horus text-2xl">Small</h3>
                     <hr className="border-[var(--brand-secondary)]/40" />
                     <div className="text-4xl font-semibold ">5&nbsp;000 kr</div>
                     <div className="text-sm">Spelvärde 6&nbsp;000 kr <span className="opacity-80">(17 % bonus)</span></div>
@@ -120,7 +120,7 @@ export default function MedlemskapPage() {
                 {/* Medium */}
                 <div className="border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] p-6 flex flex-col gap-6">
                   <div className="space-y-4">
-                    <h3 className="font-horus text-2xl">Medium User</h3>
+                    <h3 className="font-horus text-2xl">Medium</h3>
                     <hr className="border-[var(--brand-secondary)]/40" />
                     <div className="text-4xl font-semibold ">9&nbsp;000 kr</div>
                     <div className="text-sm">Spelvärde 10&nbsp;800 kr <span className="opacity-80">(20 % bonus)</span></div>
@@ -136,7 +136,7 @@ export default function MedlemskapPage() {
                 {/* Large */}
                 <div className="border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] p-6 flex flex-col gap-6">
                   <div className="space-y-4">
-                    <h3 className="font-horus text-2xl">Large User</h3>
+                    <h3 className="font-horus text-2xl">Large</h3>
                     <hr className="border-[var(--brand-secondary)]/40" />
                     <div className="text-4xl font-semibold ">14&nbsp;000 kr</div>
                     <div className="text-sm">Spelvärde 17&nbsp;500 kr <span className="opacity-80">(25 % bonus)</span></div>

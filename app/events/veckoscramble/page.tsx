@@ -16,12 +16,12 @@ export default function VeckoscramblePage() {
               <div className="space-y-4 max-w-3xl">
                 <Heading as={2}>2-mannascramble – Veckoscramble</Heading>
                 <Text className="text-[var(--brand-olive-900)] text-lg">
-                  Nyhet! Serie över 15 veckor med ny bana varje vecka. Spelas mån–sön, valfri tid.
+                  Serie över 10 veckor med ny bana varje vecka. Spelas mån–sön, valfri tid. Giltigt TrackMan-handikapp krävs. Bra prisbord utlovas – mer info kommer. Uppehåll över jul/nyår, vecka 7 och påsk.
                 </Text>
                 <ul className="list-disc pl-5 space-y-1">
                   <li><strong>Format:</strong> Tvåmannascramble – ny bana varje vecka</li>
                   <li><strong>När:</strong> Måndag–söndag, valfri tid under hallens öppettider</li>
-                  <li><strong>Period:</strong> 15 veckor</li>
+                  <li><strong>Period:</strong> 10 veckor</li>
                   <li><strong>Avgift:</strong> 200 kr/lag/vecka (går oavkortat till prispotten för finalomgången)</li>
                 </ul>
                 <div>
@@ -100,7 +100,7 @@ export default function VeckoscramblePage() {
                 <Image src="/icons/prize.png" alt="Prispott" width={48} height={48} />
                 <h3 className="font-horus text-2xl">Final & prispott</h3>
               </div>
-              <Text>Serien pågår under 15 veckor – alla anmälningsavgifter går till den gemensamma prispotten för finalen.</Text>
+              <Text>Serien pågår under 10 veckor – alla anmälningsavgifter går till den gemensamma prispotten för finalen.</Text>
               <Text>Kval sker via säsongens sammanlagda poäng – topp 10 lagen kvalificerar sig till finalspel på en av säsongens banor.</Text>
             </div>
           </Section>

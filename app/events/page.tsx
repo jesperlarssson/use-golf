@@ -68,25 +68,25 @@ export default function EventsPage() {
       ctaLabel: "Läs mer",
     },
     {
-      title: "Onsdagsgolfen ",
-      subtitle: "Ligaspelet",
-      imageSrc: "/images/club-sticker.png",
+      title: "Företagsevent",
+      subtitle: "Boka hela lokalen",
+      imageSrc: "/images/render2.PNG",
       content: (
         <Text>
-          Planerad start senast i januari. Spelas onsdagar (em/kväll) – lag eller individuellt, 1 gång i veckan över säsongen. Mer info kommer.
+          Hyr hela lokalen (6 simulatorer) för kickoff, kundkväll eller teambuilding. Anpassade upplägg med tävlingar, mat och dryck – kontakta oss för offert.
         </Text>
       ),
-      ctaHref: "/bokning",
-      ctaLabel: "Boka",
+      ctaHref: "/partner",
+      ctaLabel: "Läs mer",
     },
+    // Onsdagsgolfen pausad tills vidare
     {
       title: "Juniorligan",
-      subtitle: "Höst/Vinter",
+      subtitle: "Hösten",
       imageSrc: "/images/club2.png",
       content: (
         <Text>
-          Tisdagar <strong>15–17</strong> följande datum: <strong>11, 18, 25 nov</strong> och <strong>2, 9, 16 dec</strong>. 3 spelare/simulator, 9 hål + fri lek efteråt.
-          Kostnad <strong>1 500 kr</strong> för perioden. Medlemskap Junior krävs.
+          Start <strong>18 november</strong>. 3 spelare/simulator, 9 hål + fri lek efteråt. Kostnad <strong>1 250 kr</strong> per person. Medlemskap <strong>Junior User</strong> krävs.
         </Text>
       ),
       ctaHref: "/bokning",

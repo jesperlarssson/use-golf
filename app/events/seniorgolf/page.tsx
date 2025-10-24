@@ -14,7 +14,7 @@ export default function SeniorgolfPage() {
           <Section>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
               <div className="space-y-4 max-w-3xl">
-                <Heading as={2}>Seniorgolf – Order of Merit</Heading>
+                <Heading as={2}>Seniorgolf – Order of Merit (55+)</Heading>
                 <ul className="list-disc pl-5 space-y-1">
                   <li><strong>När:</strong> Måndag–torsdag</li>
                   <li><strong>Tider:</strong> 09.00–12.00 eller 12.00–15.00</li>

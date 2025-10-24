@@ -12,7 +12,7 @@ export default function ForetagseventPage() {
       <Section className="pt-16">
         <div className="grid grid-cols-1 gap-8">
           <div className="space-y-4 max-w-3xl">
-            <Heading as={2}>Företagspaket</Heading>
+            <Heading as={2}>Partner</Heading>
             <Lead className="text-[var(--brand-olive-900)]">Enkelt upplägg för företagsevent och gruppspel – med tydliga priser och smidiga tillval.</Lead>
             <Text>Vi hjälper er med ett avskalat och trevligt upplägg – perfekt för kickoff, kundkväll eller teambuilding.</Text>
           </div>
@@ -92,19 +92,28 @@ export default function ForetagseventPage() {
         </div>
       </Section> */}
 
-      {/* Företagspaket placeholder (tillfälligt) */}
+      {/* Företagsevent – samlat kort */}
       <Section className="-mt-16">
         <div className="mx-auto max-w-screen-2xl">
           <div className="rounded-none overflow-hidden border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)]">
             <div className="relative h-40 border-b-2 border-[var(--brand-secondary)]">
-              <Image src="/images/render2.PNG" alt="Företagspaket" fill className="object-cover brightness-90" />
+              <Image src="/images/render2.PNG" alt="Företagsevent" fill className="object-cover brightness-90" />
               <div className="absolute inset-0 bg-black/30" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <h3 className="font-horus text-3xl text-[var(--brand-primary)]">Företagspaket</h3>
+              <div className="absolute inset-0 flex items-center justify-center flex-col">
+                <h3 className="font-horus text-3xl text-[var(--brand-primary)]">Företagsevent</h3>
+                <p className="text-sm sm:text-base text-[var(--brand-primary)]/80 uppercase tracking-wider">Boka hela lokalen</p>
               </div>
             </div>
             <div className="p-6">
-              <Text>Mer info kommer snart.</Text>
+              <ul className="list-disc pl-5 space-y-1 text-sm">
+                <li>Hela lokalen (6 simulatorer) – skräddarsytt upplägg</li>
+                <li>Tävlingar, TrackMan Challenges och prisbord</li>
+                <li>Mat och dryck som tillval</li>
+              </ul>
+              <Text className="mt-2">För fasta företagstider erbjuder vi offert – kontakta oss.</Text>
+              <div className="mt-4">
+                <a href="#forfragan" className="inline-flex items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">Skicka förfrågan</a>
+              </div>
             </div>
           </div>
         </div>
@@ -115,14 +124,15 @@ export default function ForetagseventPage() {
         <div className="mx-auto max-w-screen-2xl space-y-4">
           <Heading as={3}>Partnernivåer</Heading>
           <Text>Syns, spelar och nätverkar med USE Golf. Välj nivå som passar er närvaro – från återkommande tider till hela anläggningen för event.</Text>
+         
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* UsePartner */}
+            {/* Partner */}
             <div className="border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] overflow-hidden">
               <div className="relative h-32 border-b-2 border-[var(--brand-secondary)]">
-                <Image src="/images/baller2.png" alt="UsePartner" fill className="object-cover brightness-90" />
+                <Image src="/images/baller2.png" alt="Partner" fill className="object-cover brightness-90" />
                 <div className="absolute inset-0 bg-black/20" />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <h4 className="font-horus text-2xl text-[var(--brand-primary)]">UsePartner</h4>
+                  <h4 className="font-horus text-2xl text-[var(--brand-primary)]">Partner</h4>
                 </div>
               </div>
               <div className="p-6 space-y-3">
@@ -130,25 +140,25 @@ export default function ForetagseventPage() {
                 <Text>Perfekt för företag som vill ha återkommande tider för kunder, personal eller nätverk.</Text>
                 <ul className="list-disc pl-5 space-y-2">
                   <li>30 timmars speltid per år</li>
-                  <li>Exponering av företagsnamn på vår UsePartner-tavla i entrén</li>
+                  <li>Exponering av företagsnamn på vår partner-tavla i entrén</li>
                   <li>Företagsnamn på hemsidan under våra partners</li>
-                  <li>2 baggar i förvaring</li>
+                  <li>2 bagar i förvaring</li>
                   <li>Möjlighet att boka en stående tid varje vecka</li>
                   <li>Kaffe, dryck och snacks vid varje speltillfälle</li>
                 </ul>
                 <Text>Ett paket för företag som vill synas och ha en fast närvaro på anläggningen.</Text>
                 <div className="flex flex-wrap gap-3">
-                  <a href="?type=partner&level=UsePartner#forfragan" className="inline-flex items-center justify-center bg-[var(--brand-secondary)] px-4 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition">Skicka förfrågan</a>
+                  <a href="?type=partner&level=Partner#forfragan" className="inline-flex items-center justify-center bg-[var(--brand-secondary)] px-4 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition">Skicka förfrågan</a>
                 </div>
               </div>
             </div>
-            {/* Premier User */}
+            {/* Official Partner */}
             <div className="border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] overflow-hidden">
               <div className="relative h-32 border-b-2 border-[var(--brand-secondary)]">
-                <Image src="/images/baller2-front.png" alt="Premier User" fill className="object-cover brightness-90" />
+                <Image src="/images/baller2-front.png" alt="Official Partner" fill className="object-cover brightness-90" />
                 <div className="absolute inset-0 bg-black/20" />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <h4 className="font-horus text-2xl text-[var(--brand-primary)]">Premier User</h4>
+                  <h4 className="font-horus text-2xl text-[var(--brand-primary)]">Official Partner</h4>
                 </div>
               </div>
               <div className="p-6 space-y-3">
@@ -159,14 +169,14 @@ export default function ForetagseventPage() {
                   <li>TrackMan-exponering i alla simulatorer under eventet</li>
                   <li>Möjlighet till unikt upplägg med Hole-in-One-priser och företagsbranding</li>
                   <li>40 timmars speltid per år utöver företagseventet</li>
-                  <li>2 baggar i förvaring</li>
+                  <li>2 bagar i förvaring</li>
                   <li>Tillgång till fria låneklubbor för gäster</li>
                   <li>Kaffe, dryck och snacks vid varje speltillfälle</li>
                   <li>Möjlighet att lägga till matpaket som tillval</li>
                 </ul>
                 <Text>Ett premiumkoncept för företag som vill skapa upplevelser, bygga relationer och få maximal synlighet – både digitalt och på plats.</Text>
                 <div className="flex flex-wrap gap-3">
-                  <a href="?type=partner&level=Premier%20User#forfragan" className="inline-flex items-center justify-center bg-[var(--brand-secondary)] px-4 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition">Skicka förfrågan</a>
+                  <a href="?type=partner&level=Official%20Partner#forfragan" className="inline-flex items-center justify-center bg-[var(--brand-secondary)] px-4 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition">Skicka förfrågan</a>
                 </div>
               </div>
             </div>
@@ -179,7 +189,7 @@ export default function ForetagseventPage() {
         <div className="mx-auto max-w-screen-2xl">
           <Heading as={3} className="mb-4">Skicka förfrågan</Heading>
           <Suspense fallback={<div className="text-sm opacity-70">Laddar formulär…</div>}>
-            <InquiryForm subject="Förfrågan Företagspaket" defaultType="paket" />
+            <InquiryForm subject="Förfrågan Partner" defaultType="partner" />
           </Suspense>
         </div>
       </Section>
@@ -188,7 +198,7 @@ export default function ForetagseventPage() {
 }
 
 export const metadata: Metadata = {
-  title: "Företagspaket",
+  title: "Partner",
   description: "Simulatorpaket och partnernivåer – tydliga priser, enkla tillval och skräddarsydda företagsupplevelser.",
 };
 
