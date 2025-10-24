@@ -8,7 +8,7 @@ export default function MedlemsvillkorPage() {
     <Page variant="subpage">
       <Section id="villkor" className="pt-8">
         <div className="space-y-8 max-w-5xl">
-          <Heading as={2}>USE Golf Göteborg – MASTER DOKUMENT</Heading>
+          <Heading as={2}>USE Golf Göteborg</Heading>
           <Lead className="italic">Krogabäcksvägen 2, Nya Hovås</Lead>
 
           {/* 1. Allmänt */}
