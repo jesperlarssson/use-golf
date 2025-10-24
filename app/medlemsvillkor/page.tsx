@@ -88,7 +88,6 @@ export default function MedlemsvillkorPage() {
               <li>Förberedelse och uppstart av eventet</li>
               <li>Hjälp med tävlingsupplägg, loggor och presentationer</li>
               <li>Uppvärmning och introduktion för spelare</li>
-              <li>Priser (från)</li>
             </ul>
             <Heading as={3}>Priser (från)</Heading>
             <div className="overflow-x-auto">
@@ -291,7 +290,7 @@ export default function MedlemsvillkorPage() {
             </Text>
 
             <div className="space-y-4">
-              <Heading as={3}>🟩 Partner</Heading>
+              <Heading as={3}>Partner</Heading>
               <Text><strong>Pris: 35 000 kr / år</strong> – Perfekt för företag som vill ha återkommande tider för kunder, personal eller nätverk.</Text>
               <ul className="list-disc pl-5 space-y-2">
                 <li>30 voucher-timmar per år</li>
@@ -305,7 +304,7 @@ export default function MedlemsvillkorPage() {
             </div>
 
             <div className="space-y-4">
-              <Heading as={3}>🟦 Official Partner</Heading>
+              <Heading as={3}>Official Partner</Heading>
               <Text><strong>Pris: 60 000 kr / år</strong> – För företag som vill ha en större närvaro, exponering och tillgång till fler möjligheter hos USE Golf.</Text>
               <ul className="list-disc pl-5 space-y-2">
                 <li>Företagstävling med hela lokalen i 2 timmar (6 simulatorer)
