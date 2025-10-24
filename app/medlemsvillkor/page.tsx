@@ -8,7 +8,7 @@ export default function MedlemsvillkorPage() {
     <Page variant="subpage">
       <Section id="villkor" className="pt-8">
         <div className="space-y-8 max-w-5xl">
-          <Heading as={2}>USE Golf Göteborg – Medlemskap, Simulatorpaket & Prislista</Heading>
+          <Heading as={2}>USE Golf Göteborg – MASTER DOKUMENT</Heading>
           <Lead className="italic">Krogabäcksvägen 2, Nya Hovås</Lead>
 
           {/* 1. Allmänt */}
@@ -43,12 +43,12 @@ export default function MedlemsvillkorPage() {
                 </thead>
                 <tbody>
                   <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2 align-top font-semibold">Junior Use:r</td>
+                    <td className="px-3 py-2 align-top font-semibold">Junior</td>
                     <td className="px-3 py-2 align-top">400 kr</td>
                     <td className="px-3 py-2 align-top">10 % rabatt på allt spel + 1 timmes spel inkluderad</td>
                   </tr>
                   <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2 align-top font-semibold">Use:r</td>
+                    <td className="px-3 py-2 align-top font-semibold">Senior</td>
                     <td className="px-3 py-2 align-top">600 kr</td>
                     <td className="px-3 py-2 align-top">10 % rabatt på allt spel + 1 timmes spel inkluderad</td>
                   </tr>
@@ -130,7 +130,7 @@ export default function MedlemsvillkorPage() {
             <ul className="list-disc pl-5 space-y-2">
               <li>Paketet måste bokas för hela sällskapet.</li>
               <li>Tillägg som snacks, mat och dryck beställs separat.</li>
-              <li>För offert eller skräddarsytt upplägg, kontakta oss på: <a href="mailto:hello@usegolf.se" className="underline">hello@usegolf.se</a></li>
+              <li>För offert eller skräddarsytt upplägg, kontakta oss på: 📧 <a href="mailto:hello@usegolf.se" className="underline">hello@usegolf.se</a></li>
             </ul>
           </div>
 
@@ -187,7 +187,7 @@ export default function MedlemsvillkorPage() {
                     <td className="px-3 py-2">425 kr</td>
                   </tr>
                   <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2">10:00–16:00</td>
+                    <td className="px-3 py-2">09:00–16:00</td>
                     <td className="px-3 py-2">495 kr</td>
                   </tr>
                   <tr className="border-t border-[var(--brand-secondary)]/40">
@@ -235,7 +235,7 @@ export default function MedlemsvillkorPage() {
 
           {/* 6. Spelpass – Förbetalda spelpotter */}
           <div className="space-y-4">
-            <Heading as={2}>6. User Passes – Förbetalda spelvärden</Heading>
+            <Heading as={2}>6. User Passes – Förbetalda spelpotter</Heading>
             <Text>Tre nivåer av spelpass för dig som spelar ofta och vill få mer värde för pengarna.</Text>
             <div className="overflow-x-auto">
               <table className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] text-sm">
@@ -249,19 +249,19 @@ export default function MedlemsvillkorPage() {
                 </thead>
                 <tbody>
                   <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2 font-semibold">User Pass – Small</td>
+                    <td className="px-3 py-2 font-semibold">Small User</td>
                     <td className="px-3 py-2">5 000 kr</td>
                     <td className="px-3 py-2">6 000 kr</td>
                     <td className="px-3 py-2">+17 %</td>
                   </tr>
                   <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2 font-semibold">User Pass – Medium</td>
+                    <td className="px-3 py-2 font-semibold">Medium User</td>
                     <td className="px-3 py-2">9 000 kr</td>
                     <td className="px-3 py-2">10 800 kr</td>
                     <td className="px-3 py-2">+20 %</td>
                   </tr>
                   <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2 font-semibold">User Pass – Large</td>
+                    <td className="px-3 py-2 font-semibold">Large User</td>
                     <td className="px-3 py-2">14 000 kr</td>
                     <td className="px-3 py-2">17 500 kr</td>
                     <td className="px-3 py-2">+25 %</td>
@@ -269,7 +269,7 @@ export default function MedlemsvillkorPage() {
                 </tbody>
               </table>
             </div>
-            <Heading as={3}>Villkor för User Passes</Heading>
+            <Heading as={3}>Villkor för spelpass</Heading>
             <ul className="list-disc pl-5 space-y-2">
               <li>Du behöver inte vara medlem för att kunna fylla och använda din spelpott.</li>
               <li>Gäller alla tider, alla dagar.</li>
@@ -285,13 +285,13 @@ export default function MedlemsvillkorPage() {
 
           {/* 7. Företagspaket & Partnernivåer */}
           <div className="space-y-6">
-            <Heading as={2}>7. Företagspaket & Partnernivåer</Heading>
+            <Heading as={2}>7. Partnernivåer</Heading>
             <Text>
               USE Golf erbjuder företag möjligheten att synas, spela och nätverka på ett unikt sätt. Våra partnerpaket kombinerar exklusiv speltid i våra TrackMan-simulatorer med exponering, förmåner och skräddarsydda företagsupplevelser.
             </Text>
 
             <div className="space-y-4">
-              <Heading as={3}>Partner</Heading>
+              <Heading as={3}>🟩 Partner</Heading>
               <Text><strong>Pris: 35 000 kr / år</strong> – Perfekt för företag som vill ha återkommande tider för kunder, personal eller nätverk.</Text>
               <ul className="list-disc pl-5 space-y-2">
                 <li>30 voucher-timmar per år</li>
@@ -301,10 +301,11 @@ export default function MedlemsvillkorPage() {
                 <li>Möjlighet att boka en stående tid varje vecka. De första <strong>två veckorna</strong> gäller ordinarie pris. Från och med <strong>tredje veckan</strong> tillkommer en <strong>bokningsavgift på 50 kr/h och simulator</strong> för stående tider.</li>
                 <li>Möjlighet att beställa kaffe, dryck och snacks som tillägg vid varje speltillfälle</li>
               </ul>
+              <Text>Ett paket för företag som vill synas och ha en fast närvaro på anläggningen – perfekt som återkommande mötesplats för kunder och kollegor.</Text>
             </div>
 
             <div className="space-y-4">
-              <Heading as={3}>Official Partner</Heading>
+              <Heading as={3}>🟦 Official Partner</Heading>
               <Text><strong>Pris: 60 000 kr / år</strong> – För företag som vill ha en större närvaro, exponering och tillgång till fler möjligheter hos USE Golf.</Text>
               <ul className="list-disc pl-5 space-y-2">
                 <li>Företagstävling med hela lokalen i 2 timmar (6 simulatorer)
@@ -313,6 +314,8 @@ export default function MedlemsvillkorPage() {
                     <li>Möjlighet till unikt upplägg med Hole-in-One-priser och företagsbranding</li>
                   </ul>
                 </li>
+                <li>Exponering av företagsnamn på vår Partner-tavla i entrén</li>
+                <li>Företagsnamn på hemsidan under våra partners</li>
                 <li>40 voucher-timmar per år utöver företagseventet</li>
                 <li>2 bagar i förvaring</li>
                 <li>Tillgång till fria låneklubbor för gäster</li>
@@ -320,136 +323,11 @@ export default function MedlemsvillkorPage() {
                 <li>Möjlighet att beställa kaffe, dryck och snacks som tillägg vid varje speltillfälle</li>
                 <li>Möjlighet att lägga till matpaket (t.ex. ciabatta eller chark) som tillval</li>
               </ul>
-            </div>
-
-            <div>
-              <Heading as={3}>Bokning & kontakt</Heading>
-              <ul className="list-disc pl-5 space-y-2">
-                <li>För mer information eller offert: <a href="mailto:hello@usegolf.se" className="underline">hello@usegolf.se</a></li>
-                <li>Adress: Krogabäcksvägen 2, Nya Hovås</li>
-              </ul>
+              <Text>Ett premiumkoncept för företag som vill skapa upplevelser, bygga relationer och få maximal synlighet – både digitalt och på plats i anläggningen.</Text>
             </div>
           </div>
 
-          {/* 7. Prislista – Simulatorbokning (Medlemspriser) */}
-          <div className="space-y-4">
-            <Heading as={2}>7. Prislista – Simulatorbokning (Medlemspriser)</Heading>
-
-            <Heading as={3}>Vardagar (Måndag–Fredag)</Heading>
-            <div className="overflow-x-auto">
-              <table className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] text-sm">
-                <thead>
-                  <tr className="bg-[var(--brand-secondary)] text-[var(--brand-primary)] uppercase tracking-wide">
-                    <th className="px-3 py-2 text-left">Tid</th>
-                    <th className="px-3 py-2 text-left">Pris</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2">07:00–09:00</td>
-                    <td className="px-3 py-2">295 kr</td>
-                  </tr>
-                  <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2">09:00–17:00</td>
-                    <td className="px-3 py-2">350 kr</td>
-                  </tr>
-                  <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2">17:00–21:00</td>
-                    <td className="px-3 py-2">450 kr</td>
-                  </tr>
-                  <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2">21:00–22:00</td>
-                    <td className="px-3 py-2">350 kr</td>
-                  </tr>
-                  <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2">22:00–23:00</td>
-                    <td className="px-3 py-2">295 kr</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <Heading as={3}>Lördagar</Heading>
-            <div className="overflow-x-auto">
-              <table className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] text-sm">
-                <thead>
-                  <tr className="bg-[var(--brand-secondary)] text-[var(--brand-primary)] uppercase tracking-wide">
-                    <th className="px-3 py-2 text-left">Tid</th>
-                    <th className="px-3 py-2 text-left">Pris</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2">07:00–10:00</td>
-                    <td className="px-3 py-2">300 kr</td>
-                  </tr>
-                  <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2">10:00–18:00</td>
-                    <td className="px-3 py-2">450 kr</td>
-                  </tr>
-                  <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2">18:00–20:00</td>
-                    <td className="px-3 py-2">395 kr</td>
-                  </tr>
-                  <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2">21:00–23:00</td>
-                    <td className="px-3 py-2">300 kr</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <Heading as={3}>Söndagar</Heading>
-            <div className="overflow-x-auto">
-              <table className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] text-sm">
-                <thead>
-                  <tr className="bg-[var(--brand-secondary)] text-[var(--brand-primary)] uppercase tracking-wide">
-                    <th className="px-3 py-2 text-left">Tid</th>
-                    <th className="px-3 py-2 text-left">Pris</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2">07:00–10:00</td>
-                    <td className="px-3 py-2">300 kr</td>
-                  </tr>
-                  <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2">10:00–17:00</td>
-                    <td className="px-3 py-2">450 kr</td>
-                  </tr>
-                  <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2">18:00–21:00</td>
-                    <td className="px-3 py-2">395 kr</td>
-                  </tr>
-                  <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2">21:00–23:00</td>
-                    <td className="px-3 py-2">300 kr</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <Heading as={3}>Högtider och röda dagar</Heading>
-            <ul className="list-disc pl-5 space-y-2">
-              <li>
-                På <strong>jul, nyår och samtliga röda dagar</strong> tillkommer ett pristillägg på <strong>+40 kr per timme</strong> på samtliga tider.
-              </li>
-            </ul>
-          </div>
-
-          {/* 8. Drift & kommunikation */}
-          <div className="space-y-4">
-            <Heading as={2}>8. Drift & kommunikation</Heading>
-            <ul className="list-disc pl-5 space-y-2">
-              <li>USE Golf förbehåller sig rätten att ändra öppettider, priser och utbud vid behov.</li>
-              <li>Lokalen kan tillfälligt stängas för service, underhåll eller event.</li>
-              <li>Påverkas din bokning av planerat avbrott, återbetalas eller ombokas tiden kostnadsfritt.</li>
-              <li>All information och nyheter skickas ut via e-post, sms och sociala medier till medlemmar och partners.</li>
-              <li>Vi reserverar oss för eventuella skrivfel och prisändringar.</li>
-            </ul>
-          </div>
-
-          <Text className="italic opacity-80">Alla priser anges exklusive moms.</Text>
+          
         </div>
       </Section>
     </Page>
@@ -457,8 +335,8 @@ export default function MedlemsvillkorPage() {
 }
 
 export const metadata: Metadata = {
-  title: "Medlemsvillkor",
-  description: "Villkor för medlemskap, partnerportal och simulatorpaket hos USE Golf Göteborg.",
+  title: "Medlemsvillkor – MASTER DOKUMENT",
+  description: "MASTER: Villkor för medlemskap, spelpotter, priser och partnernivåer hos USE Golf Göteborg.",
 };
 
 
