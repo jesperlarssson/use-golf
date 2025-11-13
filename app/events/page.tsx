@@ -55,28 +55,27 @@ const eventItems: EventItem[] = [
 export default function EventsPage() {
   const programItems = [
     {
-      title: "Seniorgolf",
-      subtitle: "Vardagar",
+      title: "Veckoscramble",
+      subtitle: "2-mannascramble",
       imageSrc: "/images/club.png",
       content: (
         <Text>
-          Måndag–torsdag kl <strong>09–12</strong> och <strong>12–15</strong>. Pris <strong>300 kr per person</strong> (vid bokning av simulator för fyra personer) – först till kvarn.
-          Vi kör en Order of Merit som leder till slutspel i slutet av säsongen.
+          Ny bana <strong>varje vecka</strong>. Spelas <strong>mån–sön</strong>, valfri tid. Kostnad <strong>200 kr/lag</strong> + simulatorhyra.
         </Text>
       ),
-      ctaHref: "/events/seniorgolf",
+      ctaHref: "/events/veckoscramble",
       ctaLabel: "Läs mer",
     },
     {
-      title: "Företagsevent",
+      title: "Event",
       subtitle: "Boka hela lokalen",
       imageSrc: "/images/render2.PNG",
       content: (
         <Text>
-          Hyr hela lokalen (6 simulatorer) för kickoff, kundkväll eller teambuilding. Anpassade upplägg med tävlingar, mat och dryck – kontakta oss för offert.
+          Hyr hela lokalen (6 simulatorer) med kompisgänget, för kickoff, kundkväll eller teambuilding. Anpassade upplägg med tävlingar, mat och dryck – kontakta oss för offert.
         </Text>
       ),
-      ctaHref: "/partner",
+      ctaHref: "/events/boka-lokalen",
       ctaLabel: "Läs mer",
     },
     // Onsdagsgolfen pausad tills vidare
@@ -169,7 +168,7 @@ export default function EventsPage() {
               </div>
           </Section>
 
-          {/* Veckoscramble – bakgrundsbild med text och CTA */}
+          {/* Veckoscramble – bakgrundsbild med text och CTA 
           <Section className="pt-8 -mt-18">
             <div className="relative border-2 border-[var(--brand-secondary)]/60 rounded-none overflow-hidden min-h-72 px-8">
               <Image src="/images/render2.PNG" alt="Veckoscramble" fill priority className="object-cover object-center blur-sm scale-105 brightness-90" />
@@ -189,7 +188,7 @@ export default function EventsPage() {
                   </div>
               </div>
             </div>
-          </Section>
+          </Section>*/}
 
           {/* Seniorgolf – detaljerad sektion flyttad till egen sida */}
  

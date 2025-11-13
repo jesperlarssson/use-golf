@@ -7,9 +7,10 @@ type CountdownProps = {
   target: Date | string;
   className?: string;
   accentClassName?: string; // för att styra färg/kontrast externt
+  showOnlyDaysAndHours?: boolean; // Visa bara dagar och timmar
 };
 
-function useCountdown(target: Date) {
+function useCountdown(target: Date, showOnlyDaysAndHours = false) {
   const [now, setNow] = useState<Date>(new Date());
 
   useEffect(() => {
@@ -23,6 +24,14 @@ function useCountdown(target: Date) {
   const weekMs = 7 * dayMs;
   const monthMs = 30 * dayMs; // förenklat
 
+  if (showOnlyDaysAndHours) {
+    const days = Math.floor(diff / dayMs);
+    const remAfterDays = diff - days * dayMs;
+    const hours = Math.floor(remAfterDays / hourMs);
+    const finished = diff <= 0;
+    return { days, hours, finished } as const;
+  }
+
   const months = Math.floor(diff / monthMs);
   const remAfterMonths = diff - months * monthMs;
   const weeks = Math.floor(remAfterMonths / weekMs);
@@ -33,12 +42,12 @@ function useCountdown(target: Date) {
   return { months, weeks, days, finished } as const;
 }
 
-export default function Countdown({ target, className = "", accentClassName = "" }: CountdownProps) {
+export default function Countdown({ target, className = "", accentClassName = "", showOnlyDaysAndHours = false }: CountdownProps) {
   const targetDate = useMemo(() => (typeof target === "string" ? new Date(target) : target), [target]);
-  const { months, weeks, days, finished } = useCountdown(targetDate);
+  const countdownData = useCountdown(targetDate, showOnlyDaysAndHours);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  if (finished) {
+  if (countdownData.finished) {
     return (
       <div ref={containerRef} className={`flex flex-col items-center ${className}`} style={{ position: 'relative' }}>
         <VariableProximity
@@ -55,7 +64,15 @@ export default function Countdown({ target, className = "", accentClassName = ""
   }
 
   const fmt = (n: number, singular: string, plural: string) => `${n} ${n === 1 ? singular : plural}`;
-  const label = `${fmt(months, 'månad', 'månader')}, ${fmt(weeks, 'vecka', 'veckor')} Och ${fmt(days, 'dag', 'dagar')} kvar`;
+  
+  let label: string;
+  if (showOnlyDaysAndHours) {
+    const { days, hours } = countdownData;
+    label = `${fmt(days, 'dag', 'dagar')} och ${fmt(hours, 'timme', 'timmar')} kvar`;
+  } else {
+    const { months, weeks, days } = countdownData;
+    label = `${fmt(months, 'månad', 'månader')}, ${fmt(weeks, 'vecka', 'veckor')} Och ${fmt(days, 'dag', 'dagar')} kvar`;
+  }
 
   return (
     <div ref={containerRef} className={`flex items-center justify-center ${className}`} style={{ position: 'relative' }}>

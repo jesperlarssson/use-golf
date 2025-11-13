@@ -1,57 +1,194 @@
 import type { Metadata } from "next";
-import Section from "@/components/ui/Section";
 import Page from "@/components/ui/Page";
-import { Heading, Text, Lead } from "@/components/ui/Typography";
-import SweetspotEmbed from "@/components/ui/SweetspotEmbed";
+import Section from "@/components/ui/Section";
 import FullBleed from "@/components/ui/FullBleed";
-import Banner from "@/components/ui/Banner";
-import EmailNotifyForm from "@/components/ui/EmailNotifyForm";
+import { Heading, Text, Lead } from "@/components/ui/Typography";
+import Image from "next/image";
+import FadeIn from "@/components/ui/FadeIn";
+import { pricingData, dayLabels, type DayType } from "@/lib/prices";
 
 export const metadata: Metadata = {
   title: "Bokning",
-  description: "Boka simulator hos USE Golf. TrackMan, ligor, event och träning.",
+  description: "Boka simulator, stående tider eller hela lokalen hos USE Golf.",
 };
 
 export default function BookingPage() {
   return (
-    <Page variant="subpage">
+    <FullBleed>
+      <div className="border-y border-[var(--brand-secondary)]">
+        <Page variant="subpage">
+          {/* Intro */}
+          <Section>
+            <div className="space-y-4 max-w-3xl">
+              <Heading as={2}>Boka simulator</Heading>
+              <Lead className="text-[var(--brand-olive-900)] text-lg">
+                Välj hur du vill boka – enstaka tider, stående tider eller hela lokalen för event.
+              </Lead>
+              <Text>
+                Boka direkt via vårt bokningssystem eller kontakta oss för stående tider och större event.
+              </Text>
+            </div>
+          </Section>
 
+          {/* Bokningsalternativ */}
+          <Section className="-mt-10 sm:-mt-18">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Boka simulator */}
+              <FadeIn>
+                <div className="border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] overflow-hidden h-full flex flex-col">
+                  <div className="relative h-44 border-b-2 border-[var(--brand-secondary)]">
+                    <Image src="/images/render2.PNG" alt="Boka simulator" fill className="object-cover blur-sm scale-105 brightness-90" />
+                    <div className="absolute inset-0 bg-black/20" />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <h3 className="font-horus text-2xl sm:text-3xl text-[var(--brand-primary)]">Boka simulator</h3>
+                    </div>
+                  </div>
+                  <div className="p-6 space-y-4 flex-1 flex flex-col">
+                    <Text className="text-sm">
+                      Boka enstaka tider direkt via vårt bokningssystem. Välj dag, tid och antal simulatorer.
+                    </Text>
+                    <div className="mt-auto">
+                      <a href="/bokning/sweetspot" className="inline-flex w-full items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">
+                        Boka nu
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </FadeIn>
 
-      <Section className="py-12">
-          <div className="space-y-6">
-            <div>
-              <Heading as={2}>Bokningsportalen öppnar snart!</Heading>
-              <Lead className="mt-2">Håll utkik – vi lanserar bokningsportalen inom kort.</Lead>
+              {/* Stående tider */}
+              <FadeIn delay={0.1}>
+                <div className="border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] overflow-hidden h-full flex flex-col">
+                  <div className="relative h-44 border-b-2 border-[var(--brand-secondary)]">
+                    <Image src="/images/club.png" alt="Stående tider" fill className="object-cover blur-sm scale-105 brightness-90" />
+                    <div className="absolute inset-0 bg-black/20" />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <h3 className="font-horus text-2xl sm:text-3xl text-[var(--brand-primary)]">Stående tider</h3>
+                    </div>
+                  </div>
+                  <div className="p-6 space-y-4 flex-1 flex flex-col">
+                    <Text className="text-sm">
+                      Boka fasta tider hela säsongen och säkra din plats. Perfekt för ligor, företag eller kompisgäng.
+                    </Text>
+                    <div className="mt-auto">
+                      <a href="/events/staende-tid" className="inline-flex w-full items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">
+                        Läs mer
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </FadeIn>
+
+              {/* Boka hela lokalen */}
+              <FadeIn delay={0.2}>
+                <div className="border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] overflow-hidden h-full flex flex-col">
+                  <div className="relative h-44 border-b-2 border-[var(--brand-secondary)]">
+                    <Image src="/images/render2.PNG" alt="Boka hela lokalen" fill className="object-cover blur-sm scale-105 brightness-90" />
+                    <div className="absolute inset-0 bg-black/20" />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <h3 className="font-horus text-2xl sm:text-3xl text-[var(--brand-primary)]">Boka hela lokalen</h3>
+                    </div>
+                  </div>
+                  <div className="p-6 space-y-4 flex-1 flex flex-col">
+                    <Text className="text-sm">
+                      Hyr hela lokalen (6 simulatorer) för kickoff, kundkväll eller teambuilding. Anpassade upplägg med tävlingar, mat och dryck.
+                    </Text>
+                    <div className="mt-auto">
+                      <a href="/events/boka-lokalen" className="inline-flex w-full items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">
+                        Läs mer
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </FadeIn>
             </div>
-            <div className="border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] p-6">
-              <Text className="mb-3">Få ett mail när bokningen är öppen:</Text>
-              <EmailNotifyForm />
+          </Section>
+
+          {/* Prislista */}
+          <Section className="-mt-10 sm:-mt-18">
+            <div className="space-y-6">
+              <div className="max-w-3xl">
+                <Heading as={2}>Prislista</Heading>
+                <Text className="mt-2">
+                  Priser per timme för simulatorbokning. 
+                </Text>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {(Object.keys(pricingData) as DayType[]).map((dayType, index) => (
+                  <FadeIn key={dayType} delay={index * 0.1}>
+                    <div className="border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)]">
+                      <div className="bg-[var(--brand-secondary)] px-6 py-4">
+                        <h3 className="font-horus text-xl text-[var(--brand-primary)]">
+                          {dayLabels[dayType]}
+                        </h3>
+                      </div>
+                      <div className="p-6 space-y-3">
+                        {pricingData[dayType].map((slot, slotIndex) => (
+                          <div
+                            key={slotIndex}
+                            className="flex justify-between items-center py-2 border-b border-[var(--brand-secondary)]/20 last:border-0"
+                          >
+                            <Text className="text-sm">{slot.time}</Text>
+                            <Text className="font-semibold text-[var(--brand-secondary)]">
+                              {slot.price} kr/h
+                            </Text>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </FadeIn>
+                ))}
+              </div>
             </div>
-          </div>
-          {/** 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-start ">
-            <SweetspotEmbed className="min-h-[520px]" height={720} />
-            <div className="max-w-prose text-base leading-relaxed">
-              <Heading as={3} className="uppercase tracking-wider mb-2">Träna. Spela. Utmana.</Heading>
-              <p>
-                Hos oss bokar du din tid direkt via <strong>Sweetspot</strong> – enkelt och smidigt.
-              </p>
-              <p className="mt-4">
-                Alla våra simulatorer är utrustade med <strong>TrackMan</strong>, teknologin som används världen över. Vill du spela Augusta eller St Andrews? Eller bara köra en 9-håls med polarna efter jobbet? Du bestämmer.
-              </p>
-              <p className="mt-4">Det här får du när du bokar en simulator hos oss:</p>
-              <ul className="list-disc pl-5 mt-2 space-y-1">
-                <li><strong>300+ banor världen över</strong> – från klassiker till bucket list-banor.</li>
-                <li><strong>Exakt data på varje slag</strong> – från bollhastighet till spinn.</li>
-                <li><strong>Spela eller träna</strong> – välj mellan casual golf, tävling eller djup analys.</li>
-                <li><strong>Alltid perfekt väder</strong> – året runt, oavsett Göteborgs klimat.</li>
-              </ul>
+          </Section>
+
+          {/* TrackMan-konto */}
+          <Section className="-mt-10 sm:-mt-18 pb-16">
+            <div className="max-w-3xl space-y-6">
+              <div>
+                <Heading as={2}>TrackMan-konto</Heading>
+                <Text className="mt-2">
+                  För att få ut det mesta av din upplevelse hos USE Golf behöver du ett eget TrackMan-konto. Det tar bara någon minut att skapa.
+                </Text>
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <Text className="text-sm">
+                    <strong>1. Ladda ner appen</strong> – Sök efter TrackMan Golf (orange ikon med TrackMan-loggan) i App Store eller Google Play.
+                  </Text>
+                </div>
+
+                <div>
+                  <Text className="text-sm">
+                    <strong>2. Skapa konto</strong> – Öppna appen och välj "Create Account". Fyll i namn, e-postadress och lösenord.
+                  </Text>
+                </div>
+
+                <div>
+                  <Text className="text-sm">
+                    <strong>3. Verifiera kontot</strong> – Gå till din e-post och bekräfta registreringen via länken från TrackMan.
+                  </Text>
+                </div>
+
+                <div>
+                  <Text className="text-sm">
+                    <strong>4. Logga in hos oss</strong> – När du står vid simulatorn öppna TrackMan-appen och välj "Scan to log in". Scanna QR-koden på TV-skärmen i ditt bås eller på dukens högra hörn.
+                  </Text>
+                </div>
+
+                <div className="pt-2">
+                  <Text className="text-sm opacity-80">
+                    💡 <strong>Tips:</strong> Har du redan ett TrackMan-konto? Använd samma inloggning – all din data sparas automatiskt oavsett var du spelar.
+                  </Text>
+                </div>
+              </div>
             </div>
-          </div>
-           */}
-      </Section>
-    </Page>
+          </Section>
+
+        </Page>
+      </div>
+    </FullBleed>
   );
 }
-
-

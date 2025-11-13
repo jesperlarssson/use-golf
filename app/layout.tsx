@@ -7,7 +7,6 @@ import GradualBlur from "@/components/ui/GradualBlur";
 import Noise from "@/components/ui/Noise";
 import LenisProvider from "./components/LenisProvider";
 import { Roboto_Flex } from "next/font/google";
-import CustomCursor from "@/app/components/CustomCursor";
 
 const robotoFlex = Roboto_Flex({
   subsets: ["latin"],
@@ -56,7 +55,6 @@ export default function RootLayout({
             patternRefreshInterval={10}
             patternAlpha={15}
           />
-          <CustomCursor />
           <Header />
           <main>{children}</main>
           <Footer />

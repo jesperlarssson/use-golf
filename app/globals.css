@@ -258,3 +258,9 @@ body {
   animation: bannerSlideIn 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
+/* User Pass rekommendation animation */
+@keyframes fadeInSlideDown {
+  0% { opacity: 0; transform: translateY(-8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+

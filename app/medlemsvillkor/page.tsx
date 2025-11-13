@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Page from "@/components/ui/Page";
 import Section from "@/components/ui/Section";
 import { Heading, Text, Lead } from "@/components/ui/Typography";
+import { pricingData, dayLabels, type DayType } from "@/lib/prices";
 
 export default function MedlemsvillkorPage() {
   return (
@@ -103,17 +104,17 @@ export default function MedlemsvillkorPage() {
                   <tr className="border-t border-[var(--brand-secondary)]/40">
                     <td className="px-3 py-2">Måndag–Tisdag</td>
                     <td className="px-3 py-2">från 16 000 kr</td>
-                    <td className="px-3 py-2">På förfrågan</td>
+                    <td className="px-3 py-2">3 600 kr/h</td>
                   </tr>
                   <tr className="border-t border-[var(--brand-secondary)]/40">
                     <td className="px-3 py-2">Onsdag–Torsdag</td>
                     <td className="px-3 py-2">från 20 000 kr</td>
-                    <td className="px-3 py-2">På förfrågan</td>
+                    <td className="px-3 py-2">3 600 kr/h</td>
                   </tr>
                   <tr className="border-t border-[var(--brand-secondary)]/40">
                     <td className="px-3 py-2">Fredag–Söndag</td>
                     <td className="px-3 py-2">från 24 000 kr</td>
-                    <td className="px-3 py-2">På förfrågan</td>
+                    <td className="px-3 py-2">3 600 kr/h</td>
                   </tr>
                 </tbody>
               </table>
@@ -137,99 +138,29 @@ export default function MedlemsvillkorPage() {
           <div className="space-y-4">
             <Heading as={2}>5. Prislista – Simulatorbokning</Heading>
 
-            <Heading as={3}>Måndag–Torsdag</Heading>
-            <div className="overflow-x-auto">
-              <table className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] text-sm">
-                <thead>
-                  <tr className="bg-[var(--brand-secondary)] text-[var(--brand-primary)] uppercase tracking-wide">
-                    <th className="px-3 py-2 text-left">Tid</th>
-                    <th className="px-3 py-2 text-left">Pris</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2">07:00–10:00</td>
-                    <td className="px-3 py-2">330 kr</td>
-                  </tr>
-                  <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2">10:00–16:00</td>
-                    <td className="px-3 py-2">425 kr</td>
-                  </tr>
-                  <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2">16:00–19:00</td>
-                    <td className="px-3 py-2">495 kr</td>
-                  </tr>
-                  <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2">19:00–22:00</td>
-                    <td className="px-3 py-2">450 kr</td>
-                  </tr>
-                  <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2">22:00–23:00</td>
-                    <td className="px-3 py-2">300 kr</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <Heading as={3}>Fredag–Lördag</Heading>
-            <div className="overflow-x-auto">
-              <table className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] text-sm">
-                <thead>
-                  <tr className="bg-[var(--brand-secondary)] text-[var(--brand-primary)] uppercase tracking-wide">
-                    <th className="px-3 py-2 text-left">Tid</th>
-                    <th className="px-3 py-2 text-left">Pris</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2">07:00–09:00</td>
-                    <td className="px-3 py-2">425 kr</td>
-                  </tr>
-                  <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2">09:00–16:00</td>
-                    <td className="px-3 py-2">495 kr</td>
-                  </tr>
-                  <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2">16:00–22:00</td>
-                    <td className="px-3 py-2">450 kr</td>
-                  </tr>
-                  <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2">22:00–23:00</td>
-                    <td className="px-3 py-2">300 kr</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <Heading as={3}>Söndag</Heading>
-            <div className="overflow-x-auto">
-              <table className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] text-sm">
-                <thead>
-                  <tr className="bg-[var(--brand-secondary)] text-[var(--brand-primary)] uppercase tracking-wide">
-                    <th className="px-3 py-2 text-left">Tid</th>
-                    <th className="px-3 py-2 text-left">Pris</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2">07:00–10:00</td>
-                    <td className="px-3 py-2">425 kr</td>
-                  </tr>
-                  <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2">10:00–16:00</td>
-                    <td className="px-3 py-2">495 kr</td>
-                  </tr>
-                  <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2">16:00–22:00</td>
-                    <td className="px-3 py-2">450 kr</td>
-                  </tr>
-                  <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2">22:00–23:00</td>
-                    <td className="px-3 py-2">300 kr</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            {(Object.entries(pricingData) as [DayType, typeof pricingData[DayType]][]).map(([dayType, timeSlots]) => (
+              <div key={dayType} className="space-y-2">
+                <Heading as={3}>{dayLabels[dayType]}</Heading>
+                <div className="overflow-x-auto">
+                  <table className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] text-sm">
+                    <thead>
+                      <tr className="bg-[var(--brand-secondary)] text-[var(--brand-primary)] uppercase tracking-wide">
+                        <th className="px-3 py-2 text-left">Tid</th>
+                        <th className="px-3 py-2 text-left">Pris</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {timeSlots.map((slot, index) => (
+                        <tr key={index} className="border-t border-[var(--brand-secondary)]/40">
+                          <td className="px-3 py-2">{slot.time}</td>
+                          <td className="px-3 py-2">{slot.price} kr</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            ))}
           </div>
 
           {/* 6. Spelpass – Förbetalda spelpotter */}
@@ -250,20 +181,20 @@ export default function MedlemsvillkorPage() {
                   <tr className="border-t border-[var(--brand-secondary)]/40">
                     <td className="px-3 py-2 font-semibold">Small User</td>
                     <td className="px-3 py-2">5 000 kr</td>
-                    <td className="px-3 py-2">6 000 kr</td>
-                    <td className="px-3 py-2">+17 %</td>
+                    <td className="px-3 py-2">5 500 kr</td>
+                    <td className="px-3 py-2">+10 %</td>
                   </tr>
                   <tr className="border-t border-[var(--brand-secondary)]/40">
                     <td className="px-3 py-2 font-semibold">Medium User</td>
-                    <td className="px-3 py-2">9 000 kr</td>
-                    <td className="px-3 py-2">10 800 kr</td>
-                    <td className="px-3 py-2">+20 %</td>
+                    <td className="px-3 py-2">10 000 kr</td>
+                    <td className="px-3 py-2">11 500 kr</td>
+                    <td className="px-3 py-2">+15 %</td>
                   </tr>
                   <tr className="border-t border-[var(--brand-secondary)]/40">
                     <td className="px-3 py-2 font-semibold">Large User</td>
-                    <td className="px-3 py-2">14 000 kr</td>
-                    <td className="px-3 py-2">17 500 kr</td>
-                    <td className="px-3 py-2">+25 %</td>
+                    <td className="px-3 py-2">15 000 kr</td>
+                    <td className="px-3 py-2">18 000 kr</td>
+                    <td className="px-3 py-2">+20 %</td>
                   </tr>
                 </tbody>
               </table>
@@ -293,36 +224,32 @@ export default function MedlemsvillkorPage() {
               <Heading as={3}>Partner</Heading>
               <Text><strong>Pris: 35 000 kr / år</strong> – Perfekt för företag som vill ha återkommande tider för kunder, personal eller nätverk.</Text>
               <ul className="list-disc pl-5 space-y-2">
-                <li>30 voucher-timmar per år</li>
+                <li>30 timmars speltid per år</li>
                 <li>Exponering av företagsnamn på vår partner-tavla i entrén</li>
                 <li>Företagsnamn på hemsidan under våra partners</li>
                 <li>2 bagar i förvaring</li>
-                <li>Möjlighet att boka en stående tid varje vecka. De första <strong>två veckorna</strong> gäller ordinarie pris. Från och med <strong>tredje veckan</strong> tillkommer en <strong>bokningsavgift på 50 kr/h och simulator</strong> för stående tider.</li>
-                <li>Möjlighet att beställa kaffe, dryck och snacks som tillägg vid varje speltillfälle</li>
+                <li>Möjlighet att boka en stående tid varje vecka</li>
+                <li>Kaffe, dryck och snacks vid varje speltillfälle</li>
               </ul>
-              <Text>Ett paket för företag som vill synas och ha en fast närvaro på anläggningen – perfekt som återkommande mötesplats för kunder och kollegor.</Text>
+              <Text>Ett paket för företag som vill synas och ha en fast närvaro på anläggningen.</Text>
             </div>
 
             <div className="space-y-4">
               <Heading as={3}>Official Partner</Heading>
-              <Text><strong>Pris: 60 000 kr / år</strong> – För företag som vill ha en större närvaro, exponering och tillgång till fler möjligheter hos USE Golf.</Text>
+              <Text><strong>Pris: 60 000 kr / år</strong> – För företag som vill ha en större närvaro, exponering och fler möjligheter hos USE Golf.</Text>
               <ul className="list-disc pl-5 space-y-2">
-                <li>Företagstävling med hela lokalen i 2 timmar (6 simulatorer)
-                  <ul className="list-disc pl-5 mt-2 space-y-1">
-                    <li>TrackMan-exponering i alla simulatorer under eventet</li>
-                    <li>Möjlighet till unikt upplägg med Hole-in-One-priser och företagsbranding</li>
-                  </ul>
-                </li>
-                <li>Exponering av företagsnamn på vår Partner-tavla i entrén</li>
-                <li>Företagsnamn på hemsidan under våra partners</li>
-                <li>40 voucher-timmar per år utöver företagseventet</li>
+                <li>Företagstävling med hela lokalen i 2 timmar (6 simulatorer)</li>
+                <li>TrackMan-exponering i alla simulatorer under eventet</li>
+                <li>Möjlighet till unikt upplägg med Hole-in-One-priser och företagsbranding</li>
+                <li>40 timmars speltid per år utöver företagseventet</li>
                 <li>2 bagar i förvaring</li>
+                <li>Möjlighet att boka en stående tid varje vecka</li>
                 <li>Tillgång till fria låneklubbor för gäster</li>
-                <li>Möjlighet att boka en stående tid varje vecka. De första <strong>två veckorna</strong> gäller ordinarie pris. Från och med <strong>tredje veckan</strong> tillkommer en <strong>bokningsavgift på 50 kr/h och simulator</strong> för stående tider.</li>
-                <li>Möjlighet att beställa kaffe, dryck och snacks som tillägg vid varje speltillfälle</li>
-                <li>Möjlighet att lägga till matpaket (t.ex. ciabatta eller chark) som tillval</li>
+                <li>Kaffe, dryck och snacks vid varje speltillfälle</li>
+                <li>Möjlighet att lägga till matpaket som tillval</li>
+                <li>Företagets logo på partnerskärm</li>
               </ul>
-              <Text>Ett premiumkoncept för företag som vill skapa upplevelser, bygga relationer och få maximal synlighet – både digitalt och på plats i anläggningen.</Text>
+              <Text>Ett premiumkoncept för företag som vill skapa upplevelser, bygga relationer och få maximal synlighet – både digitalt och på plats.</Text>
             </div>
           </div>
 

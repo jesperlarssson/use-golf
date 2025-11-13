@@ -7,9 +7,12 @@ export default function KontaktPage() {
   return (
     <Page variant="subpage">
       <Section>
-          <Heading as={2}>Öppettider & kontakt</Heading>
-          <Text className="mt-2">Öppet just nu: Vecka/datumintervall + tider</Text>
-          
+        <Heading as={2}>Öppettider & kontakt</Heading>
+        <div className="mt-4 space-y-3">
+          <Text className="font-semibold uppercase tracking-wide">Ordinarie öppettider</Text>
+          <Text>Alla dagar: 07:00–23:00</Text>
+        
+        </div>
       </Section>
     </Page>
   );

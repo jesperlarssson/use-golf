@@ -34,9 +34,7 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
 
-  if (pathname === "/pre-access") {
-    return null;
-  }
+  const hideHeader = pathname === "/pre-access" || pathname.startsWith("/bokning/sweetspot") || pathname.startsWith("/bli-medlem");
 
   // Ruta -> Header-variant (färg) + Banner-konfiguration
   const getHeaderVariant = (_path: string) => {
@@ -59,11 +57,14 @@ export default function Header() {
       }
     | null => {
     if (path === "/") return null; // Ingen banner på landningssidan
-    if (path.startsWith("/bokning")) {
+    if (path.startsWith("/bokning/sweetspot")) {
+      return null;
+    }
+    if (path === "/bokning") {
       return {
-        title: "Boka simulator",
+        title: "Bokning",
         imageSrc: "/images/render2.PNG",
-        marqueeText: "Boka din tid idag — Träna smartare"
+        marqueeText: "Boka din tid idag — Välj hur du vill spela"
       };
     }
     if (path.startsWith("/boka-traning")) {
@@ -77,15 +78,29 @@ export default function Header() {
     if (path.startsWith("/medlemskap")) {
       return {
         title: "Medlemskap",
-        imageSrc: "/images/lobby casual.png",
+        imageSrc: "/images/wall.png",
         marqueeText: "Flexibla medlemskap — För alla nivåer",
         subTitle: "mer golf. mer fördelar"
+      };
+    }
+    if (path.startsWith("/events/boka-lokalen")) {
+      return {
+        title: "USE GOLF TAKEOVER",
+        imageSrc: "/images/club hit.png",
+        marqueeText: "Ha hela lokalen för er själva"
+      };
+    }
+    if (path.startsWith("/events/staende-tid")) {
+      return {
+        title: "stående tider",
+        imageSrc: "/images/club hit.png",
+        marqueeText: "GETTING USED TO IT"
       };
     }
     if (path.startsWith("/events")) {
       return {
         title: "Event & Community",
-        imageSrc: "/images/baller2-front.png",
+        imageSrc: "/images/club hit.png",
         marqueeText: "Håll dig uppdaterad — Häng med på nästa event"
       };
     }
@@ -93,8 +108,8 @@ export default function Header() {
       return {
         title: "Partner",
         imageSrc: "/images/baller2-back.png",
-        marqueeText: "Skräddarsydda upplevelser — För team och kunder",
-        subTitle: "Kickoff, kundevent eller teamdag – vi fixar helheten",
+        marqueeText: "Fast närvaro på anläggningen — Synas, spela och nätverka",
+        subTitle: "",
         actionButton: { label: "Skicka förfrågan", href: "/partner#forfragan" }
       };
     }
@@ -170,11 +185,7 @@ export default function Header() {
       };
     }
     if (path.startsWith("/bli-medlem")) {
-      return {
-        title: "Bli medlem",
-        imageSrc: "/images/baller2.png",
-        marqueeText: "Portalen öppnar snart!"
-      };
+      return null;
     }
     // Fallback för övriga sidor
     return {
@@ -185,16 +196,20 @@ export default function Header() {
   };
 
   const headerVariantClass = getHeaderVariant(pathname);
-  const bannerConfig = getBannerConfig(pathname);
+  const bannerConfig = hideHeader ? null : getBannerConfig(pathname);
 
   // Liten scroll-detektor för att tona in bakgrund på header
   useEffect(() => {
+    if (hideHeader) {
+      setScrolled(false);
+      return;
+    }
     if (typeof window === "undefined") return;
     const onScroll = () => setScrolled(window.scrollY > 10);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [hideHeader]);
 
   const isActive = (href: string) => {
     if (href.startsWith("http")) return false;
@@ -215,6 +230,7 @@ export default function Header() {
           target="_blank"
           rel="noopener noreferrer "
           className={className}
+
         >
           {item.label}
         </a>
@@ -297,6 +313,10 @@ export default function Header() {
   useEffect(() => {
     if (typeof document === "undefined") return;
     const html = document.documentElement;
+    if (hideHeader) {
+      html.removeAttribute("data-menu-open");
+      return;
+    }
     if (menuOpen) {
       html.setAttribute("data-menu-open", "true");
     } else {
@@ -305,7 +325,7 @@ export default function Header() {
     return () => {
       html.removeAttribute("data-menu-open");
     };
-  }, [menuOpen]);
+  }, [menuOpen, hideHeader]);
 
   // Länkrenderare för overlay (större typografi)
   const renderOverlayItem = (item: NavItem, onClick?: () => void) => {
@@ -333,6 +353,10 @@ export default function Header() {
       </Link>
     );
   };
+
+  if (hideHeader) {
+    return null;
+  }
 
   return (
     <>

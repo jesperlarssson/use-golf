@@ -2,15 +2,15 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Page from "@/components/ui/Page";
 import Section from "@/components/ui/Section";
+import Page from "@/components/ui/Page";
 import { Heading, Text } from "@/components/ui/Typography";
 import SweetspotiFrame from "@/components/ui/SweetspotiFrame";
 
 // Datum när bokningen öppnar: onsdag 19 november 2025 09:00
 const BOOKING_OPEN_DATE = new Date("2025-11-19T09:00:00");
 
-export default function BliMedlemPage() {
+export default function SweetspotBookingPage() {
   const [now, setNow] = useState(new Date());
   const isBookingOpen = now >= BOOKING_OPEN_DATE;
   const [email, setEmail] = useState("");
@@ -54,11 +54,7 @@ export default function BliMedlemPage() {
   return (
     <Page variant="subpage">
       {isBookingOpen ? (
-        <SweetspotiFrame
-          className="min-h-[720px]"
-          height={{ mobile: 1100, desktop: 900 }}
-          subPath="memberships"
-        />
+        <SweetspotiFrame className="min-h-[720px]" height={900} subPath="" />
       ) : (
         <Section className="py-16">
           <div className="space-y-8 text-center">
@@ -121,6 +117,4 @@ export default function BliMedlemPage() {
     </Page>
   );
 }
-
-
 

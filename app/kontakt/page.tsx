@@ -12,8 +12,9 @@ export default function KontaktPage() {
             <div className="lg:col-span-2 space-y-4">
               <Heading as={2}>Kontakt</Heading>
               <div className="space-y-3">
-                <Text className="font-semibold">Vi öppnar snart</Text>
-                <Text>Öppettider uppdateras inom kort.</Text>
+                <Text className="font-semibold uppercase tracking-wide text-sm text-[var(--brand-secondary)]">Öppettider</Text>
+                <Text>Alla dagar: 07:00–23:00</Text>
+
                 <ContactForm />
               </div>
             </div>
