@@ -67,10 +67,10 @@ export default function Countdown({ target, className = "", accentClassName = ""
   
   let label: string;
   if (showOnlyDaysAndHours) {
-    const { days, hours } = countdownData;
+    const { days, hours } = countdownData as { days: number; hours: number; finished: boolean };
     label = `${fmt(days, 'dag', 'dagar')} och ${fmt(hours, 'timme', 'timmar')} kvar`;
   } else {
-    const { months, weeks, days } = countdownData;
+    const { months, weeks, days } = countdownData as { months: number; weeks: number; days: number; finished: boolean };
     label = `${fmt(months, 'månad', 'månader')}, ${fmt(weeks, 'vecka', 'veckor')} Och ${fmt(days, 'dag', 'dagar')} kvar`;
   }
 
