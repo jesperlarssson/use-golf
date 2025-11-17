@@ -36,7 +36,7 @@ export default function BokaLokalenCalculator() {
   const [harMatpaket, setHarMatpaket] = useState(false);
   const [harDryck, setHarDryck] = useState(false);
   const [harKlubbhyra, setHarKlubbhyra] = useState(false);
-  const [antalDeltagare, setAntalDeltagare] = useState(12);
+  const [antalDeltagare, setAntalDeltagare] = useState("12");
   const [showCalculation, setShowCalculation] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -240,10 +240,10 @@ export default function BokaLokalenCalculator() {
                 </label>
                 <input
                   id="deltagare"
-                  type="number"
-                  min="1"
+                  type="text"
                   value={antalDeltagare}
-                  onChange={(e) => setAntalDeltagare(Math.max(1, Number(e.target.value)))}
+                  onChange={(e) => setAntalDeltagare(e.target.value)}
+                  placeholder="Ange antal deltagare eller annan information"
                   className="w-full max-w-xs px-4 py-2 border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] text-[var(--brand-olive-900)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-secondary)]"
                 />
               </div>
@@ -398,7 +398,7 @@ type SummaryData = {
   veckodag: Weekday;
   startTid: string;
   timmar: number;
-  antalDeltagare: number;
+  antalDeltagare: string;
   harSnackspaket: boolean;
   harMatpaket: boolean;
   harDryck: boolean;

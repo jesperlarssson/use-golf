@@ -103,6 +103,19 @@ export default function BookingPage() {
               </FadeIn>
             </div>
           </Section>
+          <Section className="-mt-10 sm:-mt-18">
+  <div className="max-w-3xl space-y-4">
+    <Heading as={2}>Lokala regler</Heading>
+    <ul className="list-disc pl-5 space-y-1 text-sm">
+      <li>Använd rena nya bollar</li>
+      <li>Bollar som är märkta med penna är förbjudet</li>
+      <li>Inga träpeggar, vi har peggar i alla box</li>
+      <li>Rena skor</li>
+      <li>Golfskor är ok</li>
+      <li>Respektera spelare runtomkring dig</li>
+    </ul>
+  </div>
+</Section>
 
           {/* Prislista */}
           <Section className="-mt-10 sm:-mt-18">

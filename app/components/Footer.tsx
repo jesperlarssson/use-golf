@@ -50,7 +50,7 @@ export default function Footer() {
           <p className="text-sm">Krogabäcksvägen 2</p>
           <p className="text-sm">436 53 Hovås</p>
           <p className="text-sm mt-2">hello@usegolf.se</p>
-          <p className="text-sm">+46 (0)70-000 00 00</p>
+         
         </div>
       </div>
     </footer>
