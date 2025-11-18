@@ -14,7 +14,6 @@ type NavItem = {
 // Primär navigation (mitten på desktop)
 const primaryNav: NavItem[] = [
   { href: "/bokning", label: "Boka simulator" },
-  { href: "/boka-traning", label: "Boka Träning" },
   { href: "/medlemskap", label: "Medlemskap" },
   { href: "/events", label: "Event & Community" },
   { href: "/partner", label: "Partner" },
@@ -67,14 +66,6 @@ export default function Header() {
         marqueeText: "Boka din tid idag — Välj hur du vill spela"
       };
     }
-    if (path.startsWith("/boka-traning")) {
-      return {
-        title: "Boka träning",
-        imageSrc: "/images/render2.PNG",
-        marqueeText: "Boka din tid idag — Träna smartare",
-        subTitle: "Kommer snart"
-      };
-    }
     if (path.startsWith("/medlemskap")) {
       return {
         title: "Medlemskap",
@@ -95,6 +86,13 @@ export default function Header() {
         title: "stående tider",
         imageSrc: "/images/club hit.png",
         marqueeText: "GETTING USED TO IT"
+      };
+    }
+    if (path.startsWith("/events/juniorligan")) {
+      return {
+        title: "Juniorligan",
+        imageSrc: "/images/club2.png",
+        marqueeText: "Ligan för unga golfare",
       };
     }
     if (path.startsWith("/events")) {

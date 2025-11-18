@@ -88,8 +88,8 @@ export default function EventsPage() {
           Start <strong>18 november</strong>. 3 spelare/simulator, 9 hål + fri lek efteråt. Kostnad <strong>1 250 kr</strong> per person. Medlemskap <strong>Junior User</strong> krävs.
         </Text>
       ),
-      ctaHref: "/bokning",
-      ctaLabel: "Boka",
+      ctaHref: "/events/juniorligan",
+      ctaLabel: "Läs mer",
     },
     {
       title: "Juniorligan",
@@ -101,8 +101,8 @@ export default function EventsPage() {
           3 spelare/simulator, 9 hål + fri lek efteråt. Kostnad <strong>2 500 kr</strong>. Medlemskap Junior krävs.
         </Text>
       ),
-      ctaHref: "/bokning",
-      ctaLabel: "Boka",
+      ctaHref: "/events/juniorligan",
+      ctaLabel: "Läs mer",
     },
   ]; 
   return (

@@ -14,8 +14,12 @@ const robotoFlex = Roboto_Flex({
   axes: ["opsz"],
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const logoPath = "/logo-og.png";
+const logoUrl = new URL(logoPath, siteUrl).toString();
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://usegolf.se"),
+  metadataBase: new URL(siteUrl),
   title: {
     default: "USE GOLF",
     template: "%s | USE GOLF",
@@ -28,15 +32,32 @@ export const metadata: Metadata = {
     siteName: "USE GOLF",
     locale: "sv_SE",
     type: "website",
+    images: [
+      {
+        url: logoUrl,
+        width: 939,
+        height: 1032,
+        alt: "USE GOLF logotyp",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "USE GOLF",
     description: "Inomhusgolf i Göteborg – TrackMan, ligor, event och träning.",
+    images: [logoUrl],
   },
   icons: {
-    icon: "/icon.svg",
+    icon: "/logo-og.svg",
   },
+};
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "USE GOLF",
+  url: "https://usegolf.se",
+  logo: logoUrl,
 };
 
 export default function RootLayout({
@@ -45,7 +66,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="sv">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData),
+          }}
+        />
+      </head>
       <body className={`antialiased overflow-x-hidden ${robotoFlex.variable}`}>
         <LenisProvider>
           <Noise

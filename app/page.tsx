@@ -52,8 +52,8 @@ export default function Home() {
           Start <strong>18 november</strong>. 3 spelare/simulator, 9 hål + fri lek efteråt. Kostnad <strong>1 250 kr</strong> per person. Medlemskap <strong>Junior User</strong> krävs.
         </Text>
       ),
-      ctaHref: "mailto:hello@usegolf.se?subject=USE%20Golf%20Juniorligan%20H%C3%B6sten&body=Hej%21%20Jag%20vill%20anm%C3%A4la%20mig%20till%20Juniorligan%20%28H%C3%B6sten%29.%0ANamn%3A%20%0A%C3%85lder%3A%20",
-      ctaLabel: "Boka",
+      ctaHref: "/events/juniorligan",
+      ctaLabel: "Läs mer",
     },
     {
       title: "Juniorligan",
@@ -65,8 +65,8 @@ export default function Home() {
           3 spelare/simulator, 9 hål + fri lek efteråt. Kostnad <strong>2 500 kr</strong>. Medlemskap <strong>Junior User</strong> krävs.
         </Text>
       ),
-      ctaHref: "mailto:hello@usegolf.se?subject=USE%20Golf%20Juniorligan%20V%C3%A5ren&body=Hej%21%20Jag%20vill%20anm%C3%A4la%20mig%20till%20Juniorligan%20%28V%C3%A5ren%29.%0ANamn%3A%20%0A%C3%85lder%3A%20",
-      ctaLabel: "Boka",
+      ctaHref: "/events/juniorligan",
+      ctaLabel: "Läs mer",
     },
   ];
   return (
