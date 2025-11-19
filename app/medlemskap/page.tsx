@@ -79,7 +79,7 @@ export default function MedlemskapPage() {
                   <ul className="list-disc pl-5 space-y-1 text-sm">
                     <li>10% rabatt på alla bokade tider</li>
                     <li>10% rabatt på USE Golf merch</li>
-                    <li>0% rabatt på hela CustomClubs utbud från öppning och fram till 1 maj 2026</li>
+                    <li>10% rabatt på hela CustomClubs utbud från öppning och fram till 1 maj 2026</li>
                     <li>Gratis Custom Fitting hos CustomClubs under hela 2026</li>
                     <li>1 timmes speltid ingår vid registrering</li>
                     <li>Kvalificering till Juniorligan*</li>
