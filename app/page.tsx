@@ -13,6 +13,7 @@ import Grid, { Col } from "@/components/ui/Grid";
 import Logo from "@/components/ui/Logo";
 import FAQ, { FAQItem } from "@/components/ui/FAQ";
 import UserPassesSection from "@/components/ui/UserPassesSection";
+import SweetspotAlert from "@/components/SweetspotAlert";
 
 
 
@@ -389,6 +390,7 @@ export default function Home() {
           </FadeIn>
         </Section>
       </div>
+
     </Page>
   );
 }
