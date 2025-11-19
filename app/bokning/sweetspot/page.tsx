@@ -8,7 +8,7 @@ import { Heading, Text } from "@/components/ui/Typography";
 import SweetspotiFrame from "@/components/ui/SweetspotiFrame";
 
 // Datum när bokningen öppnar: onsdag 19 november 2025 09:00
-const BOOKING_OPEN_DATE = new Date("2025-11-19T09:00:00");
+const BOOKING_OPEN_DATE = new Date("2025-11-19T08:00:00");
 
 export default function SweetspotBookingPage() {
   const [now, setNow] = useState(new Date());

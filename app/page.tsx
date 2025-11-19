@@ -82,7 +82,7 @@ export default function Home() {
 
         <div className=" w-full bg-[var(--brand-olive-700)] text-[var(--brand-primary)] border-y-2 border-[var(--brand-secondary)]">
           <ScrollVelocity
-            texts={["Vi öppnar snart i hovås - Get used to it"]}
+            texts={["Get used to it"]}
             velocity={30}
             className="px-6 py-3 uppercase tracking-widest text-[var(--brand-primary)]"
             numCopies={8}
@@ -97,18 +97,18 @@ export default function Home() {
           <Col span={12} className="sm:hidden">
             <div className="space-y-4">
               <FadeIn>
-                <h2 className=" font-semibold uppercase text-3xl text-[var(--brand-secondary)] ">BOKNINGEN ÖPPNAR SNART</h2>
+                <h2 className=" font-semibold uppercase text-3xl text-[var(--brand-secondary)] ">BOKA TID </h2>
               </FadeIn>
               <FadeIn delay={0.1}>
-                <Lead className="text-[var(--brand-olive-900)]">Våra simulatorer är snart redo att bokas!</Lead>
+                <Lead className="text-[var(--brand-olive-900)]">Våra simulatorer är redo att bokas!</Lead>
               </FadeIn>
               <FadeIn delay={0.05}>
-                <Text className="  mt-2 max-w-xl">Bygget är fullt igång och våra första simulatorer är på plats. Snart kommer du kunna boka dem direkt på hemsidan.</Text>
+                <Text className="  mt-2 max-w-xl">Äntligen står europas största TrackMan simulatorer redo att bokas i Hovås! Boka din tid idag, läs mer om stående tider eller boka hela lokalen för event.</Text>
               </FadeIn>
-              {/** disabled boka knapp */}
+    
               <div className="mt-4 flex flex-wrap gap-3">
-                <a href="/bokning" className="inline-flex items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">Bokning</a>
-                <a href="/events/staende-tid" className="inline-flex items-center justify-center border-2 border-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-secondary)] font-semibold uppercase tracking-wider rounded-none hover:bg-[var(--brand-secondary)]/10 transition" data-cursor-target data-cursor-padding="10">Stående tid</a>
+                <a href="/bokning/sweetspot" className="inline-flex items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">Boka tid</a>
+                <a href="/events/staende-tid" className="inline-flex items-center justify-center border-2 border-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-secondary)] font-semibold uppercase tracking-wider rounded-none hover:bg-[var(--brand-secondary)]/10 transition" data-cursor-target data-cursor-padding="10">Läs mer</a>
               </div>
             </div>
           </Col>
@@ -116,18 +116,18 @@ export default function Home() {
           <Col span={6} className="sm:py-8 hidden sm:block">
             <div className="space-y-4">
               <FadeIn>
-                <h2 className=" font-semibold uppercase text-3xl text-[var(--brand-secondary)] ">BOKNINGEN ÖPPNAR SNART</h2>
+                <h2 className=" font-semibold uppercase text-3xl text-[var(--brand-secondary)] ">BOKA TID</h2>
               </FadeIn>
               <FadeIn delay={0.1}>
-                <Lead className="text-[var(--brand-olive-900)]">Våra simulatorer är snart redo att bokas!</Lead>
+                <Lead className="text-[var(--brand-olive-900)]">Våra simulatorer är redo att bokas!</Lead>
               </FadeIn>
               <FadeIn delay={0.05}>
-                <Text className="  mt-2 max-w-xl">Bygget är fullt igång och våra första simulatorer är på plats. Snart kommer du kunna boka dem direkt på hemsidan.</Text>
+                <Text className="  mt-2 max-w-xl">Äntligen står europas största TrackMan simulatorer redo att bokas i Hovås! Boka din tid idag, läs mer om stående tider eller boka hela lokalen för event.</Text>
               </FadeIn>
               {/** disabled boka knapp */}
               <div className="mt-4 flex flex-wrap gap-3">
-                <a href="/bokning" className="inline-flex items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">Bokning</a>
-                <a href="/events/staende-tid" className="inline-flex items-center justify-center border-2 border-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-secondary)] font-semibold uppercase tracking-wider rounded-none hover:bg-[var(--brand-secondary)]/10 transition" data-cursor-target data-cursor-padding="10">Stående tid</a>
+                <a href="/bokning/sweetspot" className="inline-flex items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">Boka tid</a>
+                <a href="/bokning" className="inline-flex items-center justify-center border-2 border-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-secondary)] font-semibold uppercase tracking-wider rounded-none hover:bg-[var(--brand-secondary)]/10 transition" data-cursor-target data-cursor-padding="10">Läs mer</a>
               </div>
             </div>
           </Col>
