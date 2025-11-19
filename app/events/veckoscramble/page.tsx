@@ -25,7 +25,7 @@ export default function VeckoscramblePage() {
                   <li><strong>Avgift:</strong> 200 kr/lag/vecka (går oavkortat till prispotten för finalomgången)</li>
                 </ul>
                 <div className="space-y-2">
-                  <a href="/bokning/sweetspot" className="inline-flex items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">Boka speltid</a>
+                  <a href="https://book.sweetspot.io/clubs/use-golf/" className="inline-flex items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">Boka speltid</a>
                   <p className="text-xs text-[var(--brand-olive-900)] opacity-70">
                     * 10 veckor: vecka 50, 51, 3, 4, 5, 6, 8, 9, 10, 11
                   </p>
@@ -147,7 +147,7 @@ export default function VeckoscramblePage() {
                 <li>Drop-in i mån av plats – först till kvarn.</li>
               </ul>
               <div>
-                <a href="/bokning/sweetspot" className="inline-flex items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">Boka speltid</a>
+                <a href="https://book.sweetspot.io/clubs/use-golf/" className="inline-flex items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">Boka speltid</a>
               </div>
             </div>
           </Section>
