@@ -57,7 +57,7 @@ export default function MedlemskapPage() {
                     <li>1 timmes speltid ingår vid registrering</li>
                   </ul>
                   <div>
-                    <a href="/bli-medlem" className="inline-flex items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">Bli medlem</a>
+                    <a href="https://book.sweetspot.io/clubs/use-golf/memberships" className="inline-flex items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">Bli medlem</a>
                   </div>
                 </div>
               </div>
@@ -87,7 +87,7 @@ export default function MedlemskapPage() {
                   </ul>
                   <p className="text-xs opacity-80">*För att kunna anmäla sig till Juniorligan måste man vara medlem i USE Golf (Junior).</p>
                   <div>
-                    <a href="/bli-medlem" className="inline-flex items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">Bli medlem</a>
+                    <a href="https://book.sweetspot.io/clubs/use-golf/memberships" className="inline-flex items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">Bli medlem</a>
                   </div>
                 </div>
               </div>

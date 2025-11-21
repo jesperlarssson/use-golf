@@ -70,7 +70,7 @@ export default function LandingHero({
 
               </Link>
 
-              <Link href="/bli-medlem" className="bg-[var(--brand-secondary)] text-[var(--brand-primary)] px-6 py-3 font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition text-sm w-full sm:w-auto text-center">
+              <Link href="https://book.sweetspot.io/clubs/use-golf/memberships" className="bg-[var(--brand-secondary)] text-[var(--brand-primary)] px-6 py-3 font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition text-sm w-full sm:w-auto text-center">
 
                 Bli medlem
 
