@@ -16,7 +16,7 @@ export default function VeckoscramblePage() {
               <div className="space-y-4 max-w-3xl">
                 <Heading as={2}>2-mannascramble – Veckoscramble</Heading>
                 <Text className="text-[var(--brand-olive-900)] text-lg">
-                  Serie över 10 veckor med ny bana varje vecka. Spelas mån–sön, valfri tid. Giltigt TrackMan-handikapp krävs. Bra prisbord utlovas – mer info kommer. Startar 1 december.
+                  Serie över 10 veckor med ny bana varje vecka. Spelas mån–sön, valfri tid. Giltigt TrackMan-handikapp krävs. Bra prisbord utlovas – mer info kommer. Startar 8 december.
                 </Text>
                 <ul className="list-disc pl-5 space-y-1">
                   <li><strong>Format:</strong> Tvåmannascramble – ny bana varje vecka</li>
