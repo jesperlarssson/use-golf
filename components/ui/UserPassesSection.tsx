@@ -3,6 +3,12 @@ import { Heading, Text } from "./Typography";
 import { userPasses, type UserPassType } from "@/lib/prices";
 
 export default function UserPassesSection() {
+  const passLinks: Record<UserPassType, string> = {
+    small: "https://book.sweetspot.io/clubs/use-golf/passes/33812e8a-fb1b-4d9f-af85-a2405a918fd5",
+    medium: "https://book.sweetspot.io/clubs/use-golf/passes/35aa568d-f3f7-4b43-8b98-f2f05712dc22",
+    large: "https://book.sweetspot.io/clubs/use-golf/passes/8f6ead57-a89a-4f59-b434-a004a1397f81",
+  };
+
   return (
     <Section id="spelpott" className="pt-10 pb-6 -mt-10 sm:-mt-18">
       <div className="space-y-6">
@@ -23,7 +29,14 @@ export default function UserPassesSection() {
                   <div className="text-sm">Spelvärde {pass.playValue.toLocaleString("sv-SE")}&nbsp;kr <span className="opacity-80">({pass.bonusPercent} % bonus)</span></div>
                 </div>
                 <div>
-                  <span role="link" aria-disabled="true" tabIndex={-1} className="inline-flex w-full items-center justify-center bg-[var(--brand-secondary)] px-5 py-3 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none opacity-60 cursor-not-allowed pointer-events-none transition" data-cursor-target data-cursor-padding="10">SNART TILLGÄNGLIGT</span>
+                  <a
+                    href={passLinks[passType]}
+                    className="inline-flex w-full items-center justify-center bg-[var(--brand-secondary)] px-5 py-3 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition"
+                    data-cursor-target
+                    data-cursor-padding="10"
+                  >
+                    Ladda pass
+                  </a>
                 </div>
                 <div>
                   <a href="/medlemsvillkor" className="underline text-sm">Medlemskapsvillkor</a>
