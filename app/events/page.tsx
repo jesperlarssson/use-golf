@@ -84,7 +84,7 @@ export default function EventsPage() {
       imageSrc: "/images/baller2.png",
       content: (
         <Text>
-          Tisdagar <strong>13.00–15.00</strong> (2 h) med <strong>300 kr</strong> per person. Ett Ladies only-upplägg som mixar veckovisa format och olika banor, betalning sker på plats. Speldagar: <strong>9 & 16 december, 13, 20 & 27 januari, 3, 17 & 24 februari samt 3, 10, 17, 24 & 31 mars</strong> (avslutning med bubbel).
+          Tisdagar <strong>13.00–15.00</strong> (2 h) med <strong>250 kr</strong> per person. Ett Ladies only-upplägg som mixar veckovisa format och olika banor, betalning sker på plats. Speldagar: <strong>9 & 16 december, 13, 20 & 27 januari, 3, 17 & 24 februari samt 3, 10, 17, 24 & 31 mars</strong> (avslutning med bubbel).
         </Text>
       ),
       ctaHref: "https://book.sweetspot.io/clubs/use-golf/",
