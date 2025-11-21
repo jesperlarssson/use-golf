@@ -78,7 +78,31 @@ export default function EventsPage() {
       ctaHref: "/events/boka-lokalen",
       ctaLabel: "Läs mer",
     },
-    // Onsdagsgolfen pausad tills vidare
+    {
+      title: "Ladies Tour Tuesdays",
+      subtitle: "Damliga",
+      imageSrc: "/images/baller2.png",
+      content: (
+        <Text>
+          Tisdagar <strong>13.00–15.00</strong> (2 h) med <strong>300 kr</strong> per person. Ett Ladies only-upplägg som mixar veckovisa format och olika banor, betalning sker på plats. Speldagar: <strong>9 & 16 december, 13, 20 & 27 januari, 3, 17 & 24 februari samt 3, 10, 17, 24 & 31 mars</strong> (avslutning med bubbel).
+        </Text>
+      ),
+      ctaHref: "https://book.sweetspot.io/clubs/use-golf/",
+      ctaLabel: "Anmäl dig",
+    },
+    {
+      title: "Onsdagsgolfen",
+      subtitle: "",
+      imageSrc: "/images/render2.PNG",
+      content: (
+        <Text>
+          Varje onsdag spelar vi en social tävling för max 24 medlemmar. Två starttider – <strong>13.00–15.00</strong> eller <strong>17.00–19.00</strong> – och fyra omväxlande format gör det både lekfullt och tävlingsinriktat. Kostnad <strong>250 kr</strong> och anmälan sker via Sweetspot.
+        </Text>
+      ),
+      ctaHref: "https://book.sweetspot.io/clubs/use-golf/passes/3d4941fe-3d67-4e7b-9fd2-c9a4aee12b1c",
+      ctaLabel: "Anmäl dig",
+    },
+
     {
       title: "Juniorligan",
       subtitle: "Hösten",
@@ -104,7 +128,7 @@ export default function EventsPage() {
       ctaHref: "/events/juniorligan",
       ctaLabel: "Läs mer",
     },
-  ]; 
+  ];
   return (
     <FullBleed>
 
@@ -112,60 +136,60 @@ export default function EventsPage() {
         <Page variant="subpage">
           {/* Intro – harmoniserad med Medlemskap */}
           <Section className="pt-16 ">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
-                <div className="space-y-4 max-w-3xl">
-                  <Heading as={2}>Event & Community</Heading>
-                  <Text className="text-[var(--brand-olive-900)] text-lg">Vi samlar golfare – nybörjare till single – för tävlingar, ligor och sociala kvällar. Spela, häng, utvecklas.</Text>
-                  <Text>
-                    USE Golf är mer än simulatorer. Här blandas seriös golf med en avslappnad stämning. Det kan vara en tävling, en företagskväll eller bara en kväll med polarna.
-                  </Text>
-                </div>
-                <div>
-                  <div className="bg-[var(--brand-secondary)] text-[var(--brand-primary)] p-6 border-2 border-[var(--brand-secondary)]/80 rounded-none">
-                    <p className="font-semibold">Vi erbjuder:</p>
-                    <ul className="mt-2 space-y-2">
-                      <li><strong>TrackMan Tournaments & Challenges</strong> – mäta dig mot andra och vinn grymma priser.</li>
-                      <li><strong>Företagsevent & kickoffs</strong> – golf + mat + dryck i en social miljö.</li>
-                      <li><strong>Sociala kvällar</strong> – after work med golf, musik och gemenskap.</li>
-                      <li><strong>Clinics och workshops</strong> – utveckla ditt spel med hjälp av experter.</li>
-                    </ul>
-                  </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+              <div className="space-y-4 max-w-3xl">
+                <Heading as={2}>Event & Community</Heading>
+                <Text className="text-[var(--brand-olive-900)] text-lg">Vi samlar golfare – nybörjare till single – för tävlingar, ligor och sociala kvällar. Spela, häng, utvecklas.</Text>
+                <Text>
+                  USE Golf är mer än simulatorer. Här blandas seriös golf med en avslappnad stämning. Det kan vara en tävling, en företagskväll eller bara en kväll med polarna.
+                </Text>
+              </div>
+              <div>
+                <div className="bg-[var(--brand-secondary)] text-[var(--brand-primary)] p-6 border-2 border-[var(--brand-secondary)]/80 rounded-none">
+                  <p className="font-semibold">Vi erbjuder:</p>
+                  <ul className="mt-2 space-y-2">
+                    <li><strong>TrackMan Tournaments & Challenges</strong> – mäta dig mot andra och vinn grymma priser.</li>
+                    <li><strong>Företagsevent & kickoffs</strong> – golf + mat + dryck i en social miljö.</li>
+                    <li><strong>Sociala kvällar</strong> – after work med golf, musik och gemenskap.</li>
+                    <li><strong>Clinics och workshops</strong> – utveckla ditt spel med hjälp av experter.</li>
+                  </ul>
                 </div>
               </div>
+            </div>
           </Section>
 
           {/* Program & ligor i medlemskaps-stil (bild + overlay + text) */}
           <Section className="-mt-18">
-              <div className="space-y-6">
-                {/** 
+            <div className="space-y-6">
+              {/** 
                 <Heading as={3}>Program & ligor</Heading> */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {programItems.map((item) => (
-                    <div key={`${item.title}-${item.subtitle}`} className="rounded-none overflow-hidden border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)]">
-                      <div className="relative h-44 border-b-2 border-[var(--brand-secondary)]">
-                        <Image src={item.imageSrc} alt={item.title} fill className="object-cover blur-sm scale-105 brightness-90" />
-                        <div className="absolute inset-0 bg-black/20" />
-                        <div className="absolute inset-0 flex items-center justify-center flex-col">
-                          <h3 className="font-horus text-3xl sm:text-4xl text-[var(--brand-primary)]">{item.title}</h3>
-                          <p className="text-sm sm:text-base text-[var(--brand-primary)]/80 uppercase tracking-wider">{item.subtitle}</p>
-                        </div>
-                      </div>
-                      <div className="p-6 space-y-4">
-                        <div className="text-sm sm:text-base">
-                          {item.content}
-                        </div>
-                        {item.ctaHref ? (
-                          <div>
-                            <a href={item.ctaHref} className="inline-flex items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">
-                              {item.ctaLabel ?? "Boka"}
-                            </a>
-                          </div>
-                        ) : null}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {programItems.map((item) => (
+                  <div key={`${item.title}-${item.subtitle}`} className="rounded-none overflow-hidden border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)]">
+                    <div className="relative h-44 border-b-2 border-[var(--brand-secondary)]">
+                      <Image src={item.imageSrc} alt={item.title} fill className="object-cover blur-sm scale-105 brightness-90" />
+                      <div className="absolute inset-0 bg-black/20" />
+                      <div className="absolute inset-0 flex items-center justify-center flex-col">
+                        <h3 className="font-horus text-3xl sm:text-4xl text-[var(--brand-primary)]">{item.title}</h3>
+                        <p className="text-sm sm:text-base text-[var(--brand-primary)]/80 uppercase tracking-wider">{item.subtitle}</p>
                       </div>
                     </div>
-                  ))}
-                </div>
+                    <div className="p-6 space-y-4">
+                      <div className="text-sm sm:text-base">
+                        {item.content}
+                      </div>
+                      {item.ctaHref ? (
+                        <div>
+                          <a href={item.ctaHref} className="inline-flex items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">
+                            {item.ctaLabel ?? "Boka"}
+                          </a>
+                        </div>
+                      ) : null}
+                    </div>
+                  </div>
+                ))}
               </div>
+            </div>
           </Section>
 
           {/* Veckoscramble – bakgrundsbild med text och CTA 
@@ -191,7 +215,7 @@ export default function EventsPage() {
           </Section>*/}
 
           {/* Seniorgolf – detaljerad sektion flyttad till egen sida */}
- 
+
           {/* Eventkalender 
           <Section>
             <Container>

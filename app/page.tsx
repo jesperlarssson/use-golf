@@ -31,19 +31,31 @@ export default function Home() {
       ctaHref: "/events/veckoscramble",
       ctaLabel: "Läs mer",
     },
-    {
-      title: "Event",
-      subtitle: "Boka hela lokalen",
-      imageSrc: "/images/render2.PNG",
-      content: (
-        <Text>
-          Hyr hela lokalen (6 simulatorer) med kompisgänget, för kickoff, kundkväll eller teambuilding. Anpassade upplägg med tävlingar, mat och dryck – kontakta oss för offert.
-        </Text>
-      ),
-      ctaHref: "/events/boka-lokalen",
-      ctaLabel: "Läs mer",
-    },
-    // Onsdagsgolfen pausad tills vidare
+    
+   // {
+   //   title: "Event",
+   //   subtitle: "Boka hela lokalen",
+   //   imageSrc: "/images/render2.PNG",
+   //   content: (
+   //     <Text>
+   //       Hyr hela lokalen (6 simulatorer) med kompisgänget, för kickoff, kundkväll eller teambuilding. Anpassade upplägg med tävlingar, mat och dryck – kontakta oss för offert.
+   //     </Text>
+   //   ),
+   //   ctaHref: "/events/boka-lokalen",
+   //   ctaLabel: "Läs mer",
+   // },
+  {
+    title: "Onsdagsgolfen",
+    subtitle: "",
+    imageSrc: "/images/render2.PNG",
+    content: (
+      <Text>
+        Varje onsdag spelar vi en social tävling för max 24 medlemmar. Två starttider – <strong>13.00–15.00</strong> eller <strong>17.00–19.00</strong> – och fyra omväxlande format gör det både lekfullt och tävlingsinriktat. Kostnad <strong>250 kr</strong> och anmälan sker via Sweetspot.
+      </Text>
+    ),
+    ctaHref: "https://book.sweetspot.io/clubs/use-golf/passes/3d4941fe-3d67-4e7b-9fd2-c9a4aee12b1c",
+    ctaLabel: "Anmäl dig",
+  },
     {
       title: "Juniorligan",
       subtitle: "Hösten",
