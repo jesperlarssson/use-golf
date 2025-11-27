@@ -10,7 +10,7 @@ export default function KontaktPage() {
         <Heading as={2}>Öppettider & kontakt</Heading>
         <div className="mt-4 space-y-3">
           <Text className="font-semibold uppercase tracking-wide">Ordinarie öppettider</Text>
-          <Text>Alla dagar: 07:00–23:00</Text>
+          <Text>Alla dagar: 09:00–22:00</Text>
         
         </div>
       </Section>
