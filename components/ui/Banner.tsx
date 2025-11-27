@@ -35,7 +35,7 @@ export default function Banner({ title, imageSrc, marqueeText, subTitle, actionB
           poster={videoPoster || imageSrc}
         />
       ) : (
-        <Image src={imageSrc} alt={title} fill priority className="object-cover object-center filter blur-md brightness-90 scale-110" />
+        <Image src={imageSrc} alt={title} fill priority className="object-cover object-center filter blur-sm brightness-90 scale-110" />
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-black/10" />
       <div className="absolute inset-0 z-10 flex items-center justify-center">

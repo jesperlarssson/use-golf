@@ -22,7 +22,7 @@ export default function Home() {
     {
       title: "Veckoscramble",
       subtitle: "2-mannascramble",
-      imageSrc: "/images/club.png",
+      imageSrc: "/images/invigning/DSC06519.jpg",
       content: (
         <Text>
           Ny bana <strong>varje vecka</strong>. Spelas <strong>mån–sön</strong>, valfri tid. Kostnad <strong>200 kr/lag</strong> + simulatorhyra.
@@ -31,35 +31,35 @@ export default function Home() {
       ctaHref: "/events/veckoscramble",
       ctaLabel: "Läs mer",
     },
-    
-   // {
-   //   title: "Event",
-   //   subtitle: "Boka hela lokalen",
-   //   imageSrc: "/images/render2.PNG",
-   //   content: (
-   //     <Text>
-   //       Hyr hela lokalen (6 simulatorer) med kompisgänget, för kickoff, kundkväll eller teambuilding. Anpassade upplägg med tävlingar, mat och dryck – kontakta oss för offert.
-   //     </Text>
-   //   ),
-   //   ctaHref: "/events/boka-lokalen",
-   //   ctaLabel: "Läs mer",
-   // },
-  {
-    title: "Onsdagsgolfen",
-    subtitle: "",
-    imageSrc: "/images/render2.PNG",
-    content: (
-      <Text>
-        Varje onsdag spelar vi en social tävling för max 24 medlemmar. Två starttider – <strong>13.00–15.00</strong> eller <strong>17.00–19.00</strong> – och fyra omväxlande format gör det både lekfullt och tävlingsinriktat. Kostnad <strong>250 kr</strong> och anmälan sker via Sweetspot.
-      </Text>
-    ),
-    ctaHref: "https://book.sweetspot.io/clubs/use-golf/passes/3d4941fe-3d67-4e7b-9fd2-c9a4aee12b1c",
-    ctaLabel: "Anmäl dig",
-  },
+
+    // {
+    //   title: "Event",
+    //   subtitle: "Boka hela lokalen",
+    //   imageSrc: "/images/render2.PNG",
+    //   content: (
+    //     <Text>
+    //       Hyr hela lokalen (6 simulatorer) med kompisgänget, för kickoff, kundkväll eller teambuilding. Anpassade upplägg med tävlingar, mat och dryck – kontakta oss för offert.
+    //     </Text>
+    //   ),
+    //   ctaHref: "/events/boka-lokalen",
+    //   ctaLabel: "Läs mer",
+    // },
+    {
+      title: "Onsdagsgolfen",
+      subtitle: "",
+      imageSrc: "/images/invigning/DSC06600.jpg",
+      content: (
+        <Text>
+          Varje onsdag spelar vi en social tävling för max 24 medlemmar. Två starttider – <strong>13.00–15.00</strong> eller <strong>17.00–19.00</strong> – och fyra omväxlande format gör det både lekfullt och tävlingsinriktat. Kostnad <strong>250 kr</strong> och anmälan sker via Sweetspot.
+        </Text>
+      ),
+      ctaHref: "https://book.sweetspot.io/clubs/use-golf/passes/3d4941fe-3d67-4e7b-9fd2-c9a4aee12b1c",
+      ctaLabel: "Anmäl dig",
+    },
     {
       title: "Juniorligan",
       subtitle: "Hösten",
-      imageSrc: "/images/club2.png",
+      imageSrc: "/images/invigning/DSC06511.jpg",
       content: (
         <Text>
           Start <strong>18 november</strong>. 3 spelare/simulator, 9 hål + fri lek efteråt. Kostnad <strong>1 250 kr</strong> per person. Medlemskap <strong>Junior User</strong> krävs.
@@ -71,7 +71,7 @@ export default function Home() {
     {
       title: "Juniorligan",
       subtitle: "Våren",
-      imageSrc: "/images/club2-sticker.png",
+      imageSrc: "/images/club2.png",
       content: (
         <Text>
           Tisdagar <strong>15–17</strong> följande datum: <strong>20, 27 jan</strong>, <strong>3, 17, 24 feb</strong>, <strong>3, 10, 17, 24 mars</strong> (avslutning).
@@ -88,9 +88,8 @@ export default function Home() {
         <LandingHero
           title="USE GOLF"
           heroText="Get used to it"
-          videoSrc="/use_hero.mp4"
-          videoPoster="/images/placeholder.png"
-          imageSrc="/images/placeholder.png"
+          imageSrc="/images/invigning/hero.png"
+          overlay
         />
 
         <div className=" w-full bg-[var(--brand-olive-700)] text-[var(--brand-primary)] border-y-2 border-[var(--brand-secondary)]">
@@ -118,7 +117,7 @@ export default function Home() {
               <FadeIn delay={0.05}>
                 <Text className="  mt-2 max-w-xl">Äntligen står europas största TrackMan simulatorer redo att bokas i Hovås! Boka din tid idag, läs mer om stående tider eller boka hela lokalen för event.</Text>
               </FadeIn>
-    
+
               <div className="mt-4 flex flex-wrap gap-3">
                 <a href="https://book.sweetspot.io/clubs/use-golf/" className="inline-flex items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">Boka tid</a>
                 <a href="/events/staende-tid" className="inline-flex items-center justify-center border-2 border-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-secondary)] font-semibold uppercase tracking-wider rounded-none hover:bg-[var(--brand-secondary)]/10 transition" data-cursor-target data-cursor-padding="10">Läs mer</a>
@@ -135,10 +134,10 @@ export default function Home() {
                 <Lead className="text-[var(--brand-olive-900)]">Våra simulatorer är redo att bokas!</Lead>
               </FadeIn>
               <FadeIn delay={0.05}>
-                <Text className="  mt-2 max-w-xl">Äntligen står europas största TrackMan simulatorer redo att bokas i Hovås! Boka din tid idag, läs mer om stående tider eller boka hela lokalen för event.</Text>
+                <Text className="  mt-2 max-w-xl ">Äntligen står europas största TrackMan simulatorer redo att bokas i Hovås! Boka din tid idag, läs mer om stående tider eller boka hela lokalen för event.</Text>
               </FadeIn>
-              {/** disabled boka knapp */}
-              <div className="mt-4 flex flex-wrap gap-3">
+
+              <div className="mt-4 pt-4 flex flex-wrap gap-3">
                 <a href="https://book.sweetspot.io/clubs/use-golf/" className="inline-flex items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">Boka tid</a>
                 <a href="/bokning" className="inline-flex items-center justify-center border-2 border-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-secondary)] font-semibold uppercase tracking-wider rounded-none hover:bg-[var(--brand-secondary)]/10 transition" data-cursor-target data-cursor-padding="10">Läs mer</a>
               </div>
@@ -146,7 +145,7 @@ export default function Home() {
           </Col>
           <Col span={6} className="p-0 h-full hidden sm:block">
             <div className="relative h-full w-full overflow-hidden border border-[var(--brand-secondary)]">
-              <Image src="/images/render2.PNG" alt="Boka" fill className="object-cover blur-xs scale-105 brightness-90" />
+              <Image src="/images/invigning/DSC06426.jpg" alt="Boka" fill className="object-cover blur-xs scale-105 brightness-90" />
               <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                 <Logo className="w-20 h-20 text-[var(--brand-primary)] animate-[spin_30s_linear_infinite]" />
               </div>
@@ -166,8 +165,8 @@ export default function Home() {
             {/* Senior (condensed) */}
             <FadeIn>
               <div className="rounded-none flex flex-col sm:flex-row overflow-hidden border-1 border-[var(--brand-secondary)] bg-[var(--brand-primary)]">
-                <div className="relative h-44 sm:h-64 w-full sm:w-1/2 border-b-2 border-[var(--brand-secondary)] overflow-hidden">
-                  <Image src="/images/club.png" alt="User" fill className="object-cover blur-sm scale-105 brightness-90" />
+                <div className="relative h-44 sm:h-72 w-full sm:w-1/2 border-b-2 border-[var(--brand-secondary)] overflow-hidden">
+                  <Image src="/images/invigning/adam-hampus.png" alt="User" fill className="object-cover blur-xs scale-105 brightness-90" />
                   <div className="absolute inset-0 bg-black/20" />
                   <div className="absolute inset-0 flex items-center justify-center">
                     <h3 className="font-horus text-3xl sm:text-4xl text-[var(--brand-primary)]">Use:r</h3>
@@ -190,8 +189,8 @@ export default function Home() {
             {/* Junior (condensed) */}
             <FadeIn delay={0.05}>
               <div className="rounded-none flex flex-col sm:flex-row overflow-hidden border-1 border-[var(--brand-secondary)] bg-[var(--brand-primary)]">
-                  <div className="relative h-44 sm:h-64 w-full sm:w-1/2 border-b-2 border-[var(--brand-secondary)] overflow-hidden">
-                  <Image src="/images/club2.png" alt="Junior User" fill className="object-cover blur-sm scale-105 brightness-90" />
+                <div className="relative h-44 sm:h-72 w-full sm:w-1/2 border-b-2 border-[var(--brand-secondary)] overflow-hidden">
+                  <Image src="/images/invigning/junior.png" alt="Junior User" fill className="object-cover blur-xs scale-105 brightness-90" />
                   <div className="absolute inset-0 bg-black/20" />
                   <div className="absolute inset-0 flex items-center justify-center">
                     <h3 className="font-horus text-3xl sm:text-4xl text-[var(--brand-primary)]">Junior Use:r</h3>
@@ -225,8 +224,8 @@ export default function Home() {
               {programItems.map((item) => (
                 <FadeIn key={`${item.title}-${item.subtitle}`}>
                   <div className="rounded-none overflow-hidden border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] h-full min-h-[360px] flex flex-col">
-                    <div className="relative h-44 border-b-2 border-[var(--brand-secondary)]">
-                      <Image src={item.imageSrc} alt={item.title} fill className="object-cover blur-sm scale-105 brightness-90" />
+                    <div className="relative h-56 border-b-2 border-[var(--brand-secondary)]">
+                      <Image src={item.imageSrc} alt={item.title} fill className="object-cover blur-xs scale-105 brightness-90" />
                       <div className="absolute inset-0 bg-black/20" />
                       <div className="absolute inset-0 flex items-center justify-center flex-col">
                         <h3 className="font-horus text-3xl sm:text-4xl text-[var(--brand-primary)]">{item.title}</h3>

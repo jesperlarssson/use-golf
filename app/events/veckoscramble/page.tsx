@@ -33,7 +33,7 @@ export default function VeckoscramblePage() {
               </div>
               <div>
                 <div className="relative h-56 border-2 border-[var(--brand-secondary)]/60 overflow-hidden">
-                  <Image src="/images/render2.PNG" alt="Veckoscramble" fill className="object-cover" />
+                  <Image src="/images/invigning/DSC06519.jpg" alt="Veckoscramble" fill className="object-cover" />
                   <div className="absolute inset-0 bg-black/20" />
                 </div>
               </div>

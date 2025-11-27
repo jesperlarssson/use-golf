@@ -36,8 +36,8 @@ export default function MedlemskapPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Senior */}
               <div className="rounded-none overflow-hidden border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)]">
-                <div className="relative h-44 border-b-2 border-[var(--brand-secondary)]">
-                  <Image src="/images/club.png" alt="Senior" fill className="object-cover blur-sm scale-105 brightness-90" />
+                <div className="relative h-64 border-b-2 border-[var(--brand-secondary)]">
+                  <Image src="/images/invigning/adam-hampus.png" alt="Senior" fill className="object-cover blur-xs scale-105 brightness-90" />
                   <div className="absolute inset-0 bg-black/20" />
                   <div className="absolute inset-0 flex items-center justify-center">
                     <h3 className="font-horus text-3xl sm:text-4xl text-[var(--brand-primary)]">Use:r</h3>
@@ -64,8 +64,8 @@ export default function MedlemskapPage() {
 
               {/* Junior */}
               <div className="rounded-none overflow-hidden border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)]">
-                <div className="relative h-44 border-b-2 border-[var(--brand-secondary)]">
-                  <Image src="/images/club2.png" alt="Junior" fill className="object-cover blur-sm scale-105 brightness-90" />
+                  <div className="relative h-64 border-b-2 border-[var(--brand-secondary)]">
+                  <Image src="/images/invigning/junior.png" alt="Junior" fill className="object-cover blur-xs scale-105 brightness-90" />
                   <div className="absolute inset-0 bg-black/20" />
                   <div className="absolute inset-0 flex items-center justify-center">
                     <h3 className="font-horus text-3xl sm:text-4xl text-[var(--brand-primary)]">Junior Use:r</h3>

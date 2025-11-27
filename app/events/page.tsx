@@ -81,7 +81,7 @@ export default function EventsPage() {
     {
       title: "Ladies Tour Tuesdays",
       subtitle: "Damliga",
-      imageSrc: "/images/baller2.png",
+      imageSrc: "/images/invigning/DSC06673.jpg",
       content: (
         <Text>
           Tisdagar <strong>13.00–15.00</strong> (2 h) med <strong>250 kr</strong> per person. Ett Ladies only-upplägg som mixar veckovisa format och olika banor, betalning sker på plats. Speldagar: <strong>9 & 16 december, 13, 20 & 27 januari, 3, 17 & 24 februari samt 3, 10, 17, 24 & 31 mars</strong> (avslutning med bubbel).
@@ -93,7 +93,7 @@ export default function EventsPage() {
     {
       title: "Onsdagsgolfen",
       subtitle: "",
-      imageSrc: "/images/render2.PNG",
+      imageSrc: "/images/invigning/DSC06600.jpg",
       content: (
         <Text>
           Varje onsdag spelar vi en social tävling för max 24 medlemmar. Två starttider – <strong>13.00–15.00</strong> eller <strong>17.00–19.00</strong> – och fyra omväxlande format gör det både lekfullt och tävlingsinriktat. Kostnad <strong>250 kr</strong> och anmälan sker via Sweetspot.
@@ -166,8 +166,8 @@ export default function EventsPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {programItems.map((item) => (
                   <div key={`${item.title}-${item.subtitle}`} className="rounded-none overflow-hidden border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)]">
-                    <div className="relative h-44 border-b-2 border-[var(--brand-secondary)]">
-                      <Image src={item.imageSrc} alt={item.title} fill className="object-cover blur-sm scale-105 brightness-90" />
+                    <div className="relative h-56 border-b-2 border-[var(--brand-secondary)]">
+                      <Image src={item.imageSrc} alt={item.title} fill className="object-cover blur-xs scale-105 brightness-90" />
                       <div className="absolute inset-0 bg-black/20" />
                       <div className="absolute inset-0 flex items-center justify-center flex-col">
                         <h3 className="font-horus text-3xl sm:text-4xl text-[var(--brand-primary)]">{item.title}</h3>

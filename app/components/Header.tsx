@@ -91,14 +91,14 @@ export default function Header() {
     if (path.startsWith("/events/juniorligan")) {
       return {
         title: "Juniorligan",
-        imageSrc: "/images/club2.png",
+        imageSrc: "/images/invigning/DSC06511.jpg",
         marqueeText: "Ligan för unga golfare",
       };
     }
     if (path.startsWith("/events")) {
       return {
         title: "Event & Community",
-        imageSrc: "/images/club hit.png",
+        imageSrc: "/images/invigning/DSC06527.jpg",
         marqueeText: "Håll dig uppdaterad — Häng med på nästa event"
       };
     }
@@ -215,7 +215,8 @@ export default function Header() {
     return pathname.startsWith(href);
   };
 
-  const linkBase = "transition-colors hover:opacity-80 uppercase text-sm tracking-wider text-[var(--brand-secondary)] font-semibold";
+  const headerTextColor = scrolled ? "text-[var(--brand-secondary)]" : "text-[var(--brand-primary)]";
+  const linkBase = `transition-colors hover:opacity-80 uppercase text-sm tracking-wider font-semibold ${headerTextColor}`;
   const activeBase = "underline underline-offset-4";
 
   const renderItem = (item: NavItem, onClick?: () => void) => {
@@ -359,9 +360,9 @@ export default function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 inset-x-0 z-50 w-full  ${headerVariantClass} transition-colors duration-300 text-[var(--brand-secondary)] ${
+        className={`fixed top-0 inset-x-0 z-50 w-full ${headerVariantClass} transition-colors duration-300 ${headerTextColor} ${
           scrolled
-            ? "bg-[var(--brand-primary)]/90 backdrop-blur border-b border-[var(--brand-secondary)]/20"
+            ? "bg-[var(--brand-primary)]  border-b border-[var(--brand-secondary)]/20"
             : "bg-transparent"
         }`}
       >
