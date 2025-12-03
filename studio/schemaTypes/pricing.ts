@@ -45,10 +45,10 @@ export default defineType({
               time: 'time',
               price: 'price',
             },
-            prepare({ time, price }: { time: string; price: number }) {
+            prepare({ time, price }: { time?: string; price?: number }) {
               return {
-                title: time,
-                subtitle: `${price} kr`,
+                title: time || 'Namnlös tidsperiod',
+                subtitle: price ? `${price} kr` : 'Inget pris',
               }
             },
           },
