@@ -1,10 +1,18 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
-import { dayLabels, type DayType, type Weekday, weekdayLabels, calculateHourlyPrices, getAvailableStartTimes, getDayTypeFromWeekday } from "@/lib/prices";
+import { dayLabels, type DayType, type Weekday, weekdayLabels, calculateHourlyPrices, getAvailableStartTimes, getDayTypeFromWeekday, type PricingData, defaultPricingData } from "@/lib/prices";
 import Link from "next/link";
+import type { ClosureDocument } from "@/sanity/lib/pricingQueries";
 
-export default function StaendeTidCalculator() {
+interface StaendeTidCalculatorProps {
+  pricingData?: PricingData;
+  closures?: ClosureDocument[];
+}
+
+export default function StaendeTidCalculator({ pricingData, closures = [] }: StaendeTidCalculatorProps) {
+  // Använd pricing-data från Sanity eller fallback
+  const pricing = pricingData || defaultPricingData;
   const [antalSim, setAntalSim] = useState(2);
   const [timmar, setTimmar] = useState(2);
   const [period, setPeriod] = useState(10);
@@ -18,19 +26,19 @@ export default function StaendeTidCalculator() {
   const dag = useMemo(() => getDayTypeFromWeekday(veckodag), [veckodag]);
 
   // Hämta tillgängliga starttider för vald dag
-  const availableStartTimes = useMemo(() => getAvailableStartTimes(dag), [dag]);
+  const availableStartTimes = useMemo(() => getAvailableStartTimes(dag, pricing), [dag, pricing]);
   
   // Sätt starttid baserat på tillgängliga tider
+  const initialTimes = useMemo(() => getAvailableStartTimes("monday-thursday", pricing), [pricing]);
   const [startTid, setStartTid] = useState(() => {
-    const times = getAvailableStartTimes("monday-thursday");
-    return times.length > 0 ? times[0] : "07:00";
+    return initialTimes.length > 0 ? initialTimes[0] : "07:00";
   });
 
   // Uppdatera starttid när dag ändras (sätt första tillgängliga tiden)
   const handleVeckodagChange = (newVeckodag: Weekday) => {
     setVeckodag(newVeckodag);
     const newDayType = getDayTypeFromWeekday(newVeckodag);
-    const newTimes = getAvailableStartTimes(newDayType);
+    const newTimes = getAvailableStartTimes(newDayType, pricing);
     if (newTimes.length > 0) {
       // Om nuvarande starttid finns i nya listan, behåll den, annars sätt första
       const currentTimeExists = newTimes.includes(startTid);
@@ -43,12 +51,12 @@ export default function StaendeTidCalculator() {
     if (!availableStartTimes.includes(startTid) && availableStartTimes.length > 0) {
       setStartTid(availableStartTimes[0]);
     }
-  }, [availableStartTimes, startTid]);
+  }, [availableStartTimes, startTid, pricing]);
 
   // Beräkna priset för varje timme
   const hourlyPrices = useMemo(() => {
-    return calculateHourlyPrices(dag, startTid, timmar);
-  }, [dag, startTid, timmar]);
+    return calculateHourlyPrices(dag, startTid, timmar, pricing);
+  }, [dag, startTid, timmar, pricing]);
 
   // Genomsnittligt pris per timme
   const averagePricePerHour = useMemo(() => {
@@ -77,6 +85,77 @@ export default function StaendeTidCalculator() {
 
   const veckorMedAdmin = Math.max(0, period - 2);
   const veckorUtanAdmin = Math.min(period, 2);
+
+  // Beräkna alla datum för perioden
+  const bookingDates = useMemo(() => {
+    const dates: { date: Date; isClosed: boolean; closureTitle?: string; replacementDate?: Date }[] = [];
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    // Hitta nästa förekommande av vald veckodag
+    const weekdayMap: Record<Weekday, number> = {
+      monday: 1,
+      tuesday: 2,
+      wednesday: 3,
+      thursday: 4,
+      friday: 5,
+      saturday: 6,
+      sunday: 0,
+    };
+    
+    const targetWeekday = weekdayMap[veckodag];
+    const currentWeekday = today.getDay();
+    let daysUntilNext = (targetWeekday - currentWeekday + 7) % 7;
+    if (daysUntilNext === 0) daysUntilNext = 7; // Om det är samma dag, välj nästa vecka
+    
+    const startDate = new Date(today);
+    startDate.setDate(today.getDate() + daysUntilNext);
+    
+    // Generera datum för alla veckor i perioden
+    for (let week = 0; week < period; week++) {
+      const date = new Date(startDate);
+      date.setDate(startDate.getDate() + (week * 7));
+      
+      // Kontrollera om datumet faller inom en stängningsperiod
+      let isClosed = false;
+      let closureTitle: string | undefined;
+      
+      for (const closure of closures) {
+        const closureStart = new Date(closure.startDate);
+        closureStart.setHours(0, 0, 0, 0);
+        const closureEnd = new Date(closure.endDate);
+        closureEnd.setHours(23, 59, 59, 999);
+        
+        if (date >= closureStart && date <= closureEnd) {
+          isClosed = true;
+          closureTitle = closure.title;
+          break;
+        }
+      }
+      
+      dates.push({ date, isClosed, closureTitle });
+    }
+    
+    // Beräkna ersättningsdatum för stängda datum
+    // Ersättningsdatumet är nästkommande veckodag efter det sista datumet i perioden
+    const lastDate = dates[dates.length - 1]?.date;
+    if (lastDate) {
+      dates.forEach((item) => {
+        if (item.isClosed && !item.replacementDate) {
+          // Beräkna nästa veckodag efter det sista datumet
+          const replacementDate = new Date(lastDate);
+          replacementDate.setDate(lastDate.getDate() + 7);
+          item.replacementDate = replacementDate;
+        }
+      });
+    }
+    
+    return dates;
+  }, [veckodag, period, closures]);
+
+  const closedDatesCount = useMemo(() => {
+    return bookingDates.filter(d => d.isClosed).length;
+  }, [bookingDates]);
 
   return (
     <div className="border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] p-6 space-y-6">
@@ -217,6 +296,71 @@ export default function StaendeTidCalculator() {
           </div>
         )}
 
+        {/* Datumlista */}
+        {bookingDates.length > 0 && (
+          <div className="pt-4 border-t border-[var(--brand-secondary)]/40">
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-sm font-semibold text-[var(--brand-olive-900)] uppercase tracking-wider">
+                Planerade speldatum ({bookingDates.length - closedDatesCount} av {bookingDates.length})
+              </p>
+              {closedDatesCount > 0 && (
+                <p className="text-xs text-[var(--brand-olive-900)] opacity-60">
+                  {closedDatesCount} {closedDatesCount === 1 ? 'datum hoppas över' : 'datum hoppas över'}
+                </p>
+              )}
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 max-h-48 overflow-y-auto">
+              {bookingDates.map((item, index) => {
+                const dateStr = item.date.toLocaleDateString('sv-SE', {
+                  weekday: 'short',
+                  day: 'numeric',
+                  month: 'short',
+                });
+                const replacementDateStr = item.replacementDate?.toLocaleDateString('sv-SE', {
+                  weekday: 'short',
+                  day: 'numeric',
+                  month: 'short',
+                });
+                return (
+                  <div
+                    key={index}
+                    className={`p-2 text-xs border-2 rounded ${
+                      item.isClosed
+                        ? 'border-red-300 bg-red-50 text-red-700 opacity-60'
+                        : 'border-[var(--brand-secondary)]/40 bg-[var(--brand-primary)] text-[var(--brand-olive-900)]'
+                    }`}
+                    title={item.isClosed && item.replacementDate ? `Stängt: ${item.closureTitle}. Ersätts med: ${replacementDateStr}` : item.isClosed ? `Stängt: ${item.closureTitle}` : undefined}
+                  >
+                    {item.isClosed ? (
+                      <>
+                        <div className="font-semibold line-through">{dateStr.split(' ')[0]}</div>
+                        <div className="text-xs opacity-80 line-through">{dateStr.split(' ').slice(1).join(' ')}</div>
+                        <div className="text-[10px] mt-1 opacity-70">{item.closureTitle}</div>
+                        {item.replacementDate && replacementDateStr && (
+                          <>
+                            <div className="text-[10px] mt-1 font-semibold text-green-700">→ {replacementDateStr.split(' ')[0]}</div>
+                            <div className="text-[10px] text-green-700 opacity-80">{replacementDateStr.split(' ').slice(1).join(' ')}</div>
+                          </>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        <div className="font-semibold">{dateStr.split(' ')[0]}</div>
+                        <div className="text-xs opacity-80">{dateStr.split(' ').slice(1).join(' ')}</div>
+                      </>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+            {closedDatesCount > 0 && (
+              <p className="text-xs text-[var(--brand-olive-900)] opacity-60 mt-3 italic">
+                * Datum som faller inom stängningsperioder hoppas över och kompenseras vid ett senare datum enligt våra villkor.
+              </p>
+            )}
+          </div>
+        )}
+
         {/* Dold beräkning */}
         {showCalculation && (
           <div className="pt-4 border-t border-[var(--brand-secondary)]/40 space-y-4">
@@ -292,6 +436,8 @@ export default function StaendeTidCalculator() {
             period,
             totalPris,
             dag,
+            bookingDates,
+            closedDatesCount,
           }}
         />
       )}
@@ -307,6 +453,8 @@ type SummaryData = {
   period: number;
   totalPris: number;
   dag: DayType;
+  bookingDates: { date: Date; isClosed: boolean; closureTitle?: string; replacementDate?: Date }[];
+  closedDatesCount: number;
 };
 
 function InquiryModal({ onClose, summary }: { onClose: () => void; summary: SummaryData }) {
@@ -363,7 +511,28 @@ function InquiryModal({ onClose, summary }: { onClose: () => void; summary: Summ
 - Starttid: ${summary.startTid}
 - Antal timmar: ${summary.timmar} ${summary.timmar === 1 ? "timme" : "timmar"}
 - Period: ${summary.period} veckor
-- Estimerat pris: ${summary.totalPris.toLocaleString("sv-SE")} kr`,
+- Estimerat pris: ${summary.totalPris.toLocaleString("sv-SE")} kr
+- Planerade speldatum: ${summary.bookingDates.length - summary.closedDatesCount} av ${summary.bookingDates.length}
+${summary.closedDatesCount > 0 ? `- ${summary.closedDatesCount} datum hoppas över på grund av stängning\n` : ''}
+Speldatum:
+${summary.bookingDates.map((item, index) => {
+  const dateStr = item.date.toLocaleDateString('sv-SE', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+  if (item.isClosed && item.replacementDate) {
+    const replacementStr = item.replacementDate.toLocaleDateString('sv-SE', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    });
+    return `${index + 1}. ${dateStr} (STÄNGT: ${item.closureTitle}) → Ersätts med: ${replacementStr}`;
+  }
+  return `${index + 1}. ${dateStr}${item.isClosed ? ` (STÄNGT: ${item.closureTitle})` : ''}`;
+}).join('\n')}`,
         }),
       });
 
@@ -429,6 +598,47 @@ function InquiryModal({ onClose, summary }: { onClose: () => void; summary: Summ
             <p className="pt-2 border-t border-[var(--brand-primary)]/40 mt-2 font-semibold">
               <span className="opacity-70">Estimerat pris:</span> {summary.totalPris.toLocaleString("sv-SE")} kr
             </p>
+            {summary.bookingDates.length > 0 && (
+              <>
+                <p className="pt-2 border-t border-[var(--brand-primary)]/40 mt-2">
+                  <span className="opacity-70">Speldatum:</span> {summary.bookingDates.length - summary.closedDatesCount} av {summary.bookingDates.length}
+                  {summary.closedDatesCount > 0 && (
+                    <span className="text-xs opacity-60 ml-2">({summary.closedDatesCount} hoppas över)</span>
+                  )}
+                </p>
+                <div className="mt-2 max-h-32 overflow-y-auto space-y-1 text-xs">
+                  {summary.bookingDates.slice(0, 10).map((item, index) => {
+                    const dateStr = item.date.toLocaleDateString('sv-SE', {
+                      weekday: 'short',
+                      day: 'numeric',
+                      month: 'short',
+                    });
+                    const replacementDateStr = item.replacementDate?.toLocaleDateString('sv-SE', {
+                      weekday: 'short',
+                      day: 'numeric',
+                      month: 'short',
+                    });
+                    return (
+                      <p key={index} className={item.isClosed ? 'opacity-50' : ''}>
+                        {item.isClosed ? (
+                          <>
+                            <span className="line-through">{dateStr} ({item.closureTitle})</span>
+                            {item.replacementDate && (
+                              <span className="ml-2 text-green-300">→ {replacementDateStr}</span>
+                            )}
+                          </>
+                        ) : (
+                          dateStr
+                        )}
+                      </p>
+                    );
+                  })}
+                  {summary.bookingDates.length > 10 && (
+                    <p className="opacity-60 italic">... och {summary.bookingDates.length - 10} fler</p>
+                  )}
+                </div>
+              </>
+            )}
           </div>
         </div>
 

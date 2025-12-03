@@ -33,7 +33,7 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
 
-  const hideHeader = pathname === "/pre-access" || pathname.startsWith("https://book.sweetspot.io/clubs/use-golf/") || pathname.startsWith("/bli-medlem");
+  const hideHeader = pathname === "/pre-access" || pathname.startsWith("https://book.sweetspot.io/clubs/use-golf/") || pathname.startsWith("/bli-medlem") || pathname?.startsWith("/studio");
 
   // Ruta -> Header-variant (färg) + Banner-konfiguration
   const getHeaderVariant = (_path: string) => {
@@ -58,6 +58,12 @@ export default function Header() {
     if (path === "/") return null; // Ingen banner på landningssidan
     if (path.startsWith("https://book.sweetspot.io/clubs/use-golf/")) {
       return null;
+    }
+    if (path.startsWith("/blogg")) {
+      return null; // Ingen banner på USE Journal-sidor
+    }
+    if (path.startsWith("/journal")) {
+      return null; // Ingen banner i Header för journal-sidor, vi har egen banner
     }
     if (path === "/bokning") {
       return {

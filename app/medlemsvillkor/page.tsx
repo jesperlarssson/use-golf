@@ -2,9 +2,17 @@ import type { Metadata } from "next";
 import Page from "@/components/ui/Page";
 import Section from "@/components/ui/Section";
 import { Heading, Text, Lead } from "@/components/ui/Typography";
-import { pricingData, dayLabels, type DayType } from "@/lib/prices";
+import { defaultPricingData, dayLabels, type DayType, type PricingData, defaultUserPasses, type UserPassType } from "@/lib/prices";
+import { getUserPasses, getPricingData } from "@/sanity/lib/pricingQueries";
 
-export default function MedlemsvillkorPage() {
+export default async function MedlemsvillkorPage() {
+  // Hämta User Passes från Sanity, använd fallback om Sanity-data inte finns
+  const sanityUserPasses = await getUserPasses();
+  const userPassesToUse = sanityUserPasses || defaultUserPasses;
+  
+  // Hämta Pricing Data från Sanity, använd fallback om Sanity-data inte finns
+  const sanityPricingData = await getPricingData();
+  const pricingDataToUse: PricingData = sanityPricingData || defaultPricingData;
   return (
     <Page variant="subpage">
       <Section id="villkor" className="pt-8">
@@ -138,7 +146,7 @@ export default function MedlemsvillkorPage() {
           <div className="space-y-4">
             <Heading as={2}>5. Prislista – Simulatorbokning</Heading>
 
-            {(Object.entries(pricingData) as [DayType, typeof pricingData[DayType]][]).map(([dayType, timeSlots]) => (
+            {(Object.entries(pricingDataToUse) as [DayType, typeof pricingDataToUse[DayType]][]).map(([dayType, timeSlots]) => (
               <div key={dayType} className="space-y-2">
                 <Heading as={3}>{dayLabels[dayType]}</Heading>
                 <div className="overflow-x-auto">
@@ -178,24 +186,17 @@ export default function MedlemsvillkorPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2 font-semibold">Small User</td>
-                    <td className="px-3 py-2">5 000 kr</td>
-                    <td className="px-3 py-2">5 500 kr</td>
-                    <td className="px-3 py-2">+10 %</td>
-                  </tr>
-                  <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2 font-semibold">Medium User</td>
-                    <td className="px-3 py-2">10 000 kr</td>
-                    <td className="px-3 py-2">11 500 kr</td>
-                    <td className="px-3 py-2">+15 %</td>
-                  </tr>
-                  <tr className="border-t border-[var(--brand-secondary)]/40">
-                    <td className="px-3 py-2 font-semibold">Large User</td>
-                    <td className="px-3 py-2">15 000 kr</td>
-                    <td className="px-3 py-2">18 000 kr</td>
-                    <td className="px-3 py-2">+20 %</td>
-                  </tr>
+                  {(['small', 'medium', 'large'] as UserPassType[]).map((passType) => {
+                    const pass = userPassesToUse[passType];
+                    return (
+                      <tr key={passType} className="border-t border-[var(--brand-secondary)]/40">
+                        <td className="px-3 py-2 font-semibold">{pass.name} User</td>
+                        <td className="px-3 py-2">{pass.price.toLocaleString('sv-SE')} kr</td>
+                        <td className="px-3 py-2">{pass.playValue.toLocaleString('sv-SE')} kr</td>
+                        <td className="px-3 py-2">+{pass.bonusPercent} %</td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>

@@ -5,8 +5,14 @@ import FullBleed from "@/components/ui/FullBleed";
 import { Heading, Text, Lead } from "@/components/ui/Typography";
 import BokaLokalenCalculator from "@/components/ui/BokaLokalenCalculator";
 import Image from "next/image";
+import { getClosures, getVenueBookingPricing } from "@/sanity/lib/pricingQueries";
 
-export default function BokaLokalenPage() {
+export default async function BokaLokalenPage() {
+  // Hämta stängningsdatum från Sanity
+  const closures = await getClosures();
+  
+  // Hämta venue booking pricing från Sanity
+  const venuePricing = await getVenueBookingPricing();
   return (
     <FullBleed>
       <div className="border-y border-[var(--brand-secondary)]">
@@ -70,7 +76,7 @@ export default function BokaLokalenPage() {
           {/* Estimera Pris och förfrågan */}
           <Section className="pt-8 pb-16">
             <Heading as={3} className="mb-6">Estimera Pris och förfrågan</Heading>
-            <BokaLokalenCalculator />
+            <BokaLokalenCalculator closures={closures} venuePricing={venuePricing} />
           </Section>
 
         </Page>

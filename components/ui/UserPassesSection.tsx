@@ -1,8 +1,13 @@
 import Section from "./Section";
 import { Heading, Text } from "./Typography";
-import { userPasses, type UserPassType } from "@/lib/prices";
+import { getUserPasses } from "@/sanity/lib/pricingQueries";
+import { defaultUserPasses, type UserPassType } from "@/lib/prices";
 
-export default function UserPassesSection() {
+export default async function UserPassesSection() {
+  // Hämta User Passes från Sanity, fallback till default om det misslyckas
+  const sanityPasses = await getUserPasses();
+  const userPasses = sanityPasses || defaultUserPasses;
+  
   const passLinks: Record<UserPassType, string> = {
     small: "https://book.sweetspot.io/clubs/use-golf/passes/33812e8a-fb1b-4d9f-af85-a2405a918fd5",
     medium: "https://book.sweetspot.io/clubs/use-golf/passes/35aa568d-f3f7-4b43-8b98-f2f05712dc22",

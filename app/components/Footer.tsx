@@ -1,9 +1,19 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import Logo from "@/components/ui/Logo";
 import SocialButtons from "@/components/ui/SocialButtons";
 
 export default function Footer() {
+  const pathname = usePathname();
+  const isStudio = pathname?.startsWith("/studio");
+
+  if (isStudio) {
+    return null;
+  }
+
   return (
     <footer className=" border-t border-[var(--brand-secondary)]/30 bg-[var(--brand-primary)] py-20 text-[var(--brand-secondary)]">
 

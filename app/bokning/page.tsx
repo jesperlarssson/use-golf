@@ -5,14 +5,18 @@ import FullBleed from "@/components/ui/FullBleed";
 import { Heading, Text, Lead } from "@/components/ui/Typography";
 import Image from "next/image";
 import FadeIn from "@/components/ui/FadeIn";
-import { pricingData, dayLabels, type DayType } from "@/lib/prices";
+import { defaultPricingData, dayLabels, type DayType, type PricingData } from "@/lib/prices";
+import { getPricingData } from "@/sanity/lib/pricingQueries";
 
 export const metadata: Metadata = {
   title: "Bokning",
   description: "Boka simulator, stående tider eller hela lokalen hos USE Golf.",
 };
 
-export default function BookingPage() {
+export default async function BookingPage() {
+  // Hämta Pricing Data från Sanity, använd fallback om Sanity-data inte finns
+  const sanityPricingData = await getPricingData();
+  const pricingDataToUse: PricingData = sanityPricingData || defaultPricingData;
   return (
     <FullBleed>
       <div className="border-y border-[var(--brand-secondary)]">
@@ -128,7 +132,7 @@ export default function BookingPage() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {(Object.keys(pricingData) as DayType[]).map((dayType, index) => (
+                {(Object.keys(pricingDataToUse) as DayType[]).map((dayType, index) => (
                   <FadeIn key={dayType} delay={index * 0.1}>
                     <div className="border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)]">
                       <div className="bg-[var(--brand-secondary)] px-6 py-4">
@@ -137,7 +141,7 @@ export default function BookingPage() {
                         </h3>
                       </div>
                       <div className="p-6 space-y-3">
-                        {pricingData[dayType].map((slot, slotIndex) => (
+                        {pricingDataToUse[dayType].map((slot, slotIndex) => (
                           <div
                             key={slotIndex}
                             className="flex justify-between items-center py-2 border-b border-[var(--brand-secondary)]/20 last:border-0"

@@ -5,6 +5,8 @@ import FullBleed from "@/components/ui/FullBleed";
 import { Heading, Text } from "@/components/ui/Typography";
 import Banner from "@/components/ui/Banner";
 import Image from "next/image";
+import { client } from "@/sanity/lib/client";
+import { allEventsQuery, transformEvent, Event, EventDocument } from "@/sanity/lib/queries";
 
 type EventItem = {
   title: string;
@@ -16,7 +18,7 @@ type EventItem = {
 
 const eventItems: EventItem[] = [
   {
-    title: "Företagsevent – “All in Night”",
+    title: "Företagsevent – \"All in Night\"",
     date: "När som helst – 2 timmar",
     bullets: [
       "Hyr hela lokalen (6 simulatorer).",
@@ -27,7 +29,7 @@ const eventItems: EventItem[] = [
     ctaLabel: "BOKA NU",
   },
   {
-    title: "Ligaspelet – “USE Indoor League”",
+    title: "Ligaspelet – \"USE Indoor League\"",
     date: "Varannan vecka, nov–mars",
     bullets: [
       "Matcher i lagformat.",
@@ -39,99 +41,131 @@ const eventItems: EventItem[] = [
     ctaLabel: "BOKA NU",
   },
   {
-    title: "Seriespel – “USE Indoor Series”",
+    title: "Seriespel – \"USE Indoor Series\"",
     bullets: [
       "Lag eller individuellt.",
       "Seriesystem med divisioner.",
       "Tabell online, upp/nedflyttning.",
       "Förbokade kvällar. Finalevent i april.",
-      "Partner kan “äga” en division. Mer tävlingsmoment & prestige än ligan.",
+      "Partner kan \"äga\" en division. Mer tävlingsmoment & prestige än ligan.",
     ],
     ctaHref: "/bokning",
     ctaLabel: "BOKA NU",
   },
 ];
 
-export default function EventsPage() {
-  const programItems = [
+// Helper function för att formatera text med **fet text**
+function formatContent(text: string) {
+  const parts: React.ReactNode[] = []
+  const boldRegex = /\*\*([^*]+)\*\*/g
+  const matches = Array.from(text.matchAll(boldRegex))
+  
+  if (matches.length === 0) {
+    return <Text>{text}</Text>
+  }
+  
+  let lastIndex = 0
+  let keyCounter = 0
+  
+  matches.forEach((match) => {
+    if (match.index !== undefined) {
+      // Lägg till text före match
+      if (match.index > lastIndex) {
+        const beforeText = text.substring(lastIndex, match.index)
+        if (beforeText) {
+          parts.push(<span key={`text-${keyCounter++}`}>{beforeText}</span>)
+        }
+      }
+      // Lägg till fet text
+      parts.push(<strong key={`bold-${keyCounter++}`}>{match[1]}</strong>)
+      lastIndex = match.index + match[0].length
+    }
+  })
+  
+  // Lägg till resten av texten
+  if (lastIndex < text.length) {
+    parts.push(<span key={`text-${keyCounter++}`}>{text.substring(lastIndex)}</span>)
+  }
+  
+  return <Text>{parts}</Text>
+}
+
+async function getEvents(): Promise<EventDocument[]> {
+  try {
+    const events = await client.fetch<Event[]>(allEventsQuery)
+    return events.map(transformEvent)
+  } catch (error) {
+    console.error('Error fetching events:', error)
+    // Fallback till hårdkodad data om Sanity misslyckas
+    return []
+  }
+}
+
+export default async function EventsPage() {
+  const sanityEvents = await getEvents()
+  
+  // Fallback events om Sanity är tom
+  const defaultEvents: EventDocument[] = [
     {
       title: "Veckoscramble",
       subtitle: "2-mannascramble",
-      imageSrc: "/images/club.png",
-      content: (
-        <Text>
-          Ny bana <strong>varje vecka</strong>. Spelas <strong>mån–sön</strong>, valfri tid. Kostnad <strong>200 kr/lag</strong> + simulatorhyra.
-        </Text>
-      ),
+      imageUrl: "/images/club.png",
+      imageAlt: "Veckoscramble",
+      content: "Ny bana **varje vecka**. Spelas **mån–sön**, valfri tid. Kostnad **200 kr/lag** + simulatorhyra.",
       ctaHref: "/events/veckoscramble",
       ctaLabel: "Läs mer",
     },
     {
       title: "Event",
       subtitle: "Boka hela lokalen",
-      imageSrc: "/images/render2.PNG",
-      content: (
-        <Text>
-          Hyr hela lokalen (6 simulatorer) med kompisgänget, för kickoff, kundkväll eller teambuilding. Anpassade upplägg med tävlingar, mat och dryck – kontakta oss för offert.
-        </Text>
-      ),
+      imageUrl: "/images/render2.PNG",
+      imageAlt: "Boka hela lokalen",
+      content: "Hyr hela lokalen (6 simulatorer) med kompisgänget, för kickoff, kundkväll eller teambuilding. Anpassade upplägg med tävlingar, mat och dryck – kontakta oss för offert.",
       ctaHref: "/events/boka-lokalen",
       ctaLabel: "Läs mer",
     },
     {
       title: "Ladies Tour Tuesdays",
       subtitle: "Damliga",
-      imageSrc: "/images/invigning/DSC06673.jpg",
-      content: (
-        <Text>
-          Tisdagar <strong>13.00–15.00</strong> (2 h) med <strong>250 kr</strong> per person. Ett Ladies only-upplägg som mixar veckovisa format och olika banor, betalning sker på plats. Speldagar: <strong>9 & 16 december, 13, 20 & 27 januari, 3, 17 & 24 februari samt 3, 10, 17, 24 & 31 mars</strong> (avslutning med bubbel).
-        </Text>
-      ),
+      imageUrl: "/images/invigning/DSC06673.jpg",
+      imageAlt: "Ladies Tour Tuesdays",
+      content: "Tisdagar **13.00–15.00** (2 h) med **250 kr** per person. Ett Ladies only-upplägg som mixar veckovisa format och olika banor, betalning sker på plats. Speldagar: **9 & 16 december, 13, 20 & 27 januari, 3, 17 & 24 februari samt 3, 10, 17, 24 & 31 mars** (avslutning med bubbel).",
       ctaHref: "https://book.sweetspot.io/clubs/use-golf/",
       ctaLabel: "Anmäl dig",
     },
     {
       title: "Onsdagsgolfen",
       subtitle: "",
-      imageSrc: "/images/invigning/DSC06600.jpg",
-      content: (
-        <Text>
-          Varje onsdag spelar vi en social tävling för max 24 medlemmar. Två starttider – <strong>13.00–15.00</strong> eller <strong>17.00–19.00</strong> – och fyra omväxlande format gör det både lekfullt och tävlingsinriktat. Kostnad <strong>250 kr</strong> och anmälan sker via Sweetspot.
-        </Text>
-      ),
+      imageUrl: "/images/invigning/DSC06600.jpg",
+      imageAlt: "Onsdagsgolfen",
+      content: "Varje onsdag spelar vi en social tävling för max 24 medlemmar. Två starttider – **13.00–15.00** eller **17.00–19.00** – och fyra omväxlande format gör det både lekfullt och tävlingsinriktat. Kostnad **250 kr** och anmälan sker via Sweetspot.",
       ctaHref: "https://book.sweetspot.io/clubs/use-golf/passes/3d4941fe-3d67-4e7b-9fd2-c9a4aee12b1c",
       ctaLabel: "Anmäl dig",
     },
-
     {
       title: "Juniorligan",
       subtitle: "Hösten",
-      imageSrc: "/images/club2.png",
-      content: (
-        <Text>
-          Start <strong>18 november</strong>. 3 spelare/simulator, 9 hål + fri lek efteråt. Kostnad <strong>1 250 kr</strong> per person. Medlemskap <strong>Junior User</strong> krävs.
-        </Text>
-      ),
+      imageUrl: "/images/club2.png",
+      imageAlt: "Juniorligan Hösten",
+      content: "Start **18 november**. 3 spelare/simulator, 9 hål + fri lek efteråt. Kostnad **1 250 kr** per person. Medlemskap **Junior User** krävs.",
       ctaHref: "/events/juniorligan",
       ctaLabel: "Läs mer",
     },
     {
       title: "Juniorligan",
       subtitle: "Våren",
-      imageSrc: "/images/club2-sticker.png",
-      content: (
-        <Text>
-          Tisdagar <strong>15–17</strong> följande datum: <strong>20, 27 jan</strong>, <strong>3, 17, 24 feb</strong>, <strong>3, 10, 17, 24 mars</strong> (avslutning).
-          3 spelare/simulator, 9 hål + fri lek efteråt. Kostnad <strong>2 500 kr</strong>. Medlemskap Junior krävs.
-        </Text>
-      ),
+      imageUrl: "/images/club2-sticker.png",
+      imageAlt: "Juniorligan Våren",
+      content: "Tisdagar **15–17** följande datum: **20, 27 jan**, **3, 17, 24 feb**, **3, 10, 17, 24 mars** (avslutning). 3 spelare/simulator, 9 hål + fri lek efteråt. Kostnad **2 500 kr**. Medlemskap Junior krävs.",
       ctaHref: "/events/juniorligan",
       ctaLabel: "Läs mer",
     },
-  ];
+  ]
+  
+  const programItems = sanityEvents.length > 0 ? sanityEvents : defaultEvents
+  
   return (
     <FullBleed>
-
       <div className="border-y-2 border-[var(--brand-secondary)]/40">
         <Page variant="subpage">
           {/* Intro – harmoniserad med Medlemskap */}
@@ -161,22 +195,27 @@ export default function EventsPage() {
           {/* Program & ligor i medlemskaps-stil (bild + overlay + text) */}
           <Section className="-mt-18">
             <div className="space-y-6">
-              {/** 
-                <Heading as={3}>Program & ligor</Heading> */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {programItems.map((item) => (
-                  <div key={`${item.title}-${item.subtitle}`} className="rounded-none overflow-hidden border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)]">
+                  <div key={`${item.title}-${item.subtitle || ''}`} className="rounded-none overflow-hidden border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)]">
                     <div className="relative h-56 border-b-2 border-[var(--brand-secondary)]">
-                      <Image src={item.imageSrc} alt={item.title} fill className="object-cover blur-xs scale-105 brightness-90" />
+                      <Image 
+                        src={item.imageUrl} 
+                        alt={item.imageAlt || item.title} 
+                        fill 
+                        className="object-cover blur-xs scale-105 brightness-90" 
+                      />
                       <div className="absolute inset-0 bg-black/20" />
                       <div className="absolute inset-0 flex items-center justify-center flex-col">
                         <h3 className="font-horus text-3xl sm:text-4xl text-[var(--brand-primary)]">{item.title}</h3>
-                        <p className="text-sm sm:text-base text-[var(--brand-primary)]/80 uppercase tracking-wider">{item.subtitle}</p>
+                        {item.subtitle && (
+                          <p className="text-sm sm:text-base text-[var(--brand-primary)]/80 uppercase tracking-wider">{item.subtitle}</p>
+                        )}
                       </div>
                     </div>
                     <div className="p-6 space-y-4">
                       <div className="text-sm sm:text-base">
-                        {item.content}
+                        {formatContent(item.content)}
                       </div>
                       {item.ctaHref ? (
                         <div>
@@ -191,65 +230,6 @@ export default function EventsPage() {
               </div>
             </div>
           </Section>
-
-          {/* Veckoscramble – bakgrundsbild med text och CTA 
-          <Section className="pt-8 -mt-18">
-            <div className="relative border-2 border-[var(--brand-secondary)]/60 rounded-none overflow-hidden min-h-72 px-8">
-              <Image src="/images/render2.PNG" alt="Veckoscramble" fill priority className="object-cover object-center blur-sm scale-105 brightness-90" />
-              <div className="absolute inset-0 bg-black/35" />
-              <div className="relative z-10">
-                  <div className="py-14 sm:py-20 max-w-3xl">
-                    <h3 className="font-horus text-3xl sm:text-4xl text-[var(--brand-primary)] ">Veckoscramble</h3>
-                    <p className="text-md text-[var(--brand-primary)]/80 uppercase tracking-wider mb-4">2-mannascramble</p>
-                    <p className="text-[var(--brand-primary)]/95">
-                      Ny bana <strong>varje vecka</strong>. Spelas <strong>mån–sön</strong>, valfri tid. Kostnad <strong>200 kr/lag</strong> + simulatorhyra.
-                    </p>
-                    <div className="mt-6">
-                      <a href="/events/veckoscramble" className="sketch-button sketch-v1 text-[var(--brand-primary)]" data-cursor-target data-cursor-padding="8">
-                        <span className="sketch-sides py-2 px-3 uppercase tracking-widest">Läs mer</span>
-                      </a>
-                    </div>
-                  </div>
-              </div>
-            </div>
-          </Section>*/}
-
-          {/* Seniorgolf – detaljerad sektion flyttad till egen sida */}
-
-          {/* Eventkalender 
-          <Section>
-            <Container>
-              <Heading as={2} className="text-center">Eventkalender</Heading>
-              <div className="mt-10 space-y-8">
-                {eventItems.map((ev) => (
-                  <div key={ev.title} className="grid grid-cols-1 md:grid-cols-[2fr_3fr_auto] gap-6 items-center ug-card p-4 rounded-none transition-colors">
- 
-                    <div className="bg-[var(--brand-secondary)] h-40 md:h-36 border-2 border-[var(--brand-secondary)]/60 rounded-none" />
-         
-                    <div className="max-w-xl">
-                      <p className="font-semibold uppercase tracking-wider">{ev.title}</p>
-                      {ev.date ? <p className="opacity-80 text-sm mt-1">{ev.date}</p> : null}
-                      <ul className="list-disc pl-5 mt-3 space-y-1">
-                        {ev.bullets.map((b, i) => (
-                          <li key={i}>{b}</li>
-                        ))}
-                      </ul>
-                    </div>
-      
-                    <div className="justify-self-start md:justify-self-end w-full md:w-auto">
-                      <a
-                        href={ev.ctaHref}
-                        className="inline-flex w-full md:w-auto items-center justify-center bg-[var(--brand-secondary)] text-[var(--brand-primary)] px-6 py-3 font-semibold uppercase tracking-wider rounded-none"
-                      >
-                        {ev.ctaLabel ?? "BOKA NU"}
-                      </a>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-            </Container>
-          </Section>*/}
         </Page>
       </div>
     </FullBleed>
@@ -260,5 +240,3 @@ export const metadata: Metadata = {
   title: "Event & Community",
   description: "Tävlingar, ligor och sociala kvällar hos USE Golf i Göteborg.",
 };
-
-

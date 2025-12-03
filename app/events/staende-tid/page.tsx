@@ -7,8 +7,16 @@ import { Heading, Text, Lead } from "@/components/ui/Typography";
 import InquiryForm from "@/components/ui/InquiryForm";
 import Image from "next/image";
 import StaendeTidCalculator from "@/components/ui/StaendeTidCalculator";
+import { getPricingData, getClosures } from "@/sanity/lib/pricingQueries";
+import { defaultPricingData, type PricingData } from "@/lib/prices";
 
-export default function StaendeTidPage() {
+export default async function StaendeTidPage() {
+  // Hämta Pricing Data från Sanity, använd fallback om Sanity-data inte finns
+  const sanityPricingData = await getPricingData();
+  const pricingDataToUse: PricingData = sanityPricingData || defaultPricingData;
+  
+  // Hämta stängningsdatum från Sanity
+  const closures = await getClosures();
   return (
     <FullBleed>
       <div className="border-y border-[var(--brand-secondary)]">
@@ -41,7 +49,7 @@ export default function StaendeTidPage() {
               <Text className="text-sm text-[var(--brand-olive-900)] opacity-80">
                 Välj antal simulatorer, tid och period för att få en uppskattning av kostnaden.
               </Text>
-              <StaendeTidCalculator />
+              <StaendeTidCalculator pricingData={pricingDataToUse} closures={closures} />
             </div>
           </Section>
 

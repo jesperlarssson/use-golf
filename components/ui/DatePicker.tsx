@@ -1,11 +1,13 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import type { ClosureDocument } from "@/sanity/lib/pricingQueries";
 
 type DatePickerProps = {
   selectedDate: Date | null;
   onDateSelect: (date: Date) => void;
   minDate?: Date;
+  closures?: ClosureDocument[];
 };
 
 const MONTHS = [
@@ -15,7 +17,7 @@ const MONTHS = [
 
 const WEEKDAYS = ["Mån", "Tis", "Ons", "Tor", "Fre", "Lör", "Sön"];
 
-export default function DatePicker({ selectedDate, onDateSelect, minDate }: DatePickerProps) {
+export default function DatePicker({ selectedDate, onDateSelect, minDate, closures = [] }: DatePickerProps) {
   const today = new Date();
   const [currentMonth, setCurrentMonth] = useState(today.getMonth());
   const [currentYear, setCurrentYear] = useState(today.getFullYear());
@@ -41,6 +43,24 @@ export default function DatePicker({ selectedDate, onDateSelect, minDate }: Date
     return daysArray;
   }, [startingDayOfWeek, daysInMonth]);
 
+  const isDateClosed = (day: number): { isClosed: boolean; closureTitle?: string } => {
+    const date = new Date(currentYear, currentMonth, day);
+    date.setHours(0, 0, 0, 0);
+    
+    for (const closure of closures) {
+      const closureStart = new Date(closure.startDate);
+      closureStart.setHours(0, 0, 0, 0);
+      const closureEnd = new Date(closure.endDate);
+      closureEnd.setHours(23, 59, 59, 999);
+      
+      if (date >= closureStart && date <= closureEnd) {
+        return { isClosed: true, closureTitle: closure.title };
+      }
+    }
+    
+    return { isClosed: false };
+  };
+
   const isDateDisabled = (day: number): boolean => {
     const date = new Date(currentYear, currentMonth, day);
     const today = new Date();
@@ -48,6 +68,11 @@ export default function DatePicker({ selectedDate, onDateSelect, minDate }: Date
     
     if (date < today) return true;
     if (minDate && date < minDate) return true;
+    
+    // Stängda datum är också disabled
+    const { isClosed } = isDateClosed(day);
+    if (isClosed) return true;
+    
     return false;
   };
 
@@ -130,6 +155,7 @@ export default function DatePicker({ selectedDate, onDateSelect, minDate }: Date
 
           const disabled = isDateDisabled(day);
           const selected = isDateSelected(day);
+          const { isClosed, closureTitle } = isDateClosed(day);
           const isToday = (() => {
             const today = new Date();
             return (
@@ -145,23 +171,29 @@ export default function DatePicker({ selectedDate, onDateSelect, minDate }: Date
               type="button"
               onClick={() => handleDayClick(day)}
               disabled={disabled}
+              title={isClosed ? `Stängt: ${closureTitle}` : undefined}
               className={`
-                aspect-square border-2 transition
+                aspect-square border-2 transition relative
                 ${selected
                   ? "bg-[var(--brand-secondary)] text-[var(--brand-primary)] border-[var(--brand-secondary)]"
+                  : isClosed
+                  ? "bg-red-50 border-red-300 text-red-700"
                   : "border-transparent hover:border-[var(--brand-secondary)]/40"
                 }
                 ${disabled
-                  ? "opacity-30 cursor-not-allowed"
+                  ? "opacity-60 cursor-not-allowed"
                   : "cursor-pointer hover:bg-[var(--brand-secondary)]/10"
                 }
-                ${isToday && !selected
+                ${isToday && !selected && !isClosed
                   ? "border-[var(--brand-secondary)]/60"
                   : ""
                 }
               `}
             >
-              <span className="text-sm font-medium">{day}</span>
+              <span className={`text-sm font-medium ${isClosed ? "line-through" : ""}`}>{day}</span>
+              {isClosed && (
+                <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full" />
+              )}
             </button>
           );
         })}

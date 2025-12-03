@@ -11,23 +11,203 @@ import { Heading, Lead, Text } from "@/components/ui/Typography";
 import FadeIn from "@/components/ui/FadeIn";
 import Grid, { Col } from "@/components/ui/Grid";
 import Logo from "@/components/ui/Logo";
-import FAQ, { FAQItem } from "@/components/ui/FAQ";
+import FAQ from "@/components/ui/FAQ";
+import type { FAQItem } from "@/components/ui/FAQ";
 import UserPassesSection from "@/components/ui/UserPassesSection";
 import SweetspotAlert from "@/components/SweetspotAlert";
+import { client } from "@/sanity/lib/client";
+import { allPostsQuery, transformPost, PostDocument, Post, allFAQQuery, transformFAQ, type FAQ as SanityFAQ, type FAQDocument, landingPageEventsQuery, transformEvent, Event, EventDocument } from "@/sanity/lib/queries";
+import JournalCard from "@/components/ui/JournalCard";
+import Link from "next/link";
 
 
 
-export default function Home() {
-  const programItems = [
+async function getLatestPosts(limit: number = 3): Promise<PostDocument[]> {
+  try {
+    const posts = await client.fetch<Post[]>(allPostsQuery);
+    return posts.slice(0, limit).map(transformPost);
+  } catch (error) {
+    console.error('Error fetching latest posts:', error);
+    return [];
+  }
+}
+
+async function getFAQ(): Promise<FAQDocument[]> {
+  try {
+    const faqs = await client.fetch<SanityFAQ[]>(allFAQQuery);
+    return faqs.map(transformFAQ);
+  } catch (error) {
+    console.error('Error fetching FAQ:', error);
+    // Fallback till hårdkodad data om Sanity misslyckas
+    return [];
+  }
+}
+
+// Helper function för att formatera text med **fet text**
+function formatContent(text: string) {
+  const parts: React.ReactNode[] = []
+  const boldRegex = /\*\*([^*]+)\*\*/g
+  const matches = Array.from(text.matchAll(boldRegex))
+
+  if (matches.length === 0) {
+    return <Text>{text}</Text>
+  }
+
+  let lastIndex = 0
+  let keyCounter = 0
+
+  matches.forEach((match) => {
+    if (match.index !== undefined) {
+      // Lägg till text före match
+      if (match.index > lastIndex) {
+        const beforeText = text.substring(lastIndex, match.index)
+        if (beforeText) {
+          parts.push(<span key={`text-${keyCounter++}`}>{beforeText}</span>)
+        }
+      }
+      // Lägg till fet text
+      parts.push(<strong key={`bold-${keyCounter++}`}>{match[1]}</strong>)
+      lastIndex = match.index + match[0].length
+    }
+  })
+
+  // Lägg till resten av texten
+  if (lastIndex < text.length) {
+    parts.push(<span key={`text-${keyCounter++}`}>{text.substring(lastIndex)}</span>)
+  }
+
+  return <Text>{parts}</Text>
+}
+
+async function getLandingPageEvents(): Promise<EventDocument[]> {
+  try {
+    const events = await client.fetch<Event[]>(landingPageEventsQuery);
+    return events.map(transformEvent);
+  } catch (error) {
+    console.error('Error fetching landing page events:', error);
+    return [];
+  }
+}
+
+export default async function Home() {
+  const latestPosts = await getLatestPosts(3);
+  const faqItems = await getFAQ();
+  const landingPageEvents = await getLandingPageEvents();
+
+  // Fallback FAQ-data om Sanity är tom
+  const defaultFAQ: FAQDocument[] = [
+    {
+      q: "Vad är USE Golf?",
+      a: "USE Golf är Göteborgs nya destination för inomhusgolf – en mötesplats där du kan spela, träna och umgås året runt. Vi erbjuder **premium-simulatorer från TrackMan**, ett café med enklare mat och dryck samt events och ligor för både privatpersoner och företag.",
+    },
+    {
+      q: "Var ligger ni?",
+      a: "Du hittar oss på **Krogabäcksvägen 2, 436 53 Hovås**. Parkering finns precis utanför i P-huset.",
+    },
+    {
+      q: "Hur fungerar parkeringen?",
+      a: "Det finns **gratis parkering i 2 timmar** i P-huset utanför.\nKom ihåg att aktivera parkeringen via appen **EasyPark** när du anländer.",
+    },
+    {
+      q: "Hur bokar jag en simulator?",
+      a: "Bokning sker via vår partner **Sweetspot**. Du hittar länken direkt på vår hemsida under [Boka Simulator](/bokning). Där väljer du tid, bana och antal spelare.",
+      action: {
+        label: "Till bokning",
+        href: "/bokning",
+      },
+    },
+    {
+      q: "Kan jag boka en stående tid varje vecka?",
+      a: "Ja – vi erbjuder **fasta veckotider**. Kontakta oss på [hello@usegolf.se](mailto:hello@usegolf.se) så hjälper vi dig att hitta en tid som passar.",
+      action: {
+        label: "Läs mer om stående tider",
+        href: "/events/staende-tid",
+      },
+    },
+    {
+      q: "Hur många kan spela samtidigt?",
+      a: "Upp till **4 spelare per simulator** rekommenderas för bästa upplevelse.",
+    },
+    {
+      q: "Hur lång tid tar en runda?",
+      a: "En **18-hålsrunda för 2 spelare** tar ungefär **2 timmar**. Du kan boka både **55- och 110-minuterspass** beroende på hur mycket du vill spela.",
+    },
+    {
+      q: "Behöver jag ett TrackMan-konto?",
+      a: "Ja – för att spara resultat och statistik behöver du ett **gratis TrackMan-konto**.\n\n1. Ladda ner TrackMan Golf-appen i App Store eller Google Play\n2. Skapa ett konto innan ditt besök\n3. När du kommer till oss loggar du in genom att scanna QR-koden på TV-skärmen eller i dukens högra hörn med appens skanner",
+    },
+    {
+      q: "Hur skapar jag ett TrackMan-konto?",
+      a: "Det tar bara någon minut!\n\n**1. Ladda ner appen**\nSök efter TrackMan Golf (orange ikon med TrackMan-loggan) i App Store eller Google Play.\n\n**2. Skapa konto**\nÖppna appen och välj \"Create Account\". Fyll i namn, e-postadress och lösenord.\n\n**3. Verifiera kontot**\nGå till din e-post och bekräfta registreringen via länken från TrackMan.\n\n**4. Logga in hos oss**\nNär du står vid simulatorn – öppna TrackMan-appen och välj \"Scan to log in\". Scanna QR-koden på TV-skärmen i ditt bås eller på dukens högra hörn.\n\n💡 **Tips:** Har du redan ett TrackMan-konto? Använd samma inloggning – all din data sparas automatiskt oavsett var du spelar.",
+    },
+    {
+      q: "Vad ska jag ta med?",
+      a: "• **Egna klubbor** (om du inte hyr, se nedan)\n• **Golfskor** går bra att använda\n• Använd **inte** egna bollar eller träpeggar\n\nVi har **Titleist Pro V1-bollar** och särskilda peggar som ska användas i våra simulatorer.",
+    },
+    {
+      q: "Finns hyrklubbor att låna?",
+      a: "Ja, vi erbjuder **hyrklubbor**. Boka dem gärna i förväg via [hello@usegolf.se](mailto:hello@usegolf.se).",
+    },
+    {
+      q: "Erbjuder ni dryck och lättare mat?",
+      a: "Ja! I vårt **café** hittar du kaffe, drycker, mackor och enklare tilltugg under hela dagen.",
+    },
+    {
+      q: "Behöver jag vara medlem för att spela?",
+      a: "Nej, **alla är välkomna**! Men som medlem får du förmåner som rabatt på spel, events och partnererbjudanden.",
+      action: {
+        label: "Läs mer om medlemskap",
+        href: "/medlemskap",
+      },
+    },
+    {
+      q: "Vilka medlemskap finns?",
+      a: "Vi erbjuder olika **User Pass-nivåer** samt **Junior Pass**. Du hittar aktuella priser och villkor på vår hemsida under [Medlemskap](/medlemskap).",
+      action: {
+        label: "Se medlemskap",
+        href: "/medlemskap",
+      },
+    },
+    {
+      q: "Kan företag boka egna event?",
+      a: "Absolut! Vi arrangerar **företagsevent, turneringar, after work-spel** och kundaktiviteter. Kontakta oss på [hello@usegolf.se](mailto:hello@usegolf.se) för offert.",
+      action: {
+        label: "Läs mer om event",
+        href: "/events/boka-lokalen",
+      },
+    },
+    {
+      q: "Kan jag köpa presentkort?",
+      a: "Ja, **presentkort** finns att köpa på plats eller digitalt – perfekt för golfälskaren!",
+      action: {
+        label: "Läs mer om priser & presentkort",
+        href: "/priser-presentkort",
+      },
+    },
+    {
+      q: "Finns personal på plats?",
+      a: "Ja, våra **grymma medarbetare** finns alltid på plats för att hjälpa dig i gång, svara på frågor och skapa den bästa upplevelsen.",
+    },
+    {
+      q: "Kan jag ta med barn?",
+      a: "Ja – **barn är välkomna** tillsammans med vuxen. Vi har även **Junior League** och ungdomsaktiviteter.",
+    },
+    {
+      q: "Vad händer om jag behöver avboka?",
+      a: "Avbokning sker via **Sweetspot senast 3 timmar** före spelstart. Senare avbokning debiteras **fullt pris**.",
+    },
+  ];
+
+  const faqData = faqItems.length > 0 ? faqItems : defaultFAQ;
+
+  // Fallback events om Sanity är tom
+  const defaultEvents: EventDocument[] = [
     {
       title: "Veckoscramble",
       subtitle: "2-mannascramble",
-      imageSrc: "/images/invigning/DSC06519.jpg",
-      content: (
-        <Text>
-          Ny bana <strong>varje vecka</strong>. Spelas <strong>mån–sön</strong>, valfri tid. Kostnad <strong>200 kr/lag</strong> + simulatorhyra.
-        </Text>
-      ),
+      imageUrl: "/images/invigning/DSC06519.jpg",
+      imageAlt: "Veckoscramble",
+      content: "Ny bana **varje vecka**. Spelas **mån–sön**, valfri tid. Kostnad **200 kr/lag** + simulatorhyra.",
       ctaHref: "/events/veckoscramble",
       ctaLabel: "Läs mer",
     },
@@ -47,41 +227,34 @@ export default function Home() {
     {
       title: "Onsdagsgolfen",
       subtitle: "",
-      imageSrc: "/images/invigning/DSC06600.jpg",
-      content: (
-        <Text>
-          Varje onsdag spelar vi en social tävling för max 24 medlemmar. Två starttider – <strong>13.00–15.00</strong> eller <strong>17.00–19.00</strong> – och fyra omväxlande format gör det både lekfullt och tävlingsinriktat. Kostnad <strong>250 kr</strong> och anmälan sker via Sweetspot.
-        </Text>
-      ),
+      imageUrl: "/images/invigning/DSC06600.jpg",
+      imageAlt: "Onsdagsgolfen",
+      content: "Varje onsdag spelar vi en social tävling för max 24 medlemmar. Två starttider – **13.00–15.00** eller **17.00–19.00** – och fyra omväxlande format gör det både lekfullt och tävlingsinriktat. Kostnad **250 kr** och anmälan sker via Sweetspot.",
       ctaHref: "https://book.sweetspot.io/clubs/use-golf/passes/3d4941fe-3d67-4e7b-9fd2-c9a4aee12b1c",
       ctaLabel: "Anmäl dig",
     },
     {
       title: "Juniorligan",
       subtitle: "Hösten",
-      imageSrc: "/images/invigning/DSC06511.jpg",
-      content: (
-        <Text>
-          Start <strong>18 november</strong>. 3 spelare/simulator, 9 hål + fri lek efteråt. Kostnad <strong>1 250 kr</strong> per person. Medlemskap <strong>Junior User</strong> krävs.
-        </Text>
-      ),
+      imageUrl: "/images/invigning/DSC06511.jpg",
+      imageAlt: "Juniorligan Hösten",
+      content: "Start **18 november**. 3 spelare/simulator, 9 hål + fri lek efteråt. Kostnad **1 250 kr** per person. Medlemskap **Junior User** krävs.",
       ctaHref: "/events/juniorligan",
       ctaLabel: "Läs mer",
     },
     {
       title: "Juniorligan",
       subtitle: "Våren",
-      imageSrc: "/images/club2.png",
-      content: (
-        <Text>
-          Tisdagar <strong>15–17</strong> följande datum: <strong>20, 27 jan</strong>, <strong>3, 17, 24 feb</strong>, <strong>3, 10, 17, 24 mars</strong> (avslutning).
-          3 spelare/simulator, 9 hål + fri lek efteråt. Kostnad <strong>2 500 kr</strong>. Medlemskap <strong>Junior User</strong> krävs.
-        </Text>
-      ),
+      imageUrl: "/images/club2.png",
+      imageAlt: "Juniorligan Våren",
+      content: "Tisdagar **15–17** följande datum: **20, 27 jan**, **3, 17, 24 feb**, **3, 10, 17, 24 mars** (avslutning). 3 spelare/simulator, 9 hål + fri lek efteråt. Kostnad **2 500 kr**. Medlemskap **Junior User** krävs.",
       ctaHref: "/events/juniorligan",
       ctaLabel: "Läs mer",
     },
-  ];
+  ]
+
+  const programItems = landingPageEvents.length > 0 ? landingPageEvents : defaultEvents
+
   return (
     <Page variant="landing">
       <div className="relative">
@@ -154,7 +327,31 @@ export default function Home() {
         </Grid>
 
 
-
+        {/* Section with latest blog posts */}
+        {latestPosts.length > 0
+          && (
+            <Section className="mb-0" >
+              <FadeIn>
+                <div className="flex items-center justify-between mb-2">
+                  <Heading as={2}>USE Journal</Heading>
+                  <Link
+                    href="/journal"
+                    className="text-[var(--brand-secondary)] hover:text-[var(--brand-olive-900)] text-sm uppercase tracking-wider transition"
+                  >
+                    Visa alla →
+                  </Link>
+                </div>
+                <Text className="mt-2 mb-10 max-w-xl">Läs våra senaste artiklar om golf, träning och events.</Text>
+              </FadeIn>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {latestPosts.map((post, index) => (
+                  <FadeIn key={post._id} delay={index * 0.05}>
+                    <JournalCard post={post} headingLevel="h3" height="h-84" />
+                  </FadeIn>
+                ))}
+              </div>
+            </Section>
+          )}
 
         <Section className="">
           <FadeIn>
@@ -218,23 +415,38 @@ export default function Home() {
         {/* Program & ligor i medlemskaps-stil (bild + overlay + text) */}
         <Section className="pt-10 -mt-10">
           <div className="space-y-2">
-            <Heading as={2}>Event & ligor</Heading>
+            <div className="flex items-center justify-between mb-2">
+              <Heading as={2}>Event & ligor</Heading>
+              <Link
+                href="/events"
+                className="text-[var(--brand-secondary)] hover:text-[var(--brand-olive-900)] text-sm uppercase tracking-wider transition"
+              >
+                Visa alla →
+              </Link>
+            </div>
             <Text className="pb-2 max-w-xl">Återkommande aktiviteter och ligor för alla nivåer – häng med!</Text>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
               {programItems.map((item) => (
                 <FadeIn key={`${item.title}-${item.subtitle}`}>
                   <div className="rounded-none overflow-hidden border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] h-full min-h-[360px] flex flex-col">
                     <div className="relative h-56 border-b-2 border-[var(--brand-secondary)]">
-                      <Image src={item.imageSrc} alt={item.title} fill className="object-cover blur-xs scale-105 brightness-90" />
+                      <Image
+                        src={item.imageUrl || '/images/placeholder.png'}
+                        alt={item.imageAlt || item.title}
+                        fill
+                        className="object-cover blur-xs scale-105 brightness-90"
+                      />
                       <div className="absolute inset-0 bg-black/20" />
                       <div className="absolute inset-0 flex items-center justify-center flex-col">
                         <h3 className="font-horus text-3xl sm:text-4xl text-[var(--brand-primary)]">{item.title}</h3>
-                        <p className="text-sm sm:text-base text-[var(--brand-primary)]/80 uppercase tracking-wider">{item.subtitle}</p>
+                        {item.subtitle && (
+                          <p className="text-sm sm:text-base text-[var(--brand-primary)]/80 uppercase tracking-wider">{item.subtitle}</p>
+                        )}
                       </div>
                     </div>
                     <div className="p-6 space-y-4 flex-1 flex flex-col">
                       <div className="text-sm sm:text-base">
-                        {item.content}
+                        {typeof item.content === 'string' ? formatContent(item.content) : item.content}
                       </div>
                       {item.ctaHref ? (
                         <div className="mt-auto">
@@ -294,110 +506,7 @@ export default function Home() {
             <Text className="mt-2 mb-6 max-w-xl">Här hittar du svar på de vanligaste frågorna om USE Golf.</Text>
           </FadeIn>
           <FadeIn delay={0.1}>
-            <FAQ
-              items={[
-                {
-                  q: "Vad är USE Golf?",
-                  a: "USE Golf är Göteborgs nya destination för inomhusgolf – en mötesplats där du kan spela, träna och umgås året runt. Vi erbjuder **premium-simulatorer från TrackMan**, ett café med enklare mat och dryck samt events och ligor för både privatpersoner och företag.",
-                },
-                {
-                  q: "Var ligger ni?",
-                  a: "Du hittar oss på **Krogabäcksvägen 2, 436 53 Hovås**. Parkering finns precis utanför i P-huset.",
-                },
-                {
-                  q: "Hur fungerar parkeringen?",
-                  a: "Det finns **gratis parkering i 2 timmar** i P-huset utanför.\nKom ihåg att aktivera parkeringen via appen **EasyPark** när du anländer.",
-                },
-                {
-                  q: "Hur bokar jag en simulator?",
-                  a: "Bokning sker via vår partner **Sweetspot**. Du hittar länken direkt på vår hemsida under [Boka Simulator](/bokning). Där väljer du tid, bana och antal spelare.",
-                  action: {
-                    label: "Till bokning",
-                    href: "/bokning",
-                  },
-                },
-                {
-                  q: "Kan jag boka en stående tid varje vecka?",
-                  a: "Ja – vi erbjuder **fasta veckotider**. Kontakta oss på [hello@usegolf.se](mailto:hello@usegolf.se) så hjälper vi dig att hitta en tid som passar.",
-                  action: {
-                    label: "Läs mer om stående tider",
-                    href: "/events/staende-tid",
-                  },
-                },
-                {
-                  q: "Hur många kan spela samtidigt?",
-                  a: "Upp till **4 spelare per simulator** rekommenderas för bästa upplevelse.",
-                },
-                {
-                  q: "Hur lång tid tar en runda?",
-                  a: "En **18-hålsrunda för 2 spelare** tar ungefär **2 timmar**. Du kan boka både **55- och 110-minuterspass** beroende på hur mycket du vill spela.",
-                },
-                {
-                  q: "Behöver jag ett TrackMan-konto?",
-                  a: "Ja – för att spara resultat och statistik behöver du ett **gratis TrackMan-konto**.\n\n1. Ladda ner TrackMan Golf-appen i App Store eller Google Play\n2. Skapa ett konto innan ditt besök\n3. När du kommer till oss loggar du in genom att scanna QR-koden på TV-skärmen eller i dukens högra hörn med appens skanner",
-                },
-                {
-                  q: "Hur skapar jag ett TrackMan-konto?",
-                  a: "Det tar bara någon minut!\n\n**1. Ladda ner appen**\nSök efter TrackMan Golf (orange ikon med TrackMan-loggan) i App Store eller Google Play.\n\n**2. Skapa konto**\nÖppna appen och välj \"Create Account\". Fyll i namn, e-postadress och lösenord.\n\n**3. Verifiera kontot**\nGå till din e-post och bekräfta registreringen via länken från TrackMan.\n\n**4. Logga in hos oss**\nNär du står vid simulatorn – öppna TrackMan-appen och välj \"Scan to log in\". Scanna QR-koden på TV-skärmen i ditt bås eller på dukens högra hörn.\n\n💡 **Tips:** Har du redan ett TrackMan-konto? Använd samma inloggning – all din data sparas automatiskt oavsett var du spelar.",
-                },
-                {
-                  q: "Vad ska jag ta med?",
-                  a: "• **Egna klubbor** (om du inte hyr, se nedan)\n• **Golfskor** går bra att använda\n• Använd **inte** egna bollar eller träpeggar\n\nVi har **Titleist Pro V1-bollar** och särskilda peggar som ska användas i våra simulatorer.",
-                },
-                {
-                  q: "Finns hyrklubbor att låna?",
-                  a: "Ja, vi erbjuder **hyrklubbor**. Boka dem gärna i förväg via [hello@usegolf.se](mailto:hello@usegolf.se).",
-                },
-                {
-                  q: "Erbjuder ni dryck och lättare mat?",
-                  a: "Ja! I vårt **café** hittar du kaffe, drycker, mackor och enklare tilltugg under hela dagen.",
-                },
-                {
-                  q: "Behöver jag vara medlem för att spela?",
-                  a: "Nej, **alla är välkomna**! Men som medlem får du förmåner som rabatt på spel, events och partnererbjudanden.",
-                  action: {
-                    label: "Läs mer om medlemskap",
-                    href: "/medlemskap",
-                  },
-                },
-                {
-                  q: "Vilka medlemskap finns?",
-                  a: "Vi erbjuder olika **User Pass-nivåer** samt **Junior Pass**. Du hittar aktuella priser och villkor på vår hemsida under [Medlemskap](/medlemskap).",
-                  action: {
-                    label: "Se medlemskap",
-                    href: "/medlemskap",
-                  },
-                },
-                {
-                  q: "Kan företag boka egna event?",
-                  a: "Absolut! Vi arrangerar **företagsevent, turneringar, after work-spel** och kundaktiviteter. Kontakta oss på [hello@usegolf.se](mailto:hello@usegolf.se) för offert.",
-                  action: {
-                    label: "Läs mer om event",
-                    href: "/events/boka-lokalen",
-                  },
-                },
-                {
-                  q: "Kan jag köpa presentkort?",
-                  a: "Ja, **presentkort** finns att köpa på plats eller digitalt – perfekt för golfälskaren!",
-                  action: {
-                    label: "Läs mer om priser & presentkort",
-                    href: "/priser-presentkort",
-                  },
-                },
-                {
-                  q: "Finns personal på plats?",
-                  a: "Ja, våra **grymma medarbetare** finns alltid på plats för att hjälpa dig i gång, svara på frågor och skapa den bästa upplevelsen.",
-                },
-                {
-                  q: "Kan jag ta med barn?",
-                  a: "Ja – **barn är välkomna** tillsammans med vuxen. Vi har även **Junior League** och ungdomsaktiviteter.",
-                },
-                {
-                  q: "Vad händer om jag behöver avboka?",
-                  a: "Avbokning sker via **Sweetspot senast 3 timmar** före spelstart. Senare avbokning debiteras **fullt pris**.",
-                },
-              ]}
-            />
+            <FAQ items={faqData} />
           </FadeIn>
         </Section>
       </div>

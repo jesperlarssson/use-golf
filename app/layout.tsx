@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import ConditionalNoise from "./components/ConditionalNoise";
 import NoticeBar from "./components/NoticeBar";
 import GradualBlur from "@/components/ui/GradualBlur";
-import Noise from "@/components/ui/Noise";
 import LenisProvider from "./components/LenisProvider";
 import { Roboto_Flex } from "next/font/google";
 
@@ -77,17 +77,10 @@ export default function RootLayout({
       </head>
       <body className={`antialiased overflow-x-hidden ${robotoFlex.variable}`}>
         <LenisProvider>
-          <Noise
-            patternSize={50}
-            patternScaleX={0.5}
-            patternScaleY={0.5}
-            patternRefreshInterval={10}
-            patternAlpha={15}
-          />
+          <ConditionalNoise />
           <Header />
           <main>{children}</main>
           <Footer />
-
         </LenisProvider>
       </body>
     </html>

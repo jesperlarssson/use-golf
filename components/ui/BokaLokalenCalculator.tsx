@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
-import { dayLabels, type DayType, type Weekday, weekdayLabels, getAvailableStartTimes, getDayTypeFromWeekday, bokaLokalenPriser, getBokaLokalenBasPris } from "@/lib/prices";
+import { dayLabels, type DayType, type Weekday, weekdayLabels, getAvailableStartTimes, getDayTypeFromWeekday, bokaLokalenPriser, getBokaLokalenBasPris, defaultBokaLokalenPriser } from "@/lib/prices";
 import DatePicker from "./DatePicker";
 import Link from "next/link";
+import type { ClosureDocument, VenueBookingDocument } from "@/sanity/lib/pricingQueries";
 
 const ANTAL_SIMULATORER = 6; // Alltid 6 simulatorer för hela lokalen
 const MIN_TIMAR = 2; // Minst 2 timmar
@@ -25,7 +26,12 @@ function formatDate(date: Date): string {
   });
 }
 
-export default function BokaLokalenCalculator() {
+interface BokaLokalenCalculatorProps {
+  closures?: ClosureDocument[];
+  venuePricing?: VenueBookingDocument | null;
+}
+
+export default function BokaLokalenCalculator({ closures = [], venuePricing }: BokaLokalenCalculatorProps) {
   const [timmar, setTimmar] = useState(MIN_TIMAR);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [startTid, setStartTid] = useState(() => {
@@ -73,17 +79,21 @@ export default function BokaLokalenCalculator() {
     setSelectedDate(date);
   };
 
+  // Använd venue pricing från Sanity eller fallback
+  const venuePricingToUse = venuePricing || null;
+  const extraTimmePris = venuePricingToUse?.extraHourPrice || defaultBokaLokalenPriser.extraTimme;
+
   // Baspris för hela lokalen (minst 2 timmar) baserat på veckodag
   const basPris = useMemo(() => {
     if (!veckodag) return 0;
-    return getBokaLokalenBasPris(veckodag);
-  }, [veckodag]);
+    return getBokaLokalenBasPris(veckodag, venuePricingToUse || undefined);
+  }, [veckodag, venuePricingToUse]);
 
   // Extra timmar (utöver 2 timmar)
   const extraTimmar = Math.max(0, timmar - MIN_TIMAR);
   const extraTimmarPris = useMemo(() => {
-    return extraTimmar * bokaLokalenPriser.extraTimme;
-  }, [extraTimmar]);
+    return extraTimmar * extraTimmePris;
+  }, [extraTimmar, extraTimmePris]);
 
   // Lokalhyra (baspris + extra timmar)
   const lokalhyraPris = useMemo(() => {
@@ -104,6 +114,7 @@ export default function BokaLokalenCalculator() {
               selectedDate={selectedDate}
               onDateSelect={handleDateSelect}
               minDate={new Date()}
+              closures={closures}
             />
             {selectedDate && (
               <p className="mt-2 text-sm text-[var(--brand-olive-900)] opacity-80">
@@ -307,7 +318,7 @@ export default function BokaLokalenCalculator() {
                   </p>
                   {extraTimmar > 0 && (
                     <p className="text-xs">
-                      Extra timmar ({extraTimmar} × {bokaLokalenPriser.extraTimme.toLocaleString("sv-SE")} kr): {extraTimmarPris.toLocaleString("sv-SE")} kr
+                      Extra timmar ({extraTimmar} × {extraTimmePris.toLocaleString("sv-SE")} kr): {extraTimmarPris.toLocaleString("sv-SE")} kr
                     </p>
                   )}
                   <p className="text-xs font-semibold mt-2 pt-2 border-t border-[var(--brand-secondary)]/20">
