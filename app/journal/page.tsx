@@ -13,6 +13,9 @@ export const metadata: Metadata = {
   description: "Läs våra senaste artiklar om golf, träning och events i USE Journal.",
 };
 
+// Revalidera sidan var 60:e sekund som fallback (webhook revaliderar omedelbart)
+export const revalidate = 60;
+
 async function getPosts(): Promise<PostDocument[]> {
   const posts = await client.fetch<Post[]>(allPostsQuery);
   return posts.map(transformPost);

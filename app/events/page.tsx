@@ -240,3 +240,6 @@ export const metadata: Metadata = {
   title: "Event & Community",
   description: "Tävlingar, ligor och sociala kvällar hos USE Golf i Göteborg.",
 };
+
+// Revalidera sidan var 60:e sekund som fallback (webhook revaliderar omedelbart)
+export const revalidate = 60;

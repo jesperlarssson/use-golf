@@ -525,3 +525,6 @@ export const metadata: Metadata = {
     type: "website",
   },
 };
+
+// Revalidera sidan var 60:e sekund som fallback (webhook revaliderar omedelbart)
+export const revalidate = 60;

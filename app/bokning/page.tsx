@@ -13,6 +13,9 @@ export const metadata: Metadata = {
   description: "Boka simulator, stående tider eller hela lokalen hos USE Golf.",
 };
 
+// Revalidera sidan var 60:e sekund som fallback (webhook revaliderar omedelbart)
+export const revalidate = 60;
+
 export default async function BookingPage() {
   // Hämta Pricing Data från Sanity, använd fallback om Sanity-data inte finns
   const sanityPricingData = await getPricingData();

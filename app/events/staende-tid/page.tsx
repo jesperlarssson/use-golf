@@ -76,3 +76,6 @@ export const metadata: Metadata = {
   description: "Boka fasta tider hela säsongen och säkra din plats i simulatorn. Perfekt för ligor, företag eller kompisgäng.",
 };
 
+// Revalidera sidan var 60:e sekund som fallback (webhook revaliderar omedelbart)
+export const revalidate = 60;
+

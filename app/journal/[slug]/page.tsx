@@ -18,6 +18,9 @@ export async function generateStaticParams() {
   }));
 }
 
+// Revalidera sidan var 60:e sekund som fallback (webhook revaliderar omedelbart)
+export const revalidate = 60;
+
 export async function generateMetadata({
   params,
 }: {

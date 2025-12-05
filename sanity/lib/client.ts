@@ -6,5 +6,8 @@ export const client = createClient({
   dataset,
   apiVersion,
   useCdn: true,
+  // Stöd för cache-taggar för revalidation
+  perspective: 'published',
+  stega: false,
 })
 

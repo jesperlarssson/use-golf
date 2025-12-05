@@ -90,3 +90,6 @@ export const metadata: Metadata = {
   description: "Boka hela lokalen för en exklusiv kväll med golf, mat och gemenskap. Sex TrackMan-simulatorer, lounge, café och musik. Perfekt för after work, kundevent eller intern tävling.",
 };
 
+// Revalidera sidan var 60:e sekund som fallback (webhook revaliderar omedelbart)
+export const revalidate = 60;
+

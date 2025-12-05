@@ -266,4 +266,7 @@ export const metadata: Metadata = {
   description: "MASTER: Villkor för medlemskap, spelpotter, priser och partnernivåer hos USE Golf Göteborg.",
 };
 
+// Revalidera sidan var 60:e sekund som fallback (webhook revaliderar omedelbart)
+export const revalidate = 60;
+
 
