@@ -23,16 +23,8 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: false,
   },
-  // Exclude studio directory from build
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      config.resolve = config.resolve || {};
-      config.resolve.alias = {
-        ...config.resolve.alias,
-      };
-    }
-    return config;
-  },
+  // Turbopack är standard i Next.js 16
+  turbopack: {},
 };
 
 export default nextConfig;

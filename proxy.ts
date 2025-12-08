@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const isLaunched = (process.env.LAUNCHED ?? "false").toLowerCase() === "true";
   const { pathname } = request.nextUrl;
 
-  // Tillåt alltid API-routes att passera middleware orörda
+  // Tillåt alltid API-routes att passera proxy orörda
   if (pathname.startsWith("/api")) {
     return NextResponse.next();
   }
@@ -46,5 +46,3 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
 };
-
-

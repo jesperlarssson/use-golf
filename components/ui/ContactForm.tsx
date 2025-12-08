@@ -22,8 +22,23 @@ export default function ContactForm() {
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ name, email, phone, message, hp }),
       });
+      
+      if (!res.ok) {
+        let errorMessage = "Kunde inte skicka";
+        try {
+          const errorData = await res.json();
+          errorMessage = errorData.error || errorMessage;
+        } catch {
+          errorMessage = `Serverfel: ${res.status}`;
+        }
+        throw new Error(errorMessage);
+      }
+      
       const data = await res.json();
-      if (!res.ok || !data.ok) throw new Error(data.error || "Kunde inte skicka");
+      if (!data.ok) {
+        throw new Error(data.error || "Kunde inte skicka");
+      }
+      
       setState("success");
       setName("");
       setEmail("");

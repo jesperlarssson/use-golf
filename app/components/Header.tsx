@@ -191,12 +191,8 @@ export default function Header() {
     if (path.startsWith("/bli-medlem")) {
       return null;
     }
-    // Fallback för övriga sidor
-    return {
-      title: "USE GOLF",
-      imageSrc: "/images/wall.png",
-      marqueeText: undefined
-    };
+    // Ingen banner för övriga sidor
+    return null;
   };
 
   const headerVariantClass = getHeaderVariant(pathname);

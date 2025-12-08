@@ -22,6 +22,15 @@ const isRateLimited = (ip: string) => {
   return false;
 };
 
+const escapeHtml = (text: string) => {
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+};
+
 export async function POST(req: NextRequest) {
   try {
     const ip = getClientIp(req);
@@ -62,14 +71,14 @@ export async function POST(req: NextRequest) {
     const client = new Brevo.TransactionalEmailsApi();
     client.setApiKey(Brevo.TransactionalEmailsApiApiKeys.apiKey, apiKey);
 
-    const subject = `Kontaktformulär: ${name}`;
+    const subject = `Kontaktformulär: ${escapeHtml(name)}`;
     const htmlContent = `
       <div>
-        <p><strong>Namn:</strong> ${name}</p>
-        <p><strong>E-post:</strong> ${email}</p>
-        ${phone ? `<p><strong>Telefon:</strong> ${phone}</p>` : ""}
+        <p><strong>Namn:</strong> ${escapeHtml(name)}</p>
+        <p><strong>E-post:</strong> ${escapeHtml(email)}</p>
+        ${phone ? `<p><strong>Telefon:</strong> ${escapeHtml(phone)}</p>` : ""}
         <p><strong>Meddelande:</strong></p>
-        <p>${(message || "").replace(/\n/g, "<br/>")}</p>
+        <p>${escapeHtml(message || "").replace(/\n/g, "<br/>")}</p>
       </div>
     `;
 
@@ -88,7 +97,7 @@ export async function POST(req: NextRequest) {
           subject: "Tack för ditt meddelande",
           sender: { email: process.env.CONTACT_AUTOREPLY_FROM, name: "USE GOLF" },
           to: [{ email }],
-          htmlContent: `<p>Tack ${name}! Vi återkommer så snart vi kan.</p>`,
+          htmlContent: `<p>Tack ${escapeHtml(name)}! Vi återkommer så snart vi kan.</p>`,
         });
       } catch {
         // svälj autosvarsfel tyst
