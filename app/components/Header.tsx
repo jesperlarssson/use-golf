@@ -152,6 +152,13 @@ export default function Header() {
         marqueeText: "Noga utvalda produkter — För din utveckling"
       };
     }
+    if (path.startsWith("/presentkort")) {
+      return {
+        title: "Presentkort",
+        imageSrc: "/images/baller2-back.png",
+        marqueeText: "Ge golfglädje — Presentkort till vänner och familj"
+      };
+    }
     if (path.startsWith("/priser-presentkort")) {
       return {
         title: "Priser & Presentkort",

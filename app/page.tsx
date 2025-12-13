@@ -178,10 +178,10 @@ export default async function Home() {
     },
     {
       q: "Kan jag köpa presentkort?",
-      a: "Ja, **presentkort** finns att köpa på plats eller digitalt – perfekt för golfälskaren!",
+      a: "Ja, **presentkort** finns att köpa på plats hos oss – eller via mail. Perfekt för golfälskaren!",
       action: {
-        label: "Läs mer om priser & presentkort",
-        href: "/priser-presentkort",
+        label: "Läs mer om presentkort",
+        href: "/presentkort",
       },
     },
     {
