@@ -292,7 +292,7 @@ export default async function Home() {
               </FadeIn>
 
               <div className="mt-4 flex flex-wrap gap-3">
-                <a href="https://book.sweetspot.io/clubs/use-golf/" className="inline-flex items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">Boka tid</a>
+                <a href="https://book.sweetspot.io/clubs/use-golf/2129/tee-sheet" className="inline-flex items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">Boka tid</a>
                 <a href="/events/staende-tid" className="inline-flex items-center justify-center border-2 border-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-secondary)] font-semibold uppercase tracking-wider rounded-none hover:bg-[var(--brand-secondary)]/10 transition" data-cursor-target data-cursor-padding="10">Läs mer</a>
               </div>
             </div>

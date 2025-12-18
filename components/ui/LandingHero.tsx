@@ -64,7 +64,7 @@ export default function LandingHero({
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mt-4 w-full">
-              <Link href="https://book.sweetspot.io/clubs/use-golf/" className="bg-[var(--brand-secondary)] text-[var(--brand-primary)] px-6 py-3 font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition text-sm w-full sm:w-auto text-center">
+              <Link href="https://book.sweetspot.io/clubs/use-golf/2129/tee-sheet" className="bg-[var(--brand-secondary)] text-[var(--brand-primary)] px-6 py-3 font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition text-sm w-full sm:w-auto text-center">
 
                 Boka nu
 
