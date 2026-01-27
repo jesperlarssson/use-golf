@@ -90,14 +90,14 @@ export default function Header() {
         subTitle: "mer golf. mer fördelar"
       };
     }
-    if (path.startsWith("/events/boka-lokalen")) {
+    if (path.startsWith("/bokning/boka-lokalen")) {
       return {
         title: "USE GOLF TAKEOVER",
         imageSrc: "/images/club hit.png",
         marqueeText: "Ha hela lokalen för er själva"
       };
     }
-    if (path.startsWith("/events/staende-tid")) {
+    if (path.startsWith("/bokning/staende-tid")) {
       return {
         title: "stående tider",
         imageSrc: "/images/club hit.png",

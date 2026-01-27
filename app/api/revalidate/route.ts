@@ -40,15 +40,15 @@ export async function POST(req: NextRequest) {
         revalidatePath("/events/veckoscramble");
         revalidatePath("/events/juniorligan");
         revalidatePath("/events/seniorgolf");
-        revalidatePath("/events/boka-lokalen");
-        revalidatePath("/events/staende-tid");
+        revalidatePath("/bokning/boka-lokalen");
+        revalidatePath("/bokning/staende-tid");
         // Revalidera startsidan som visar events
         revalidatePath("/");
         break;
 
       case "pricing":
         // Revalidera sidor som använder pricing-data
-        revalidatePath("/events/staende-tid");
+        revalidatePath("/bokning/staende-tid");
         revalidatePath("/medlemsvillkor");
         revalidatePath("/bokning");
         revalidatePath("/medlemskap");
@@ -63,12 +63,12 @@ export async function POST(req: NextRequest) {
 
       case "venueBooking":
         // Revalidera sidor som använder venue booking-data
-        revalidatePath("/events/boka-lokalen");
+        revalidatePath("/bokning/boka-lokalen");
         break;
 
       case "closure":
         // Revalidera sidor som använder closure-data
-        revalidatePath("/events/staende-tid");
+        revalidatePath("/bokning/staende-tid");
         revalidatePath("/bokning");
         break;
 
