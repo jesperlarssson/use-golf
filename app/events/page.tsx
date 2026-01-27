@@ -186,7 +186,7 @@ export default async function EventsPage() {
                   />
                   <div className="pt-4">
                     <a
-                      href="/events/boka-lokalen"
+                      href="/bokning/boka-lokalen"
                       className="inline-flex items-center justify-center bg-[var(--brand-olive-900)] text-[var(--brand-primary)] px-8 py-4 font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition"
                     >
                       Läs mer 

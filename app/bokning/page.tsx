@@ -137,7 +137,7 @@ export default async function BookingPage() {
                       Boka fasta tider hela säsongen och säkra din plats. Perfekt för ligor, företag eller kompisgäng.
                     </Text>
                     <div className="mt-auto">
-                      <a href="/events/staende-tid" className="inline-flex w-full items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">
+                      <a href="/bokning/staende-tid" className="inline-flex w-full items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">
                         Läs mer
                       </a>
                     </div>
@@ -160,7 +160,7 @@ export default async function BookingPage() {
                       Hyr hela lokalen (6 simulatorer) för kickoff, kundkväll eller teambuilding. Anpassade upplägg med tävlingar, mat och dryck.
                     </Text>
                     <div className="mt-auto">
-                      <a href="/events/boka-lokalen" className="inline-flex w-full items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">
+                      <a href="/bokning/boka-lokalen" className="inline-flex w-full items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">
                         Läs mer
                       </a>
                     </div>
