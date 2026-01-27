@@ -23,8 +23,6 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: false,
   },
-  // Turbopack är standard i Next.js 16
-  turbopack: {},
 };
 
 export default nextConfig;

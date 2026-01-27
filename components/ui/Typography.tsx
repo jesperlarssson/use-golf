@@ -6,30 +6,47 @@ type HeadingProps = {
   as?: HeadingLevel;
   children: ReactNode;
   className?: string;
+  style?: React.CSSProperties;
 };
 
-export function Heading({ as = 1, children, className = "" }: HeadingProps) {
+export function Heading({ as = 1, children, className = "", style }: HeadingProps) {
   const Tag = ("h" + as) as unknown as ElementType;
   const base = "tracking-tight";
+  // Ta bort hårdkodad färg från size så att den kan överridas via className eller style
   const size =
     as === 1
       ? "text-3xl sm:text-5xl md:text-6xl font-horus"
       : as === 2
-      ? "text-xl sm:text-2xl md:text-3xl font-semibold uppercase text-[var(--brand-secondary)] tracking-wide"
+      ? "text-xl sm:text-2xl md:text-3xl font-semibold uppercase tracking-wide"
       : as === 3
-      ? "text-lg md:text-xl  uppercase text-[var(--brand-secondary)] tracking-wide"
+      ? "text-lg md:text-xl uppercase tracking-wide"
       : "text-lg sm:text-xl md:text-2xl font-semibold";
+  
+  // Standardfärg om ingen färg anges i className eller style
+  // Kontrollera om className redan innehåller en text-färg klass
+  const hasColorClass = className.match(/text-\[|text-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)/);
+  const defaultColor = !hasColorClass && !style?.color && (as === 2 || as === 3) 
+    ? "text-[var(--brand-secondary)]" 
+    : "";
 
-  return <Tag className={`${base} ${size} ${className}`}>{children}</Tag>;
+  return (
+    <Tag 
+      className={`${base} ${size} ${defaultColor} ${className}`}
+      style={style}
+    >
+      {children}
+    </Tag>
+  );
 }
 
 type TextProps = {
   children: ReactNode;
   className?: string;
+  style?: React.CSSProperties;
 };
 
-export function Text({ children, className = "" }: TextProps) {
-  return <p className={`text-base leading-relaxed ${className}`}>{children}</p>;
+export function Text({ children, className = "", style }: TextProps) {
+  return <p className={`text-base leading-relaxed ${className}`} style={style}>{children}</p>;
 }
 
 type LeadProps = {

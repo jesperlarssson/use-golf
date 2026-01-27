@@ -11,6 +11,14 @@ type NavItem = {
   external?: boolean;
 };
 
+type EventDocument = {
+  _id: string;
+  title: string;
+  slug?: string;
+  ctaHref?: string;
+  hasExternalLink?: boolean;
+};
+
 // Primär navigation (mitten på desktop)
 const primaryNav: NavItem[] = [
   { href: "/bokning", label: "Boka simulator" },
@@ -25,12 +33,14 @@ const primaryNav: NavItem[] = [
 const secondaryNav: NavItem[] = [
   { href: "/custom-fitting", label: "Custom Fitting" },
   { href: "/medlemsvillkor", label: "Medlemsvillkor" },
-
 ];
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [events, setEvents] = useState<EventDocument[]>([]);
+  const [eventsDropdownOpen, setEventsDropdownOpen] = useState(false);
+  const [eventsMenuExpanded, setEventsMenuExpanded] = useState(false);
   const pathname = usePathname();
 
   const hideHeader = pathname === "/pre-access" || pathname.startsWith("https://book.sweetspot.io/clubs/use-golf/") || pathname.startsWith("/bli-medlem") || pathname?.startsWith("/studio");
@@ -102,11 +112,7 @@ export default function Header() {
       };
     }
     if (path.startsWith("/events")) {
-      return {
-        title: "Event & Community",
-        imageSrc: "/images/invigning/DSC06527.jpg",
-        marqueeText: "Håll dig uppdaterad — Häng med på nästa event"
-      };
+      return null; // Banner hanteras nu på events-sidan direkt
     }
     if (path.startsWith("/partner")) {
       return {
@@ -205,6 +211,22 @@ export default function Header() {
   const headerVariantClass = getHeaderVariant(pathname);
   const bannerConfig = hideHeader ? null : getBannerConfig(pathname);
 
+  // Hämta events från API
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch('/api/events');
+        if (response.ok) {
+          const data = await response.json();
+          setEvents(data);
+        }
+      } catch (error) {
+        console.error('Error fetching events:', error);
+      }
+    };
+    fetchEvents();
+  }, []);
+
   // Liten scroll-detektor för att tona in bakgrund på header
   useEffect(() => {
     if (hideHeader) {
@@ -253,6 +275,73 @@ export default function Header() {
 
   // Enkla headerlänkar (utan sketch), med enradig ellips
   const renderHeaderItem = (item: NavItem, onClick?: () => void) => {
+    // Specialhantering för Events med dropdown
+    if (item.href === "/events" && events.length > 0) {
+      return (
+        <li
+          key={item.href}
+          className="relative"
+          onMouseEnter={() => setEventsDropdownOpen(true)}
+          onMouseLeave={() => setEventsDropdownOpen(false)}
+        >
+          <Link
+            href={item.href}
+            className={`${linkBase} ${isActive(item.href) ? activeBase : ""} whitespace-nowrap truncate max-w-[18ch]`}
+            aria-current={isActive(item.href) ? "page" : undefined}
+          >
+            {item.label}
+          </Link>
+          {/* Dropdown meny */}
+          {eventsDropdownOpen && (
+            <div className="absolute top-full left-0 pt-2 w-64 z-[60]">
+              {/* Osynlig bridge för att förhindra gap */}
+              <div className="absolute top-0 left-0 right-0 h-2 bg-transparent" />
+              {/* Dropdown innehåll */}
+              <div className="bg-[var(--brand-primary)] border-2 border-[var(--brand-secondary)]/20 shadow-lg">
+                <div className="py-2">
+                {events.map((event) => {
+                  const eventHref = event.hasExternalLink && event.ctaHref
+                    ? event.ctaHref
+                    : event.slug
+                    ? `/events/${event.slug}`
+                    : "/events";
+                  const isExternal = event.hasExternalLink && event.ctaHref?.startsWith("http");
+                  
+                  if (isExternal) {
+                    return (
+                      <a
+                        key={event._id}
+                        href={eventHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block px-4 py-2 text-sm uppercase tracking-wider hover:bg-[var(--brand-secondary)]/10 transition-colors text-[var(--brand-secondary)]"
+                      >
+                        {event.title}
+                      </a>
+                    );
+                  }
+                  return (
+                    <Link
+                      key={event._id}
+                      href={eventHref}
+                      className="block px-4 py-2 text-sm uppercase tracking-wider hover:bg-[var(--brand-secondary)]/10 transition-colors text-[var(--brand-secondary)]"
+                      onClick={() => {
+                        setEventsDropdownOpen(false);
+                        onClick?.();
+                      }}
+                    >
+                      {event.title}
+                    </Link>
+                  );
+                })}
+                </div>
+              </div>
+            </div>
+          )}
+        </li>
+      );
+    }
+
     const className = `${linkBase} ${isActive(item.href) ? activeBase : ""} whitespace-nowrap truncate max-w-[18ch]`;
     if (item.external) {
       return (
@@ -329,6 +418,8 @@ export default function Header() {
       html.setAttribute("data-menu-open", "true");
     } else {
       html.removeAttribute("data-menu-open");
+      // Stäng även events-expanderbar meny när huvudmenyn stängs
+      setEventsMenuExpanded(false);
     }
     return () => {
       html.removeAttribute("data-menu-open");
@@ -337,6 +428,82 @@ export default function Header() {
 
   // Länkrenderare för overlay (större typografi)
   const renderOverlayItem = (item: NavItem, onClick?: () => void) => {
+    // Specialhantering för Events med expanderbar meny
+    if (item.href === "/events" && events.length > 0) {
+      return (
+        <li key={item.href} className="space-y-2">
+          <button
+            onClick={() => setEventsMenuExpanded(!eventsMenuExpanded)}
+            className={`w-full flex items-center justify-between transition-opacity hover:opacity-80 uppercase tracking-widest text-[var(--brand-secondary)] ${isActive(item.href) ? "underline underline-offset-8" : ""}`}
+            data-cursor-target
+            data-cursor-padding="10"
+          >
+            <Link href={item.href} className="flex-1 text-left" onClick={onClick}>
+              {item.label}
+            </Link>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              className={`transition-transform ${eventsMenuExpanded ? "rotate-180" : ""}`}
+            >
+              <path
+                d="M4 6L8 10L12 6"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+          {eventsMenuExpanded && (
+            <ul className="ml-4 space-y-2 mt-2">
+              {events.map((event) => {
+                const eventHref = event.hasExternalLink && event.ctaHref
+                  ? event.ctaHref
+                  : event.slug
+                  ? `/events/${event.slug}`
+                  : "/events";
+                const isExternal = event.hasExternalLink && event.ctaHref?.startsWith("http");
+                
+                if (isExternal) {
+                  return (
+                    <li key={event._id}>
+                      <a
+                        href={eventHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block text-lg md:text-xl opacity-90 transition-opacity hover:opacity-80 uppercase tracking-widest text-[var(--brand-secondary)]"
+                        onClick={onClick}
+                        data-cursor-target
+                        data-cursor-padding="10"
+                      >
+                        {event.title}
+                      </a>
+                    </li>
+                  );
+                }
+                return (
+                  <li key={event._id}>
+                    <Link
+                      href={eventHref}
+                      className="block text-lg md:text-xl opacity-90 transition-opacity hover:opacity-80 uppercase tracking-widest text-[var(--brand-secondary)]"
+                      onClick={onClick}
+                      data-cursor-target
+                      data-cursor-padding="10"
+                    >
+                      {event.title}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </li>
+      );
+    }
+
     const overlayClass = `transition-opacity hover:opacity-80 uppercase tracking-widest text-[var(--brand-secondary)] ${isActive(item.href) ? "underline underline-offset-8" : ""
       }`;
     if (item.external) {
@@ -394,9 +561,14 @@ export default function Header() {
             <div className="justify-self-end flex items-center gap-6">
               <nav className="hidden md:block" aria-label="Snabblänkar">
                 <ul className="flex items-center gap-6">
-                  {leftNav.map((item) => (
-                    <li key={item.href}>{renderHeaderItem(item)}</li>
-                  ))}
+                  {leftNav.map((item) => {
+                    const rendered = renderHeaderItem(item);
+                    // Om det är Events med dropdown, returnera direkt (redan wrapped i li)
+                    if (item.href === "/events" && events.length > 0) {
+                      return rendered;
+                    }
+                    return <li key={item.href}>{rendered}</li>;
+                  })}
                 </ul>
               </nav>
               <button
@@ -452,9 +624,14 @@ export default function Header() {
             </button>
             <nav aria-label="Meny (desktop-slidein)" className="mt-8 text-2xl md:text-3xl font-medium">
               <ul className="space-y-6">
-                {[...leftNav, ...restNav].map((item) => (
-                  <li key={item.href}>{renderOverlayItem(item, () => setMenuOpen(false))}</li>
-                ))}
+                {[...leftNav, ...restNav].map((item) => {
+                  const rendered = renderOverlayItem(item, () => setMenuOpen(false));
+                  // Om det är Events med expanderbar meny, returnera direkt (redan wrapped i li)
+                  if (item.href === "/events" && events.length > 0) {
+                    return rendered;
+                  }
+                  return <li key={item.href}>{rendered}</li>;
+                })}
               </ul>
               
               <hr className="my-8 border-[var(--brand-secondary)]/30" />
@@ -468,7 +645,7 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Banner under header, ej på landningssidan. Remount per route för enkel in-animation */}
+      {/* Banner under header, ej på landningssidan. Remount per route för enkel in-animation 
       {bannerConfig ? (
         <div key={pathname} className="banner-enter">
           <Banner
@@ -484,13 +661,12 @@ export default function Header() {
           >
             {pathname === "/" ? (
               <div className="mt-10">
-                {/* NavCards ovanpå bannern på startsidan */}
-                {/* Importen av NavCards är i komponenten själv om vi vill undvika korsimport här. */}
+             
               </div>
             ) : null}
           </Banner>
         </div>
-      ) : null}
+      ) : null}*/}
     </>
   );
 }

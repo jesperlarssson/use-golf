@@ -13,13 +13,25 @@ interface PortableTextProps {
 const components = {
   types: {
     image: ({ value }: any) => {
-      if (!value?.asset) return null
-      const imageUrl = builder.image(value).width(1200).height(800).url()
+      if (!value) return null
+      
+      // Hantera både Sanity-bilder (med asset) och lokala bilder (med url)
+      let imageUrl: string
+      if (value.asset) {
+        // Sanity-bild
+        imageUrl = builder.image(value).width(1200).height(800).url()
+      } else if (value.url) {
+        // Lokal bild (för dummy-data)
+        imageUrl = value.url
+      } else {
+        return null
+      }
+      
       return (
         <figure className="my-8">
           <Image
             src={imageUrl}
-            alt={value.alt || 'Bloggbild'}
+            alt={value.alt || 'Eventbild'}
             width={1200}
             height={800}
             className="w-full h-auto border-2 border-[var(--brand-secondary)]"

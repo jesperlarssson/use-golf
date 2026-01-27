@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import Page from "@/components/ui/Page";
 import Section from "@/components/ui/Section";
 import FullBleed from "@/components/ui/FullBleed";
-import { Heading, Text, Lead } from "@/components/ui/Typography";
+import { Heading, Text } from "@/components/ui/Typography";
 import Image from "next/image";
 import FadeIn from "@/components/ui/FadeIn";
+import SectionHeader from "@/components/ui/SectionHeader";
 import { defaultPricingData, dayLabels, type DayType, type PricingData } from "@/lib/prices";
 import { getPricingData } from "@/sanity/lib/pricingQueries";
 
@@ -22,24 +23,82 @@ export default async function BookingPage() {
   const pricingDataToUse: PricingData = sanityPricingData || defaultPricingData;
   return (
     <FullBleed>
-      <div className="border-y border-[var(--brand-secondary)]">
-        <Page variant="subpage">
-          {/* Intro */}
-          <Section>
-            <div className="space-y-4 max-w-3xl">
-              <Heading as={2}>Boka simulator</Heading>
-              <Lead className="text-[var(--brand-olive-900)] text-lg">
-                Välj hur du vill boka – enstaka tider, stående tider eller hela lokalen för event.
-              </Lead>
-              <Text>
-                Boka direkt via vårt bokningssystem eller kontakta oss för stående tider och större event.
-              </Text>
+      {/* Hero Banner */}
+      <div className="relative w-full min-h-[50vh] sm:min-h-[60vh] overflow-hidden border-b border-[var(--brand-secondary)]">
+        <Image
+          src="/images/render2.PNG"
+          alt="Bokning"
+          fill
+          priority
+          className="object-cover filter blur-sm brightness-90 scale-110"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/40 to-black/20" />
+        <div className="relative z-10 flex items-center justify-center min-h-[50vh] sm:min-h-[60vh]">
+          <div className="w-full max-w-screen-2xl px-4 sm:px-6 py-20">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
+              {/* Vänster kolumn - SectionHeader */}
+              <FadeIn>
+                <SectionHeader
+                  label="Bokning"
+                  heading="Boka simulator"
+                  description="Välj hur du vill boka – enstaka tider, stående tider eller hela lokalen för event. Boka direkt via vårt bokningssystem eller kontakta oss för stående tider och större event."
+                  align="left"
+                  labelColor="rgb(255, 255, 255)"
+                  headingColor="rgb(255, 255, 255)"
+                  textColor="rgba(255, 255, 255, 0.9)"
+                  maxWidth="full"
+                />
+              </FadeIn>
+              
+              {/* Höger kolumn - Bokningsalternativ med glassy effekt */}
+              <FadeIn delay={0.1}>
+                <div className="backdrop-blur-md bg-[var(--brand-primary)]/20 border-2 border-[var(--brand-primary)]/30 p-6 md:p-8">
+                  <p className="font-horus text-xl md:text-2xl mb-6 text-[var(--brand-primary)]">Bokningsalternativ:</p>
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-3">
+                      <span className="text-[var(--brand-primary)] mt-1 text-lg">•</span>
+                      <div>
+                        <strong className="text-[var(--brand-primary)] block">Enstaka tider</strong>
+                        <p className="text-sm text-[var(--brand-primary)]/80 mt-1">Boka direkt via vårt bokningssystem.</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <span className="text-[var(--brand-primary)] mt-1 text-lg">•</span>
+                      <div>
+                        <strong className="text-[var(--brand-primary)] block">Stående tider</strong>
+                        <p className="text-sm text-[var(--brand-primary)]/80 mt-1">Fasta tider hela säsongen för ligor och kompisgäng.</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <span className="text-[var(--brand-primary)] mt-1 text-lg">•</span>
+                      <div>
+                        <strong className="text-[var(--brand-primary)] block">Hela lokalen</strong>
+                        <p className="text-sm text-[var(--brand-primary)]/80 mt-1">6 simulatorer för kickoff, kundkväll eller teambuilding.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </FadeIn>
             </div>
-          </Section>
+          </div>
+        </div>
+      </div>
+
+      <div className="border-y border-[var(--brand-secondary)] pt-10">
+        <Page variant="subpage">
 
           {/* Bokningsalternativ */}
-          <Section className="-mt-10 sm:-mt-18">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Section className="py-20 -mt-10 sm:-mt-18 max-w-screen-2xl mx-auto">
+            <FadeIn>
+              <SectionHeader
+                variant="small"
+                heading="Bokningsalternativ"
+                description="Välj det alternativ som passar dig bäst."
+                align="left"
+              />
+            </FadeIn>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mt-12">
               {/* Boka simulator */}
               <FadeIn>
                 <div className="border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] overflow-hidden h-full flex flex-col">
@@ -110,32 +169,48 @@ export default async function BookingPage() {
               </FadeIn>
             </div>
           </Section>
-          <Section className="-mt-10 sm:-mt-18">
-  <div className="max-w-3xl space-y-4">
-    <Heading as={2}>Lokala regler</Heading>
-    <ul className="list-disc pl-5 space-y-1 text-sm">
-      <li>Använd rena nya bollar</li>
-      <li>Bollar som är märkta med penna är förbjudet</li>
-      <li>Inga träpeggar, vi har peggar i alla box</li>
-      <li>Rena skor</li>
-      <li>Golfskor är ok</li>
-      <li>Respektera spelare runtomkring dig</li>
-    </ul>
-  </div>
-</Section>
+          {/* Lokala regler */}
+          <Section className="py-20 -mt-10 sm:-mt-18 bg-gradient-to-b from-[var(--brand-primary)] to-[var(--brand-olive-700)]/10">
+            <FadeIn>
+              <div className="max-w-screen-2xl mx-auto space-y-6">
+                <SectionHeader
+                  label="Regler"
+                  heading="Lokala regler"
+                  description="För att alla ska kunna njuta av sin speltid."
+                  align="left"
+                  maxWidth="full"
+                   variant="small"
+                />
+                <ul className="list-disc pl-5 space-y-2 text-sm">
+                  <li>Använd rena nya bollar</li>
+                  <li>Bollar som är märkta med penna är förbjudet</li>
+                  <li>Inga träpeggar, vi har peggar i alla box</li>
+                  <li>Rena skor</li>
+                  <li>Golfskor är ok</li>
+                  <li>Respektera spelare runtomkring dig</li>
+                </ul>
+              </div>
+            </FadeIn>
+          </Section>
 
           {/* Prislista */}
-          <Section className="-mt-10 sm:-mt-18">
-            <div className="space-y-6">
-              <div className="max-w-3xl">
-                <Heading as={2}>Prislista</Heading>
-                <Text className="mt-2">
-                  Priser per timme för simulatorbokning. 
-                </Text>
-              </div>
+          <Section className=" bg-[var(--brand-olive-700)]">
+            <div className="space-y-8 max-w-screen-2xl mx-auto">
+              <FadeIn>
+                <SectionHeader
+             
+                  heading="Prislista"
+                  description="Priser per timme för simulatorbokning."
+                  align="left"
+                  headingColor="var(--brand-primary)"
+                  variant="small"
+                />
+              </FadeIn>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {(Object.keys(pricingDataToUse) as DayType[]).map((dayType, index) => (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                {(["monday-thursday", "friday-saturday", "sunday"] as DayType[])
+                  .filter(dayType => pricingDataToUse[dayType])
+                  .map((dayType, index) => (
                   <FadeIn key={dayType} delay={index * 0.1}>
                     <div className="border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)]">
                       <div className="bg-[var(--brand-secondary)] px-6 py-4">
@@ -164,14 +239,17 @@ export default async function BookingPage() {
           </Section>
 
           {/* TrackMan-konto */}
-          <Section className="-mt-10 sm:-mt-18 pb-16">
-            <div className="max-w-3xl space-y-6">
-              <div>
-                <Heading as={2}>TrackMan-konto</Heading>
-                <Text className="mt-2">
-                  För att få ut det mesta av din upplevelse hos USE Golf behöver du ett eget TrackMan-konto. Det tar bara någon minut att skapa.
-                </Text>
-              </div>
+          <Section className="py-20 pb-16 bg-gradient-to-b from-[var(--brand-primary)] to-[var(--brand-olive-700)]/10 ">
+            <div className="max-w-screen-2xl mx-auto space-y-8">
+              <FadeIn>
+                <SectionHeader
+                  label="TrackMan"
+                  heading="TrackMan-konto"
+                  description="För att få ut det mesta av din upplevelse hos USE Golf behöver du ett eget TrackMan-konto. Det tar bara någon minut att skapa."
+                  align="left"
+                  maxWidth="full"
+                />
+              </FadeIn>
 
               <div className="space-y-4">
                 <div>

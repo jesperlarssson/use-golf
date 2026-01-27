@@ -110,7 +110,7 @@ function formatAnswer(text: string): ReactNode {
             href={match.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[var(--brand-secondary)] underline hover:opacity-80"
+            className="text-[var(--brand-primary)] underline hover:opacity-80"
           >
             {match.content}
           </a>
@@ -120,7 +120,7 @@ function formatAnswer(text: string): ReactNode {
           <Link
             key={`link-${keyCounter++}`}
             href={match.url}
-            className="text-[var(--brand-secondary)] underline hover:opacity-80"
+            className="text-[var(--brand-primary)] underline hover:opacity-80"
           >
             {match.content}
           </Link>
@@ -171,7 +171,7 @@ export default function FAQ({ items, className = "" }: FAQProps) {
         return (
           <div
             key={index}
-            className="border-b border-[var(--brand-secondary)] bg-[var(--brand-primary)] overflow-hidden cursor-pointer"
+            className="border-b border-[var(--brand-secondary)]/20 bg-transparent overflow-hidden cursor-pointer"
           >
             <button
               onClick={() => toggleItem(index)}
@@ -179,11 +179,11 @@ export default function FAQ({ items, className = "" }: FAQProps) {
               aria-expanded={isOpen}
               aria-controls={`faq-answer-${index}`}
             >
-              <span className="font-semibold text-[var(--brand-secondary)] pr-4">
+              <span className="font-semibold text-[var(--brand-primary)] pr-4">
                 {item.q}
               </span>
               <span
-                className={`flex-shrink-0 text-[var(--brand-secondary)] transition-transform duration-200 ${
+                className={`flex-shrink-0 text-[var(--brand-primary)] transition-transform duration-200 ${
                   isOpen ? "rotate-180" : ""
                 }`}
                 aria-hidden="true"
@@ -212,7 +212,7 @@ export default function FAQ({ items, className = "" }: FAQProps) {
               }`}
             >
               <div className="pr-6 py-2 pb-4 pt-0">
-                <div className="text-sm text-[var(--brand-olive-900)] mb-3 space-y-2 leading-relaxed">
+                <div className="text-sm text-[var(--brand-primary)]/80 mb-3 space-y-2 leading-relaxed">
                   {typeof item.a === 'string' ? formatAnswer(item.a) : item.a}
                 </div>
                 {item.action && (

@@ -1,26 +1,52 @@
-
-
 import type { Metadata } from "next";
 import Page from "@/components/ui/Page";
-import LandingHero from "@/components/ui/LandingHero";
-import NavCards from "@/components/ui/NavCards";
-import ScrollVelocity from "@/components/ui/ScrollVelocity";
 import Section from "@/components/ui/Section";
 import Image from "next/image";
 import { Heading, Lead, Text } from "@/components/ui/Typography";
 import FadeIn from "@/components/ui/FadeIn";
-import Grid, { Col } from "@/components/ui/Grid";
-import Logo from "@/components/ui/Logo";
+import SectionHeader from "@/components/ui/SectionHeader";
 import FAQ from "@/components/ui/FAQ";
 import type { FAQItem } from "@/components/ui/FAQ";
-import UserPassesSection from "@/components/ui/UserPassesSection";
-import SweetspotAlert from "@/components/SweetspotAlert";
-import { client } from "@/sanity/lib/client";
-import { allPostsQuery, transformPost, PostDocument, Post, allFAQQuery, transformFAQ, type FAQ as SanityFAQ, type FAQDocument, landingPageEventsQuery, transformEvent, Event, EventDocument } from "@/sanity/lib/queries";
+import { getUserPasses } from "@/sanity/lib/pricingQueries";
+import { defaultUserPasses, type UserPassType } from "@/lib/prices";
 import JournalCard from "@/components/ui/JournalCard";
+import PortableText from "@/components/ui/PortableText";
 import Link from "next/link";
+import { client } from "@/sanity/lib/client";
+import { allPostsQuery, transformPost, PostDocument, Post, allFAQQuery, transformFAQ, type FAQ as SanityFAQ, type FAQDocument, getLandingPageEvents, EventDocument } from "@/sanity/lib/queries";
 
+// Helper function för att formatera text med **fet text**
+function formatContent(text: string) {
+  const parts: React.ReactNode[] = []
+  const boldRegex = /\*\*([^*]+)\*\*/g
+  const matches = Array.from(text.matchAll(boldRegex))
 
+  if (matches.length === 0) {
+    return <Text>{text}</Text>
+  }
+
+  let lastIndex = 0
+  let keyCounter = 0
+
+  matches.forEach((match) => {
+    if (match.index !== undefined) {
+      if (match.index > lastIndex) {
+        const beforeText = text.substring(lastIndex, match.index)
+        if (beforeText) {
+          parts.push(<span key={`text-${keyCounter++}`}>{beforeText}</span>)
+        }
+      }
+      parts.push(<strong key={`bold-${keyCounter++}`}>{match[1]}</strong>)
+      lastIndex = match.index + match[0].length
+    }
+  })
+
+  if (lastIndex < text.length) {
+    parts.push(<span key={`text-${keyCounter++}`}>{text.substring(lastIndex)}</span>)
+  }
+
+  return <Text>{parts}</Text>
+}
 
 async function getLatestPosts(limit: number = 3): Promise<PostDocument[]> {
   try {
@@ -38,63 +64,25 @@ async function getFAQ(): Promise<FAQDocument[]> {
     return faqs.map(transformFAQ);
   } catch (error) {
     console.error('Error fetching FAQ:', error);
-    // Fallback till hårdkodad data om Sanity misslyckas
     return [];
   }
 }
 
-// Helper function för att formatera text med **fet text**
-function formatContent(text: string) {
-  const parts: React.ReactNode[] = []
-  const boldRegex = /\*\*([^*]+)\*\*/g
-  const matches = Array.from(text.matchAll(boldRegex))
+// Använder helper-funktion från queries.ts som automatiskt hanterar dummy-data
 
-  if (matches.length === 0) {
-    return <Text>{text}</Text>
-  }
-
-  let lastIndex = 0
-  let keyCounter = 0
-
-  matches.forEach((match) => {
-    if (match.index !== undefined) {
-      // Lägg till text före match
-      if (match.index > lastIndex) {
-        const beforeText = text.substring(lastIndex, match.index)
-        if (beforeText) {
-          parts.push(<span key={`text-${keyCounter++}`}>{beforeText}</span>)
-        }
-      }
-      // Lägg till fet text
-      parts.push(<strong key={`bold-${keyCounter++}`}>{match[1]}</strong>)
-      lastIndex = match.index + match[0].length
-    }
-  })
-
-  // Lägg till resten av texten
-  if (lastIndex < text.length) {
-    parts.push(<span key={`text-${keyCounter++}`}>{text.substring(lastIndex)}</span>)
-  }
-
-  return <Text>{parts}</Text>
-}
-
-async function getLandingPageEvents(): Promise<EventDocument[]> {
-  try {
-    const events = await client.fetch<Event[]>(landingPageEventsQuery);
-    return events.map(transformEvent);
-  } catch (error) {
-    console.error('Error fetching landing page events:', error);
-    return [];
-  }
-}
-
-export default async function Home() {
+export default async function Landing2DemoPage() {
   const latestPosts = await getLatestPosts(3);
   const faqItems = await getFAQ();
   const landingPageEvents = await getLandingPageEvents();
+  
+  // Hämta User Passes från Sanity, fallback till default om det misslyckas
+  const sanityPasses = await getUserPasses();
+  const userPasses = sanityPasses || defaultUserPasses;
 
-  // Fallback FAQ-data om Sanity är tom
+  // Använd posts från Sanity
+  const postsToUse = latestPosts;
+
+  // Fallback FAQ-data
   const defaultFAQ: FAQDocument[] = [
     {
       q: "Vad är USE Golf?",
@@ -105,52 +93,12 @@ export default async function Home() {
       a: "Du hittar oss på **Krogabäcksvägen 2, 436 53 Hovås**. Parkering finns precis utanför i P-huset.",
     },
     {
-      q: "Hur fungerar parkeringen?",
-      a: "Det finns **gratis parkering i 2 timmar** i P-huset utanför.\nKom ihåg att aktivera parkeringen via appen **EasyPark** när du anländer.",
-    },
-    {
       q: "Hur bokar jag en simulator?",
       a: "Bokning sker via vår partner **Sweetspot**. Du hittar länken direkt på vår hemsida under [Boka Simulator](/bokning). Där väljer du tid, bana och antal spelare.",
       action: {
         label: "Till bokning",
         href: "/bokning",
       },
-    },
-    {
-      q: "Kan jag boka en stående tid varje vecka?",
-      a: "Ja – vi erbjuder **fasta veckotider**. Kontakta oss på [hello@usegolf.se](mailto:hello@usegolf.se) så hjälper vi dig att hitta en tid som passar.",
-      action: {
-        label: "Läs mer om stående tider",
-        href: "/events/staende-tid",
-      },
-    },
-    {
-      q: "Hur många kan spela samtidigt?",
-      a: "Upp till **4 spelare per simulator** rekommenderas för bästa upplevelse.",
-    },
-    {
-      q: "Hur lång tid tar en runda?",
-      a: "En **18-hålsrunda för 2 spelare** tar ungefär **2 timmar**. Du kan boka både **55- och 110-minuterspass** beroende på hur mycket du vill spela.",
-    },
-    {
-      q: "Behöver jag ett TrackMan-konto?",
-      a: "Ja – för att spara resultat och statistik behöver du ett **gratis TrackMan-konto**.\n\n1. Ladda ner TrackMan Golf-appen i App Store eller Google Play\n2. Skapa ett konto innan ditt besök\n3. När du kommer till oss loggar du in genom att scanna QR-koden på TV-skärmen eller i dukens högra hörn med appens skanner",
-    },
-    {
-      q: "Hur skapar jag ett TrackMan-konto?",
-      a: "Det tar bara någon minut!\n\n**1. Ladda ner appen**\nSök efter TrackMan Golf (orange ikon med TrackMan-loggan) i App Store eller Google Play.\n\n**2. Skapa konto**\nÖppna appen och välj \"Create Account\". Fyll i namn, e-postadress och lösenord.\n\n**3. Verifiera kontot**\nGå till din e-post och bekräfta registreringen via länken från TrackMan.\n\n**4. Logga in hos oss**\nNär du står vid simulatorn – öppna TrackMan-appen och välj \"Scan to log in\". Scanna QR-koden på TV-skärmen i ditt bås eller på dukens högra hörn.\n\n💡 **Tips:** Har du redan ett TrackMan-konto? Använd samma inloggning – all din data sparas automatiskt oavsett var du spelar.",
-    },
-    {
-      q: "Vad ska jag ta med?",
-      a: "• **Egna klubbor** (om du inte hyr, se nedan)\n• **Golfskor** går bra att använda\n• Använd **inte** egna bollar eller träpeggar\n\nVi har **Titleist Pro V1-bollar** och särskilda peggar som ska användas i våra simulatorer.",
-    },
-    {
-      q: "Finns hyrklubbor att låna?",
-      a: "Ja, vi erbjuder **hyrklubbor**. Boka dem gärna i förväg via [hello@usegolf.se](mailto:hello@usegolf.se).",
-    },
-    {
-      q: "Erbjuder ni dryck och lättare mat?",
-      a: "Ja! I vårt **café** hittar du kaffe, drycker, mackor och enklare tilltugg under hela dagen.",
     },
     {
       q: "Behöver jag vara medlem för att spela?",
@@ -160,298 +108,362 @@ export default async function Home() {
         href: "/medlemskap",
       },
     },
-    {
-      q: "Vilka medlemskap finns?",
-      a: "Vi erbjuder olika **User Pass-nivåer** samt **Junior Pass**. Du hittar aktuella priser och villkor på vår hemsida under [Medlemskap](/medlemskap).",
-      action: {
-        label: "Se medlemskap",
-        href: "/medlemskap",
-      },
-    },
-    {
-      q: "Kan företag boka egna event?",
-      a: "Absolut! Vi arrangerar **företagsevent, turneringar, after work-spel** och kundaktiviteter. Kontakta oss på [hello@usegolf.se](mailto:hello@usegolf.se) för offert.",
-      action: {
-        label: "Läs mer om event",
-        href: "/events/boka-lokalen",
-      },
-    },
-    {
-      q: "Kan jag köpa presentkort?",
-      a: "Ja, **presentkort** finns att köpa på plats hos oss – eller via mail. Perfekt för golfälskaren!",
-      action: {
-        label: "Läs mer om presentkort",
-        href: "/presentkort",
-      },
-    },
-    {
-      q: "Finns personal på plats?",
-      a: "Ja, våra **grymma medarbetare** finns alltid på plats för att hjälpa dig i gång, svara på frågor och skapa den bästa upplevelsen.",
-    },
-    {
-      q: "Kan jag ta med barn?",
-      a: "Ja – **barn är välkomna** tillsammans med vuxen. Vi har även **Junior League** och ungdomsaktiviteter.",
-    },
-    {
-      q: "Vad händer om jag behöver avboka?",
-      a: "Avbokning sker via **Sweetspot senast 3 timmar** före spelstart. Senare avbokning debiteras **fullt pris**.",
-    },
   ];
 
   const faqData = faqItems.length > 0 ? faqItems : defaultFAQ;
 
-  // Fallback events om Sanity är tom
+  // Fallback events
   const defaultEvents: EventDocument[] = [
     {
-      title: "Veckoscramble",
-      subtitle: "2-mannascramble",
-      imageUrl: "/images/invigning/DSC06519.jpg",
-      imageAlt: "Veckoscramble",
-      content: "Ny bana **varje vecka**. Spelas **mån–sön**, valfri tid. Kostnad **200 kr/lag** + simulatorhyra.",
-      ctaHref: "/events/veckoscramble",
-      ctaLabel: "Läs mer",
-    },
-
-    // {
-    //   title: "Event",
-    //   subtitle: "Boka hela lokalen",
-    //   imageSrc: "/images/render2.PNG",
-    //   content: (
-    //     <Text>
-    //       Hyr hela lokalen (6 simulatorer) med kompisgänget, för kickoff, kundkväll eller teambuilding. Anpassade upplägg med tävlingar, mat och dryck – kontakta oss för offert.
-    //     </Text>
-    //   ),
-    //   ctaHref: "/events/boka-lokalen",
-    //   ctaLabel: "Läs mer",
-    // },
-    {
+      _id: "default-1",
       title: "Onsdagsgolfen",
       subtitle: "",
       imageUrl: "/images/invigning/DSC06600.jpg",
       imageAlt: "Onsdagsgolfen",
-      content: "Varje onsdag spelar vi en social tävling för max 24 medlemmar. Två starttider – **13.00–15.00** eller **17.00–19.00** – och fyra omväxlande format gör det både lekfullt och tävlingsinriktat. Kostnad **250 kr** och anmälan sker via Sweetspot.",
+      excerpt: "Varje onsdag spelar vi en social tävling för max 24 medlemmar. Två starttider – **13.00–15.00** eller **17.00–19.00** – och fyra omväxlande format gör det både lekfullt och tävlingsinriktat.",
       ctaHref: "https://book.sweetspot.io/clubs/use-golf/passes/3d4941fe-3d67-4e7b-9fd2-c9a4aee12b1c",
       ctaLabel: "Anmäl dig",
+      hasExternalLink: true,
+      category: "ligor",
     },
     {
+      _id: "default-2",
       title: "Juniorligan",
       subtitle: "Hösten",
       imageUrl: "/images/invigning/DSC06511.jpg",
       imageAlt: "Juniorligan Hösten",
-      content: "Start **18 november**. 3 spelare/simulator, 9 hål + fri lek efteråt. Kostnad **1 250 kr** per person. Medlemskap **Junior User** krävs.",
+      excerpt: "Start **18 november**. 3 spelare/simulator, 9 hål + fri lek efteråt. Kostnad **1 250 kr** per person. Medlemskap **Junior User** krävs.",
       ctaHref: "/events/juniorligan",
       ctaLabel: "Läs mer",
+      category: "ligor",
     },
-    {
-      title: "Juniorligan",
-      subtitle: "Våren",
-      imageUrl: "/images/club2.png",
-      imageAlt: "Juniorligan Våren",
-      content: "Tisdagar **15–17** följande datum: **20, 27 jan**, **3, 17, 24 feb**, **3, 10, 17, 24 mars** (avslutning). 3 spelare/simulator, 9 hål + fri lek efteråt. Kostnad **2 500 kr**. Medlemskap **Junior User** krävs.",
-      ctaHref: "/events/juniorligan",
-      ctaLabel: "Läs mer",
-    },
-  ]
+  ];
 
-  const programItems = landingPageEvents.length > 0 ? landingPageEvents : defaultEvents
+  const programItems = landingPageEvents.length > 0 ? landingPageEvents : defaultEvents;
+
+  // Formatera datum för visning
+  function dateFormatter(publishedAt: string): string {
+    try {
+      const date = new Date(publishedAt);
+      return date.toLocaleDateString('sv-SE', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      });
+    } catch {
+      return '';
+    }
+  }
 
   return (
     <Page variant="landing">
       <div className="relative">
-        <LandingHero
-          title="USE GOLF"
-          heroText="Get used to it"
-          imageSrc="/images/invigning/hero.png"
-          overlay
-        />
+        {/* Hero Section - Modernare och mer dramatisk */}
+        <section className="relative w-full min-h-screen flex items-center overflow-hidden">
+          {/* Background Image */}
+          <div className="absolute inset-0">
+            <Image
+              src="/images/invigning/hero.png"
+              alt="USE Golf"
+              fill
+              priority
+              className="object-cover"
+              sizes="100vw"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60" />
+          </div>
 
-        <div className=" w-full bg-[var(--brand-olive-700)] text-[var(--brand-primary)] border-y-2 border-[var(--brand-secondary)]">
-          <ScrollVelocity
-            texts={["Get used to it"]}
-            velocity={30}
-            className="px-6 py-3 uppercase tracking-widest text-[var(--brand-primary)]"
-            numCopies={8}
-            parallaxClassName=""
-            scrollerClassName=""
-          />
-        </div>
+          {/* Content */}
+          <div className="relative z-10 w-full">
+            <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="grid grid-cols-12 gap-6 items-center min-h-screen py-20">
+                {/* Left Column - Text */}
+                <div className="col-span-12 lg:col-span-7 space-y-8">
+                  <FadeIn>
+                    <div className="inline-block mb-4">
+                      <span className="text-[var(--brand-accent-amber)]  text-xl md:text-2xl uppercase tracking-widest">
+                        Göteborg
+                      </span>
+                    </div>
+                    <h1 className="font-horus text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-none text-[var(--brand-primary)] mb-6">
+                      USE
 
-
-        <Grid gutter="0" className="p-6 sm:p-10  h-[490px] items-stretch mt-2">
-          {/* Mobil: vänster innehåll i fullbredd */}
-          <Col span={12} className="sm:hidden">
-            <div className="space-y-4">
-              <FadeIn>
-                <h2 className=" font-semibold uppercase text-3xl text-[var(--brand-secondary)] ">BOKA TID </h2>
-              </FadeIn>
-              <FadeIn delay={0.1}>
-                <Lead className="text-[var(--brand-olive-900)]">Våra simulatorer är redo att bokas!</Lead>
-              </FadeIn>
-              <FadeIn delay={0.05}>
-                <Text className="  mt-2 max-w-xl">Äntligen står europas största TrackMan simulatorer redo att bokas i Hovås! Boka din tid idag, läs mer om stående tider eller boka hela lokalen för event.</Text>
-              </FadeIn>
-
-              <div className="mt-4 flex flex-wrap gap-3">
-                <a href="https://book.sweetspot.io/clubs/use-golf/2129/tee-sheet" className="inline-flex items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">Boka tid</a>
-                <a href="/events/staende-tid" className="inline-flex items-center justify-center border-2 border-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-secondary)] font-semibold uppercase tracking-wider rounded-none hover:bg-[var(--brand-secondary)]/10 transition" data-cursor-target data-cursor-padding="10">Läs mer</a>
-              </div>
-            </div>
-          </Col>
-          {/* Desktop: två kolumner */}
-          <Col span={6} className="sm:py-8 hidden sm:block">
-            <div className="space-y-4">
-              <FadeIn>
-                <h2 className=" font-semibold uppercase text-3xl text-[var(--brand-secondary)] ">BOKA TID</h2>
-              </FadeIn>
-              <FadeIn delay={0.1}>
-                <Lead className="text-[var(--brand-olive-900)]">Våra simulatorer är redo att bokas!</Lead>
-              </FadeIn>
-              <FadeIn delay={0.05}>
-                <Text className="  mt-2 max-w-xl ">Äntligen står europas största TrackMan simulatorer redo att bokas i Hovås! Boka din tid idag, läs mer om stående tider eller boka hela lokalen för event.</Text>
-              </FadeIn>
-
-              <div className="mt-4 pt-4 flex flex-wrap gap-3">
-                <a href="https://book.sweetspot.io/clubs/use-golf/" className="inline-flex items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">Boka tid</a>
-                <a href="/bokning" className="inline-flex items-center justify-center border-2 border-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-secondary)] font-semibold uppercase tracking-wider rounded-none hover:bg-[var(--brand-secondary)]/10 transition" data-cursor-target data-cursor-padding="10">Läs mer</a>
-              </div>
-            </div>
-          </Col>
-          <Col span={6} className="p-0 h-full hidden sm:block">
-            <div className="relative h-full w-full overflow-hidden border border-[var(--brand-secondary)]">
-              <Image src="/images/invigning/DSC06426.jpg" alt="Boka" fill className="object-cover blur-xs scale-105 brightness-90" />
-              <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                <Logo className="w-20 h-20 text-[var(--brand-primary)] animate-[spin_30s_linear_infinite]" />
-              </div>
-            </div>
-          </Col>
-        </Grid>
-
-
-        {/* Section with latest blog posts */}
-        {latestPosts.length > 0
-          && (
-            <Section className="mb-0" >
-              <FadeIn>
-                <div className="flex items-center justify-between mb-2">
-                  <Heading as={2}>USE Journal</Heading>
-                  <Link
-                    href="/journal"
-                    className="text-[var(--brand-secondary)] hover:text-[var(--brand-olive-900)] text-sm uppercase tracking-wider transition"
-                  >
-                    Visa alla →
-                  </Link>
-                </div>
-                <Text className="mt-2 mb-10 max-w-xl">Läs våra senaste artiklar om golf, träning och events.</Text>
-              </FadeIn>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {latestPosts.map((post, index) => (
-                  <FadeIn key={post._id} delay={index * 0.05}>
-                    <JournalCard post={post} headingLevel="h3" height="h-84" />
+                      GOLF
+                    </h1>
+                    <Lead className="text-lg md:text-xl lg:text-2xl text-[var(--brand-primary)]/90 max-w-2xl leading-relaxed">
+                      Europas största TrackMan-simulatorer i Hovås. Spela, träna och umgås året runt - Get used to it
+                    </Lead>
                   </FadeIn>
-                ))}
-              </div>
-            </Section>
-          )}
 
-        <Section className="">
-          <FadeIn>
-            <Heading as={2} >Medlemskap</Heading>
-            <Text className="mt-2 mb-10 max-w-xl">Välj ett medlemskap – spela mer, betala mindre, och bli en del av vårt community.</Text>
-          </FadeIn>
-          <div className="grid grid-cols-1  gap-6 ">
-            {/* Senior (condensed) */}
-            <FadeIn>
-              <div className="rounded-none flex flex-col sm:flex-row overflow-hidden border-1 border-[var(--brand-secondary)] bg-[var(--brand-primary)]">
-                <div className="relative h-44 sm:h-72 w-full sm:w-1/2 border-b-2 border-[var(--brand-secondary)] overflow-hidden">
-                  <Image src="/images/invigning/adam-hampus.png" alt="User" fill className="object-cover blur-xs scale-105 brightness-90" />
-                  <div className="absolute inset-0 bg-black/20" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <h3 className="font-horus text-3xl sm:text-4xl text-[var(--brand-primary)]">Use:r</h3>
-                  </div>
-                </div>
-                <div className="p-6 space-y-3 sm:pl-10">
-                  <p className="text-lg font-semibold uppercase tracking-wider">från 600 kr/år</p>
-                  <div className="flex flex-wrap gap-2 text-xs uppercase tracking-wider">
-                    <span className="border border-[var(--brand-secondary)] px-2 py-1">rabatt på bokningar</span>
-                    <span className="border border-[var(--brand-secondary)] px-2 py-1">förtur till event</span>
-                    <span className="border border-[var(--brand-secondary)] px-2 py-1">1h speltid ingår</span>
-                  </div>
-                  <div>
-                    <a href="/medlemskap" className="inline-flex items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">Läs mer</a>
-                  </div>
-                </div>
-              </div>
-            </FadeIn>
 
-            {/* Junior (condensed) */}
-            <FadeIn delay={0.05}>
-              <div className="rounded-none flex flex-col sm:flex-row overflow-hidden border-1 border-[var(--brand-secondary)] bg-[var(--brand-primary)]">
-                <div className="relative h-44 sm:h-72 w-full sm:w-1/2 border-b-2 border-[var(--brand-secondary)] overflow-hidden">
-                  <Image src="/images/invigning/junior.png" alt="Junior User" fill className="object-cover blur-xs scale-105 brightness-90" />
-                  <div className="absolute inset-0 bg-black/20" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <h3 className="font-horus text-3xl sm:text-4xl text-[var(--brand-primary)]">Junior Use:r</h3>
-                  </div>
+
+                  <FadeIn delay={0.2}>
+                    <div className="flex flex-wrap gap-4 pt-4">
+                      <a
+                        href="https://book.sweetspot.io/clubs/use-golf/"
+                        className="inline-flex items-center justify-center bg-[var(--brand-secondary)] text-[var(--brand-primary)] px-6 py-3 text-base font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition transform hover:scale-105"
+                        data-cursor-target
+                        data-cursor-padding="10"
+                      >
+                        Boka tid
+                      </a>
+                      <a
+                        href="/medlemskap"
+                        className="inline-flex items-center justify-center border-2 border-[var(--brand-primary)] text-[var(--brand-primary)] px-6 py-3 text-base font-semibold uppercase tracking-wider rounded-none hover:bg-[var(--brand-primary)]/10 transition"
+                        data-cursor-target
+                        data-cursor-padding="10"
+                      >
+                        Bli medlem
+                      </a>
+                    </div>
+                  </FadeIn>
                 </div>
-                <div className="p-6 space-y-3 sm:pl-10">
-                  <p className="text-lg font-semibold uppercase tracking-wider">400 kr/år</p>
-                  <div className="flex flex-wrap gap-2 text-xs uppercase tracking-wider">
-                    <span className="border border-[var(--brand-secondary)] px-2 py-1">rabatt på bokningar</span>
-                    <span className="border border-[var(--brand-secondary)] px-2 py-1">förtur till event</span>
-                    <span className="border border-[var(--brand-secondary)] px-2 py-1">1h ingår</span>
+
+                {/* Right Column - Aktuellt hos oss */}
+                {postsToUse.length > 0 && (
+                  <div className="col-span-12 lg:col-span-5 hidden lg:block">
+                    <FadeIn delay={0.3}>
+                      <Link href={`/journal/${postsToUse[0].slug}`} className="group block h-full">
+                        <div className="relative aspect-square border-4 border-[var(--brand-secondary)] bg-[var(--brand-primary)]/10 backdrop-blur-sm overflow-hidden hover:border-[var(--brand-accent-amber)] transition-colors">
+                          {postsToUse[0].coverImageUrl ? (
+                            <>
+                              <Image
+                                src={postsToUse[0].coverImageUrl}
+                                alt={postsToUse[0].coverImage?.alt || postsToUse[0].title}
+                                fill
+                                className="object-cover opacity-30 group-hover:opacity-40 transition-opacity"
+                                sizes="(max-width: 1024px) 0vw, 40vw"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/40 to-black/20" />
+                            </>
+                          ) : (
+                            <div className="absolute inset-0 bg-[var(--brand-olive-900)]/20" />
+                          )}
+                          <div className="relative h-full flex flex-col justify-between p-6 md:p-8">
+                            <div>
+                              <div className="text-[var(--brand-accent-amber)] font-horus text-xl uppercase tracking-widest mb-4">
+                                USE JOURNAL - {dateFormatter(postsToUse[0].publishedAt)}
+                              </div>
+                              <h3 className="uppercase font-semibold tracking-wide text-3xl md:text-4xl text-[var(--brand-primary)] mb-3 line-clamp-2 group-hover:text-[var(--brand-accent-amber)] transition-colors">
+                                {postsToUse[0].title}
+                              </h3>
+                              {postsToUse[0].excerpt && (
+                                <p className="text-[var(--brand-primary)]/80 text-sm md:text-base line-clamp-3">
+                                  {Array.isArray(postsToUse[0].excerpt) 
+                                    ? postsToUse[0].excerpt
+                                        .map((block: any) => 
+                                          block.children?.map((child: any) => child.text || '').join('') || ''
+                                        )
+                                        .join(' ')
+                                    : typeof postsToUse[0].excerpt === 'string'
+                                      ? postsToUse[0].excerpt
+                                      : ''}
+                                </p>
+                              )}
+                            </div>
+                            <div className="pt-4 border-t border-[var(--brand-secondary)]/30">
+                              <div className="text-[var(--brand-primary)]/70 text-xs uppercase tracking-widest flex items-center gap-2">
+                                Läs mer
+                                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                </svg>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    </FadeIn>
                   </div>
-                  <div>
-                    <a href="/medlemskap" className="inline-flex items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">Läs mer</a>
-                  </div>
-                </div>
+                )}
               </div>
-            </FadeIn>
+            </div>
+          </div>
+
+          {/* Scroll Indicator */}
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
+            <div className="animate-bounce">
+              <svg className="w-6 h-6 text-[var(--brand-primary)]/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+              </svg>
+            </div>
+          </div>
+        </section>
+
+        {/* Value Proposition Section - Tydligare och mer visuell */}
+        <Section className="py-20 bg-[var(--brand-primary)]">
+          <div className="grid grid-cols-12 gap-6 md:gap-8">
+            <div className="col-span-12 lg:col-span-6">
+              <FadeIn>
+                <div className="relative h-[400px] md:h-[500px] border-4 border-[var(--brand-secondary)] overflow-hidden">
+                  <Image
+                    src="/images/invigning/DSC06426.jpg"
+                    alt="TrackMan Simulator"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[var(--brand-olive-900)]/80 to-transparent" />
+                 
+                </div>
+              </FadeIn>
+            </div>
+
+            <div className="col-span-12 lg:col-span-6 flex items-center">
+              <FadeIn delay={0.1}>
+                <div className="space-y-6">
+                  <div>
+                    <span className="text-[var(--brand-secondary)] font-horus text-xl uppercase tracking-widest mb-4 block">
+                      Varför USE Golf?
+                    </span>
+                    <Heading as={2} className="text-4xl md:text-5xl mb-6">
+                      Spela året runt
+                    </Heading>
+                  </div>
+                  <Text className="text-lg leading-relaxed max-w-xl">
+                    Vi erbjuder premium-simulatorer från TrackMan, ett café med enklare mat och dryck samt events och ligor för både privatpersoner och företag.
+                  </Text>
+                
+                  <div className="pt-4">
+                    <a
+                      href="/bokning"
+                      className="inline-flex items-center justify-center bg-[var(--brand-olive-900)] text-[var(--brand-primary)] px-8 py-4 font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition"
+                    >
+                      Läs mer om bokning
+                    </a>
+                  </div>
+                </div>
+              </FadeIn>
+            </div>
           </div>
         </Section>
 
-        {/** Userpasses */}
-        <UserPassesSection />
-
-        {/* Program & ligor i medlemskaps-stil (bild + overlay + text) */}
-        <Section className="pt-10 -mt-10">
-          <div className="space-y-2">
-            <div className="flex items-center justify-between mb-2">
-              <Heading as={2}>Event & ligor</Heading>
-              <Link
-                href="/events"
-                className="text-[var(--brand-secondary)] hover:text-[var(--brand-olive-900)] text-sm uppercase tracking-wider transition"
-              >
-                Visa alla →
-              </Link>
+        {/* CTA Section - Boka tid - Mer visuell och tydlig */}
+        <Section className="py-20 bg-[var(--brand-olive-900)] text-[var(--brand-primary)]">
+          <div className="grid grid-cols-12 gap-6 md:gap-8 items-center">
+            <div className="col-span-12 lg:col-span-7">
+              <FadeIn>
+                <span className="text-[var(--brand-accent-amber)] font-horus text-xl uppercase tracking-widest mb-4 block">
+                  Kom igång idag
+                </span>
+                <Heading as={2} className="text-4xl md:text-5xl lg:text-6xl mb-6 text-[var(--brand-primary)]">
+                  Boka din tid
+                </Heading>
+                <Text className="text-xl md:text-2xl text-[var(--brand-primary)]/90 max-w-2xl mb-8">
+                  Våra simulatorer är redo att bokas! Boka direkt via Sweetspot eller läs mer om stående tider och event.
+                </Text>
+                <div className="flex flex-wrap gap-4">
+                  <a
+                    href="https://book.sweetspot.io/clubs/use-golf/"
+                    className="inline-flex items-center justify-center bg-[var(--brand-accent-amber)] text-[var(--brand-olive-900)] px-8 py-4 text-lg font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition transform hover:scale-105"
+                  >
+                    Boka nu
+                  </a>
+                  <a
+                    href="/bokning"
+                    className="inline-flex items-center justify-center border-2 border-[var(--brand-primary)] text-[var(--brand-primary)] px-8 py-4 text-lg font-semibold uppercase tracking-wider rounded-none hover:bg-[var(--brand-primary)]/10 transition"
+                  >
+                    Läs mer
+                  </a>
+                </div>
+              </FadeIn>
             </div>
-            <Text className="pb-2 max-w-xl">Återkommande aktiviteter och ligor för alla nivåer – häng med!</Text>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-              {programItems.map((item) => (
-                <FadeIn key={`${item.title}-${item.subtitle}`}>
-                  <div className="rounded-none overflow-hidden border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] h-full min-h-[360px] flex flex-col">
-                    <div className="relative h-56 border-b-2 border-[var(--brand-secondary)]">
+            <div className="col-span-12 lg:col-span-5">
+              <FadeIn delay={0.1}>
+                <div className="relative h-[300px] md:h-[400px] border-4 border-[var(--brand-secondary)] overflow-hidden">
+                  <Image
+                    src="/images/invigning/DSC06519.jpg"
+                    alt="Boka tid"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 40vw"
+                  />
+                  <div className="absolute inset-0 bg-[var(--brand-accent-amber)]/20" />
+                </div>
+              </FadeIn>
+            </div>
+          </div>
+        </Section>
+
+        {/* Event & Community - Tydligare grid och layout */}
+        <Section className="py-20 bg-[var(--brand-primary)]">
+          <div className="space-y-8">
+            <div className="flex items-end justify-between">
+              <div>
+                <FadeIn>
+                  <span className="text-[var(--brand-secondary)] font-horus text-xl uppercase tracking-widest mb-4 block">
+                    Community
+                  </span>
+                  <Heading as={2} className="text-4xl md:text-5xl mb-4">
+                    Event & ligor
+                  </Heading>
+                  <Text className="text-lg max-w-2xl">
+                    Återkommande aktiviteter och ligor för alla nivåer – häng med!
+                  </Text>
+                </FadeIn>
+              </div>
+              <FadeIn delay={0.1}>
+                <Link
+                  href="/events"
+                  className="hidden md:inline-flex items-center gap-2 text-[var(--brand-olive-900)] hover:text-[var(--brand-secondary)] transition uppercase tracking-wider text-sm"
+                >
+                  Visa alla
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </Link>
+              </FadeIn>
+            </div>
+
+            <div className="grid grid-cols-12 gap-6 md:gap-8">
+              {programItems.map((item, index) => (
+                <FadeIn
+                  key={`${item.title}-${item.subtitle}`}
+                  delay={index * 0.1}
+                  className={`col-span-12 md:col-span-6 ${index === 0 ? 'lg:col-span-8' : 'lg:col-span-4'}`}
+                >
+                  <div className="overflow-hidden border-4 border-[var(--brand-secondary)] bg-[var(--brand-primary)] flex flex-col h-full">
+                    <div className={`relative ${index === 0 ? 'h-64 md:h-80' : 'h-48 md:h-64'} border-b-4 border-[var(--brand-secondary)]`}>
                       <Image
                         src={item.imageUrl || '/images/placeholder.png'}
                         alt={item.imageAlt || item.title}
                         fill
-                        className="object-cover blur-xs scale-105 brightness-90"
+                        loading={index < 2 ? "eager" : "lazy"}
+                        className="object-cover"
+                        sizes={index === 0 ? "(max-width: 1024px) 100vw, 66vw" : "(max-width: 1024px) 100vw, 33vw"}
                       />
-                      <div className="absolute inset-0 bg-black/20" />
-                      <div className="absolute inset-0 flex items-center justify-center flex-col">
-                        <h3 className="font-horus text-3xl sm:text-4xl text-[var(--brand-primary)]">{item.title}</h3>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                      <div className="absolute bottom-0 left-0 right-0 p-6">
+                        <h3 className="font-horus text-3xl md:text-4xl text-[var(--brand-primary)] mb-1">
+                          {item.title}
+                        </h3>
                         {item.subtitle && (
-                          <p className="text-sm sm:text-base text-[var(--brand-primary)]/80 uppercase tracking-wider">{item.subtitle}</p>
+                          <p className="text-[var(--brand-primary)]/80 uppercase tracking-wider text-sm">
+                            {item.subtitle}
+                          </p>
                         )}
                       </div>
                     </div>
                     <div className="p-6 space-y-4 flex-1 flex flex-col">
-                      <div className="text-sm sm:text-base">
-                        {typeof item.content === 'string' ? formatContent(item.content) : item.content}
+                      <div className="text-base md:text-lg flex-1">
+                        {item.excerpt ? (
+                          Array.isArray(item.excerpt) ? (
+                            <PortableText content={item.excerpt} />
+                          ) : typeof item.excerpt === 'string' ? (
+                            formatContent(item.excerpt)
+                          ) : null
+                        ) : item.content && Array.isArray(item.content) ? (
+                          <PortableText content={item.content} />
+                        ) : typeof item.content === 'string' ? (
+                          formatContent(item.content)
+                        ) : null}
                       </div>
                       {item.ctaHref ? (
-                        <div className="mt-auto">
-                          <a href={item.ctaHref} className="inline-flex items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">
-                            {item.ctaLabel ?? "Boka"}
+                        <div className="pt-4">
+                          <a
+                            href={item.ctaHref}
+                            className="inline-flex items-center justify-center bg-[var(--brand-secondary)] text-[var(--brand-primary)] px-6 py-3 font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition"
+                          >
+                            {item.ctaLabel ?? "Läs mer"}
                           </a>
                         </div>
                       ) : null}
@@ -463,60 +475,269 @@ export default async function Home() {
           </div>
         </Section>
 
-        {/* Veckoscramble – bakgrundsbild med text och CTA
-        <Section className="pt-8 -mt-10">
-          <FadeIn>
-            <div className="relative border-2 border-[var(--brand-secondary)]/60 rounded-none overflow-hidden min-h-72 px-8">
-              <Image src="/images/render2.PNG" alt="Veckoscramble" fill priority className="object-cover object-center blur-sm scale-105 brightness-90" />
-              <div className="absolute inset-0 bg-black/35" />
-              <div className="relative z-10">
-                <div className="py-14 sm:py-20 max-w-3xl">
-                  <h3 className="font-horus text-3xl sm:text-4xl text-[var(--brand-primary)] ">Veckoscramble</h3>
-                  <p className="text-md text-[var(--brand-primary)]/80 uppercase tracking-wider mb-4">2-mannascramble</p>
-                  <p className="text-[var(--brand-primary)]/95">
-                    Ny bana <strong>varje vecka</strong>. Spelas <strong>mån–sön</strong>, valfri tid. Kostnad <strong>200 kr/lag</strong> + simulatorhyra.
-                  </p>
-                  <div className="mt-6">
-                    <a href="/events/veckoscramble" className="sketch-button sketch-v1 text-[var(--brand-primary)]" data-cursor-target data-cursor-padding="8">
-                      <span className="sketch-sides py-2 px-3 uppercase tracking-widest">Läs mer</span>
-                    </a>
+        {/* Medlemskap - Modernare layout */}
+        <Section className="py-20 bg-gradient-to-b from-[var(--brand-primary)] to-[var(--brand-olive-700)]/10">
+          <div className="space-y-12">
+            <FadeIn>
+              <SectionHeader
+                label="Medlemskap"
+                heading="Spela mer, betala mindre"
+                description="Välj ett medlemskap och bli en del av vårt community. Förtur till event, rabatter och mer."
+                align="center"
+              />
+            </FadeIn>
+
+            <div className="grid grid-cols-12 gap-6 md:gap-8">
+              {/* Senior */}
+              <FadeIn delay={0.1} className="col-span-12 md:col-span-6">
+                <div className="overflow-hidden border-4 border-[var(--brand-secondary)] bg-[var(--brand-primary)]">
+                  <div className="grid md:grid-cols-2">
+                    <div className="relative h-64 md:h-full min-h-[300px] border-b-4 md:border-b-0 md:border-r-4 border-[var(--brand-secondary)]">
+                      <Image
+                        src="/images/invigning/adam-hampus.png"
+                        alt="User"
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                      />
+                      <div className="absolute inset-0 bg-black/30" />
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <h3 className="font-horus text-5xl md:text-6xl text-[var(--brand-primary)]">Use:r</h3>
+                      </div>
+                    </div>
+                    <div className="p-8 space-y-4 flex flex-col justify-center">
+                      <div>
+                        <p className="text-2xl font-semibold uppercase tracking-wider text-[var(--brand-olive-900)] mb-2">
+                          från 600 kr/år
+                        </p>
+                        <div className="flex flex-wrap gap-2 mb-6">
+                          <span className="border-2 border-[var(--brand-secondary)] px-3 py-1 text-xs uppercase tracking-wider">
+                            rabatt på bokningar
+                          </span>
+                          <span className="border-2 border-[var(--brand-secondary)] px-3 py-1 text-xs uppercase tracking-wider">
+                            förtur till event
+                          </span>
+                          <span className="border-2 border-[var(--brand-secondary)] px-3 py-1 text-xs uppercase tracking-wider">
+                            1h speltid ingår
+                          </span>
+                        </div>
+                      </div>
+                      <a
+                        href="/medlemskap"
+                        className="inline-flex items-center justify-center bg-[var(--brand-olive-900)] text-[var(--brand-primary)] px-6 py-3 font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition"
+                      >
+                        Läs mer
+                      </a>
+                    </div>
                   </div>
                 </div>
+              </FadeIn>
+
+              {/* Junior */}
+              <FadeIn delay={0.2} className="col-span-12 md:col-span-6">
+                <div className="overflow-hidden border-4 border-[var(--brand-secondary)] bg-[var(--brand-primary)]">
+                  <div className="grid md:grid-cols-2">
+                    <div className="relative h-64 md:h-full min-h-[300px] border-b-4 md:border-b-0 md:border-r-4 border-[var(--brand-secondary)]">
+                      <Image
+                        src="/images/invigning/junior.png"
+                        alt="Junior User"
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                      />
+                      <div className="absolute inset-0 bg-black/30" />
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <h3 className="font-horus text-5xl md:text-6xl text-[var(--brand-primary)]">Junior Use:r</h3>
+                      </div>
+                    </div>
+                    <div className="p-8 space-y-4 flex flex-col justify-center">
+                      <div>
+                        <p className="text-2xl font-semibold uppercase tracking-wider text-[var(--brand-olive-900)] mb-2">
+                          400 kr/år
+                        </p>
+                        <div className="flex flex-wrap gap-2 mb-6">
+                          <span className="border-2 border-[var(--brand-secondary)] px-3 py-1 text-xs uppercase tracking-wider">
+                            rabatt på bokningar
+                          </span>
+                          <span className="border-2 border-[var(--brand-secondary)] px-3 py-1 text-xs uppercase tracking-wider">
+                            förtur till event
+                          </span>
+                          <span className="border-2 border-[var(--brand-secondary)] px-3 py-1 text-xs uppercase tracking-wider">
+                            1h ingår
+                          </span>
+                        </div>
+                      </div>
+                      <a
+                        href="/medlemskap"
+                        className="inline-flex items-center justify-center bg-[var(--brand-olive-900)] text-[var(--brand-primary)] px-6 py-3 font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition"
+                      >
+                        Läs mer
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </FadeIn>
+            </div>
+          </div>
+        </Section>
+
+        {/* User Passes */}
+        <Section className="py-20 bg-gradient-to-b from-[var(--brand-olive-700)]/10 to-[var(--brand-primary)]">
+          <div className="space-y-12">
+            <FadeIn>
+              <SectionHeader
+                label="User Passes"
+                heading="Spela ofta under säsongen"
+                description="Välj nivå efter hur mycket du tror du kommer spela. Du kan ta med gäster utan extra kostnad och allt gäller i 12 månader från inköp."
+                align="center"
+              />
+            </FadeIn>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+              {(["small", "medium", "large"] as UserPassType[]).map((passType, index) => {
+                const pass = userPasses[passType];
+                const passLinks: Record<UserPassType, string> = {
+                  small: "https://book.sweetspot.io/clubs/use-golf/passes/33812e8a-fb1b-4d9f-af85-a2405a918fd5",
+                  medium: "https://book.sweetspot.io/clubs/use-golf/passes/35aa568d-f3f7-4b43-8b98-f2f05712dc22",
+                  large: "https://book.sweetspot.io/clubs/use-golf/passes/8f6ead57-a89a-4f59-b434-a004a1397f81",
+                };
+                
+                return (
+                  <FadeIn key={passType} delay={index * 0.1}>
+                    <div className="overflow-hidden border-4 border-[var(--brand-secondary)] bg-[var(--brand-primary)] flex flex-col">
+                      <div className="p-8 space-y-6 flex-1 flex flex-col">
+                        <div className="space-y-4">
+                          <h3 className="font-horus text-3xl md:text-4xl">{pass.name}</h3>
+                          <hr className="border-[var(--brand-secondary)]/40" />
+                          <div className="text-5xl font-semibold text-[var(--brand-olive-900)]">
+                            {pass.price.toLocaleString("sv-SE")}&nbsp;kr
+                          </div>
+                          <div className="text-sm text-[var(--brand-olive-700)]">
+                            Spelvärde {pass.playValue.toLocaleString("sv-SE")}&nbsp;kr{" "}
+                            <span className="opacity-80">({pass.bonusPercent}% bonus)</span>
+                          </div>
+                        </div>
+                        <div className="mt-auto space-y-4">
+                          <a
+                            href={passLinks[passType]}
+                            className="inline-flex w-full items-center justify-center bg-[var(--brand-secondary)] px-5 py-3 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition"
+                            data-cursor-target
+                            data-cursor-padding="10"
+                          >
+                            Ladda pass
+                          </a>
+                          <div className="text-center">
+                            <a href="/medlemsvillkor" className="underline text-sm text-[var(--brand-olive-700)] hover:text-[var(--brand-olive-900)] transition">
+                              Medlemskapsvillkor
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </FadeIn>
+                );
+              })}
+            </div>
+          </div>
+        </Section>
+
+        {/* Journal Section */}
+        {postsToUse.length > 0 && (
+          <Section className="py-20 bg-[var(--color-brand-secondary)]">
+            <div className="space-y-8">
+              <div className="flex items-end justify-between">
+                <div>
+                  <FadeIn>
+                    <span className="text-[var(--brand-primary)] font-horus text-xl uppercase tracking-widest mb-4 block">
+                      Journal
+                    </span>
+                    <Heading as={2} className="text-4xl md:text-5xl mb-4 text-[var(--brand-primary)]">
+                      USE Journal
+                    </Heading>
+                    <Text className="text-lg max-w-2xl">
+                      Läs våra senaste artiklar om golf, träning och events.
+                    </Text>
+                  </FadeIn>
+                </div>
+                <FadeIn delay={0.1}>
+                  <Link
+                    href="/journal"
+                    className="hidden md:inline-flex items-center gap-2 text-[var(--brand-olive-900)] hover:text-[var(--brand-secondary)] transition uppercase tracking-wider text-sm"
+                  >
+                    Visa alla
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </Link>
+                </FadeIn>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                {postsToUse.slice(0, 3).map((post, index) => (
+                  <FadeIn key={post._id} delay={index * 0.1}>
+                    <JournalCard post={post} headingLevel="h3" height="h-84" />
+                  </FadeIn>
+                ))}
               </div>
             </div>
-          </FadeIn>
-        </Section> */}
+          </Section>
+        )}
 
-        {/* NavCards överlappar upp på hero 
-        <div className=" relative z-20 py-20">
-          <NavCards
-            items={[
-              { href: "/bokning", title: "Boka simulator", description: "Boka din tid idag" },
-              { href: "/medlemskap", title: "Medlemskap", description: "Junior och seniormedlemskap" },
-              { href: "/events", title: "Event & Community", description: "Träningar & ligaspel" },
-              
-            ]}
-          />
-        </div>*/}
+        {/* FAQ Section - Modernare layout */}
+        <Section className="py-20 bg-[var(--brand-olive-900)] text-[var(--brand-primary)]">
+          <div className="max-w-4xl mx-auto space-y-8">
+            <FadeIn>
+              <div className="text-center">
+                <span className="text-[var(--brand-accent-amber)] font-horus text-xl uppercase tracking-widest mb-4 block">
+                  Frågor & Svar
+                </span>
+                <Heading as={2} className="text-4xl md:text-5xl mb-6 text-[var(--brand-primary)]">
+                  Vanliga frågor
+                </Heading>
+                <Text className="text-lg md:text-xl text-[var(--brand-primary)]/90">
+                  Här hittar du svar på de vanligaste frågorna om USE Golf.
+                </Text>
+              </div>
+            </FadeIn>
+            <FadeIn delay={0.1}>
+              <FAQ items={faqData} />
+            </FadeIn>
+          </div>
+        </Section>
 
-        {/* FAQ Section */}
-        <Section className="pt-10 -mt-10">
-          <FadeIn>
-            <Heading as={2}>Vanliga frågor</Heading>
-            <Text className="mt-2 mb-6 max-w-xl">Här hittar du svar på de vanligaste frågorna om USE Golf.</Text>
-          </FadeIn>
-          <FadeIn delay={0.1}>
-            <FAQ items={faqData} />
-          </FadeIn>
+        {/* Final CTA */}
+        <Section className="py-20 bg-[var(--brand-primary)]">
+          <div className="max-w-4xl mx-auto text-center space-y-8">
+            <FadeIn>
+              <Heading as={2} className="text-4xl md:text-5xl ">
+                Redo att komma igång?
+              </Heading>
+              <Text className="text-xl md:text-xl text-[var(--brand-olive-700)] mt-2 max-w-2xl mx-auto">
+                Boka din tid idag eller läs mer om våra erbjudanden.
+              </Text>
+              <div className="flex flex-wrap justify-center gap-4 pt-6">
+                <a
+                  href="https://book.sweetspot.io/clubs/use-golf/"
+                  className="inline-flex items-center justify-center bg-[var(--brand-secondary)] text-[var(--brand-primary)] px-10 py-5 text-lg font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition transform hover:scale-105"
+                >
+                  Boka tid
+                </a>
+                <a
+                  href="/events"
+                  className="inline-flex items-center justify-center border-2 border-[var(--brand-secondary)] text-[var(--brand-olive-900)] px-10 py-5 text-lg font-semibold uppercase tracking-wider rounded-none hover:bg-[var(--brand-secondary)]/10 transition"
+                >
+                  Se events
+                </a>
+              </div>
+            </FadeIn>
+          </div>
         </Section>
       </div>
-
     </Page>
   );
 }
 
 export const metadata: Metadata = {
-  title: "Inomhusgolf i Göteborg",
+  title: "USE Golf – Inomhusgolf i Göteborg",
   description: "USE Golf – TrackMan-simulatorer, ligor, event och träning i Hovås.",
   openGraph: {
     title: "USE GOLF – Inomhusgolf i Göteborg",
@@ -526,5 +747,4 @@ export const metadata: Metadata = {
   },
 };
 
-// Revalidera sidan var 60:e sekund som fallback (webhook revaliderar omedelbart)
 export const revalidate = 60;
