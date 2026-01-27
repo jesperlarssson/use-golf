@@ -133,7 +133,11 @@ export default function EventCard({ event, variant = "default", className = "" }
       <div className="p-6 space-y-4 flex-1 flex flex-col">
         <div className="text-sm sm:text-base flex-1">
           {event.excerpt ? (
-            formatContent(event.excerpt)
+            typeof event.excerpt === 'string' ? (
+              formatContent(event.excerpt)
+            ) : Array.isArray(event.excerpt) ? (
+              <PortableText content={event.excerpt} />
+            ) : null
           ) : event.content && Array.isArray(event.content) ? (
             <PortableText content={event.content} />
           ) : null}

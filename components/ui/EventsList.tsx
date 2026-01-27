@@ -32,12 +32,28 @@ function EventsList({ events }: EventsListProps) {
     // Filtrera på sökterm
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
-      filtered = filtered.filter(
-        (event) =>
-          event.title.toLowerCase().includes(query) ||
-          event.subtitle?.toLowerCase().includes(query) ||
-          event.excerpt?.toLowerCase().includes(query)
-      );
+      filtered = filtered.filter((event) => {
+        const titleMatch = event.title.toLowerCase().includes(query);
+        const subtitleMatch = event.subtitle?.toLowerCase().includes(query) || false;
+        
+        // Hantera excerpt som kan vara string eller rich text array
+        let excerptMatch = false;
+        if (event.excerpt) {
+          if (typeof event.excerpt === 'string') {
+            excerptMatch = event.excerpt.toLowerCase().includes(query);
+          } else if (Array.isArray(event.excerpt)) {
+            const excerptText = event.excerpt
+              .map((block: any) => 
+                block.children?.map((child: any) => child.text || '').join('') || ''
+              )
+              .join(' ')
+              .toLowerCase();
+            excerptMatch = excerptText.includes(query);
+          }
+        }
+        
+        return titleMatch || subtitleMatch || excerptMatch;
+      });
     }
 
     // Sortera kronologiskt

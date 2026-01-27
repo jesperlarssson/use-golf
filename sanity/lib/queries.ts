@@ -202,6 +202,7 @@ export interface EventDocument {
   hasExternalLink?: boolean
   ctaHref?: string
   ctaLabel?: string
+  order?: number
   category?: 'tavlingar' | 'kurser' | 'ligor' | 'erbjudanden'
   requiresInterestForm?: boolean
   eventType?: 'recurring' | 'single' | 'specific'
@@ -332,10 +333,11 @@ export function transformEvent(event: Event): EventDocument {
     imageAlt: event.image?.alt,
     excerpt: excerpt,
     content: Array.isArray(event.content) ? event.content : undefined,
-    slug: event.slug,
+    slug: typeof event.slug === 'string' ? event.slug : event.slug?.current,
     hasExternalLink: event.hasExternalLink,
     ctaHref: finalCtaHref,
     ctaLabel: event.ctaLabel || 'Läs mer',
+    order: event.order,
     category: event.category,
     requiresInterestForm: event.requiresInterestForm,
     eventType: event.eventType,
