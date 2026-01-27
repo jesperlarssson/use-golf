@@ -8,9 +8,27 @@ interface JournalCardProps {
   height?: "h-56" | "h-84";
 }
 
-function truncateExcerpt(text: string, maxLength: number = 100): string {
-  if (text.length <= maxLength) return text;
-  return text.substring(0, maxLength).trim() + '..';
+function truncateExcerpt(text: string | any[] | undefined, maxLength: number = 100): string {
+  if (!text) return '';
+  
+  // Om det är rich text (array), extrahera text
+  if (Array.isArray(text)) {
+    const extractedText = text
+      .map((block: any) => 
+        block.children?.map((child: any) => child.text || '').join('') || ''
+      )
+      .join(' ');
+    if (extractedText.length <= maxLength) return extractedText;
+    return extractedText.substring(0, maxLength).trim() + '..';
+  }
+  
+  // Om det är vanlig text
+  if (typeof text === 'string') {
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength).trim() + '..';
+  }
+  
+  return '';
 }
 
 export default function JournalCard({ 

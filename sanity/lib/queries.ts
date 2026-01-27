@@ -19,7 +19,7 @@ export interface Post {
   }
   author?: string
   publishedAt: string
-  excerpt?: string
+  excerpt?: string | any[] // Kan vara vanlig text eller rich text (PortableText)
   coverImage?: {
     asset: {
       _ref: string
@@ -43,7 +43,7 @@ export interface PostDocument {
   slug: string
   author?: string
   publishedAt: string
-  excerpt?: string
+  excerpt?: string | any[] // Kan vara vanlig text eller rich text (PortableText)
   coverImage?: {
     asset: {
       _ref: string
@@ -67,6 +67,14 @@ const postFields = groq`
   author,
   publishedAt,
   excerpt,
+  excerpt[] {
+    ...,
+    _type == "image" => {
+      asset,
+      alt,
+      caption
+    }
+  },
   coverImage {
     asset,
     alt
@@ -188,7 +196,7 @@ export interface EventDocument {
   subtitle?: string
   imageUrl: string
   imageAlt?: string
-  excerpt?: string
+  excerpt?: string | any[] // Kan vara vanlig text eller rich text (PortableText)
   content?: any[] // Portable text array
   slug?: string
   hasExternalLink?: boolean
@@ -437,6 +445,22 @@ export function transformPost(post: Post): PostDocument {
       title: cat.title,
       slug: typeof cat.slug === 'string' ? cat.slug : cat.slug.current,
     })),
+  }
+}
+
+/**
+ * Hämta post via slug från Sanity
+ */
+export async function getPostBySlug(slug: string): Promise<PostDocument | null> {
+  try {
+    const post = await client.fetch<Post | null>(postBySlugQuery, { slug });
+    if (post) {
+      return transformPost(post);
+    }
+    return null;
+  } catch (error) {
+    console.error('Error fetching post by slug:', error);
+    return null;
   }
 }
 

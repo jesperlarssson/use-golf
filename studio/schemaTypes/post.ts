@@ -35,9 +35,48 @@ export default defineType({
     defineField({
       name: 'excerpt',
       title: 'Ingress',
-      type: 'text',
-      rows: 4,
-      description: 'Kort beskrivning som visas i listor',
+      type: 'array',
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+          ],
+          lists: [],
+          marks: {
+            decorators: [
+              { title: 'Fet', value: 'strong' },
+              { title: 'Kursiv', value: 'em' },
+            ],
+            annotations: [
+              {
+                name: 'link',
+                type: 'object',
+                title: 'Länk',
+                fields: [
+                  {
+                    name: 'href',
+                    type: 'url',
+                    title: 'URL',
+                    validation: (Rule: any) =>
+                      Rule.uri({
+                        allowRelative: true,
+                        scheme: ['http', 'https', 'mailto', 'tel'],
+                      }),
+                  },
+                  {
+                    name: 'blank',
+                    type: 'boolean',
+                    title: 'Öppna i ny flik',
+                    initialValue: false,
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      ],
+      description: 'Kort beskrivning som visas i listor. Du kan använda fet text och länkar.',
     }),
     defineField({
       name: 'coverImage',

@@ -79,26 +79,8 @@ export default async function Landing2DemoPage() {
   const sanityPasses = await getUserPasses();
   const userPasses = sanityPasses || defaultUserPasses;
 
-  // Dummy post för development
-  const dummyPost: PostDocument = {
-    _id: "dummy-post-1",
-    title: "Introducing USE Journal",
-    slug: "introducing-use-journal",
-    author: "USE Golf",
-    publishedAt: new Date().toISOString(),
-    excerpt: "USE Journal är platsen där vi samlar allt som händer på USE Golf. Här delar vi nyheter om event, träningar, tips och tricks – samt uppdateringar direkt från anläggningen för dig som vill få ut mer av varje besök.",
-    coverImageUrl: "/images/invigning/DSC06519.jpg",
-    coverImage: {
-      asset: {
-        _ref: "dummy",
-        _type: "reference"
-      },
-      alt: "USE Journal – nyheter, event och träning på USE Golf"
-    }
-  };
-
-  // Använd dummy post om inga posts finns
-  const postsToUse = latestPosts.length > 0 ? latestPosts : [dummyPost];
+  // Använd posts från Sanity
+  const postsToUse = latestPosts;
 
   // Fallback FAQ-data
   const defaultFAQ: FAQDocument[] = [
@@ -267,7 +249,15 @@ export default async function Landing2DemoPage() {
                               </h3>
                               {postsToUse[0].excerpt && (
                                 <p className="text-[var(--brand-primary)]/80 text-sm md:text-base line-clamp-3">
-                                  {postsToUse[0].excerpt}
+                                  {Array.isArray(postsToUse[0].excerpt) 
+                                    ? postsToUse[0].excerpt
+                                        .map((block: any) => 
+                                          block.children?.map((child: any) => child.text || '').join('') || ''
+                                        )
+                                        .join(' ')
+                                    : typeof postsToUse[0].excerpt === 'string'
+                                      ? postsToUse[0].excerpt
+                                      : ''}
                                 </p>
                               )}
                             </div>
@@ -456,7 +446,11 @@ export default async function Landing2DemoPage() {
                     <div className="p-6 space-y-4 flex-1 flex flex-col">
                       <div className="text-base md:text-lg flex-1">
                         {item.excerpt ? (
-                          formatContent(item.excerpt)
+                          Array.isArray(item.excerpt) ? (
+                            <PortableText content={item.excerpt} />
+                          ) : typeof item.excerpt === 'string' ? (
+                            formatContent(item.excerpt)
+                          ) : null
                         ) : item.content && Array.isArray(item.content) ? (
                           <PortableText content={item.content} />
                         ) : typeof item.content === 'string' ? (

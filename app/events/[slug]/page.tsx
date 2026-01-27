@@ -262,13 +262,52 @@ export async function generateMetadata({
 
   if (!event) {
     return {
-      title: "Event hittades inte",
+      title: "Event hittades inte | USE Golf",
+      description: "Eventet kunde inte hittas.",
     };
   }
 
+  // Extrahera text från excerpt (kan vara string eller rich text)
+  let excerptText = '';
+  if (event.excerpt) {
+    if (typeof event.excerpt === 'string') {
+      excerptText = event.excerpt.replace(/\*\*/g, ''); // Ta bort markdown-formatering
+    } else if (Array.isArray(event.excerpt)) {
+      excerptText = (event.excerpt as any[])
+        .map((block: any) => 
+          block.children?.map((child: any) => child.text || '').join('') || ''
+        )
+        .join(' ');
+    }
+  }
+
+  const description = excerptText || event.subtitle || `Läs mer om ${event.title} hos USE Golf.`;
+  const title = event.subtitle 
+    ? `${event.title} - ${event.subtitle} | USE Golf`
+    : `${event.title} | USE Golf`;
+
   return {
-    title: `${event.title} | USE Golf`,
-    description: event.excerpt || event.subtitle || `Läs mer om ${event.title} hos USE Golf.`,
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      images: event.imageUrl ? [
+        {
+          url: event.imageUrl,
+          width: 1200,
+          height: 630,
+          alt: event.imageAlt || event.title,
+        }
+      ] : [],
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: event.imageUrl ? [event.imageUrl] : [],
+    },
   };
 }
 
