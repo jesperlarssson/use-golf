@@ -14,21 +14,19 @@ export default function VeckoscramblePage() {
           <Section>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
               <div className="space-y-4 max-w-3xl">
-                <Heading as={2}>2-mannascramble – Veckoscramble</Heading>
+                <Heading as={2}>2-manna scramble</Heading>
                 <Text className="text-[var(--brand-olive-900)] text-lg">
-                  Serie över 10 veckor med ny bana varje vecka. Spelas mån–sön, valfri tid. Giltigt TrackMan-handikapp krävs. Bra prisbord utlovas – mer info kommer. Startar 8 december.
+                  Vårt mål är att alltid ha en pågående scrambletävling med attraktiva priser från sponsorer. Upplägget är enkelt och lågtröskligt.
                 </Text>
-                <ul className="list-disc pl-5 space-y-1">
-                  <li><strong>Format:</strong> Tvåmannascramble – ny bana varje vecka</li>
-                  <li><strong>När:</strong> Måndag–söndag, valfri tid under hallens öppettider</li>
-                  <li><strong>Period:</strong> 10 veckor*</li>
-                  <li><strong>Avgift:</strong> 200 kr/lag/vecka (går oavkortat till prispotten för finalomgången)</li>
+                <ul className="list-disc pl-5 space-y-2">
+                  <li><strong>Ingen anmälningsavgift</strong> – du betalar endast för bokad simulatorspelstid</li>
+                  <li><strong>Rekommenderad speltid:</strong> 2 timmar</li>
+                  <li><strong>Fritt antal försök</strong> att kvala in</li>
+                  <li><strong>Innan rundan startar</strong> fyller spelarna i sitt utomhushandicap</li>
+                  <li><strong>Ny bana varje vecka</strong> – spela när det passar dig</li>
                 </ul>
                 <div className="space-y-2">
                   <a href="https://book.sweetspot.io/clubs/use-golf/" className="inline-flex items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">Boka speltid</a>
-                  <p className="text-xs text-[var(--brand-olive-900)] opacity-70">
-                    * 10 veckor: vecka 50, 51, 3, 4, 5, 6, 8, 9, 10, 11
-                  </p>
                 </div>
               </div>
               <div>
@@ -59,66 +57,22 @@ export default function VeckoscramblePage() {
               <div className="border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] p-6 space-y-3">
                 <h3 className="font-horus text-2xl">Så funkar det</h3>
                 <ul className="list-disc pl-5 space-y-1 text-sm">
-                  <li>Boka valfri simulatortid under veckan och spela veckans bana.</li>
-                  <li>Registrera laget i receptionen före start.</li>
-                  <li>Skicka in scorekortet direkt efter ronden.</li>
-                  <li>Resultat och leaderboard publiceras varje måndag.</li>
+                  <li>Boka valfri simulatortid (rekommenderat 2 timmar) och spela veckans bana.</li>
+                  <li>Innan rundan startar fyller ni i ert utomhushandicap.</li>
+                  <li>Spela scramble och registrera resultatet i TrackMan.</li>
+                  <li>Fritt antal försök – kvala in när ni vill!</li>
+                  <li>Resultat och leaderboard uppdateras löpande.</li>
                 </ul>
               </div>
               <div className="border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] p-6 space-y-3">
-                <h3 className="font-horus text-2xl">Veckor</h3>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-b-2 border-[var(--brand-secondary)]">
-                        <th className="text-left py-2 px-2 font-semibold">Vecka</th>
-                        <th className="text-left py-2 px-2 font-semibold">Omgång</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr className="border-b border-[var(--brand-secondary)]/40">
-                        <td className="py-2 px-2">50</td>
-                        <td className="py-2 px-2">Omgång 1</td>
-                      </tr>
-                      <tr className="border-b border-[var(--brand-secondary)]/40">
-                        <td className="py-2 px-2">51</td>
-                        <td className="py-2 px-2">Omgång 2</td>
-                      </tr>
-                      <tr className="border-b border-[var(--brand-secondary)]/40">
-                        <td className="py-2 px-2">3</td>
-                        <td className="py-2 px-2">Omgång 3</td>
-                      </tr>
-                      <tr className="border-b border-[var(--brand-secondary)]/40">
-                        <td className="py-2 px-2">4</td>
-                        <td className="py-2 px-2">Omgång 4</td>
-                      </tr>
-                      <tr className="border-b border-[var(--brand-secondary)]/40">
-                        <td className="py-2 px-2">5</td>
-                        <td className="py-2 px-2">Omgång 5</td>
-                      </tr>
-                      <tr className="border-b border-[var(--brand-secondary)]/40">
-                        <td className="py-2 px-2">6</td>
-                        <td className="py-2 px-2">Omgång 6</td>
-                      </tr>
-                      <tr className="border-b border-[var(--brand-secondary)]/40">
-                        <td className="py-2 px-2">8</td>
-                        <td className="py-2 px-2">Omgång 7</td>
-                      </tr>
-                      <tr className="border-b border-[var(--brand-secondary)]/40">
-                        <td className="py-2 px-2">9</td>
-                        <td className="py-2 px-2">Kvartsfinal</td>
-                      </tr>
-                      <tr className="border-b border-[var(--brand-secondary)]/40">
-                        <td className="py-2 px-2">10</td>
-                        <td className="py-2 px-2">Semifinal</td>
-                      </tr>
-                      <tr>
-                        <td className="py-2 px-2">11</td>
-                        <td className="py-2 px-2">Final</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+                <h3 className="font-horus text-2xl">Varför 2-manna scramble?</h3>
+                <ul className="list-disc pl-5 space-y-1 text-sm">
+                  <li><strong>Låg tröskel</strong> – perfekt för både nybörjare och erfarna spelare</li>
+                  <li><strong>Socialt spel</strong> – spela tillsammans och utvecklas</li>
+                  <li><strong>Flexibelt</strong> – spela när det passar er</li>
+                  <li><strong>Fritt antal försök</strong> – kvala in när ni vill</li>
+                  <li><strong>Attraktiva priser</strong> från våra sponsorer</li>
+                </ul>
               </div>
             </div>
           </Section>
@@ -126,26 +80,36 @@ export default function VeckoscramblePage() {
           {/* Regler i korthet (förtydligad) */}
           {/* Deleted this entire Section as requested */}
 
-          {/* Final & prispott */}
+          {/* Historik & prispott */}
           <Section className="pt-2 -mt-10 sm:-mt-18">
-            <div className="border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] p-6 space-y-3">
+            <div className="border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] p-6 space-y-4">
               <div className="flex items-center gap-3">
                 <Image src="/icons/prize.png" alt="Prispott" width={48} height={48} />
-                <h3 className="font-horus text-2xl">Final & prispott</h3>
+                <h3 className="font-horus text-2xl">Attraktiva priser från sponsorer</h3>
               </div>
-              <Text>Serien pågår under 10 veckor – alla anmälningsavgifter går till den gemensamma prispotten för finalen.</Text>
-              <Text>Kval sker via säsongens sammanlagda poäng – topp 10 lagen kvalificerar sig till finalspel på en av säsongens banor.</Text>
+              <Text className="text-[var(--brand-olive-900)]">
+                Vi arbetar kontinuerligt med att säkra attraktiva priser från våra sponsorer. Mer information om aktuellt prisbord publiceras löpande.
+              </Text>
+              
+              <div className="pt-4 border-t border-[var(--brand-secondary)]/30">
+                <h4 className="font-semibold mb-2 uppercase tracking-wider text-sm">Historik</h4>
+                <Text className="text-sm">
+                  Den senaste scrambletävlingen pågick under en månad med <strong>över 100 deltagare</strong>. 
+                  Finalen spelades måndag den 19:e mellan <strong>12 finalister</strong>. 
+                  Samma dag som finalen spelades smygstartade omgång 1 av en ny scrambletävling.
+                </Text>
+              </div>
             </div>
           </Section>
 
           {/* Anmälan */}
           <Section className="pt-2 -mt-10 sm:-mt-18">
             <div className="border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] p-6 space-y-3">
-              <h3 className="font-horus text-2xl">Anmälan</h3>
-              <ul className="list-disc pl-5 space-y-1 text-sm">
-                <li>Boka din simulatorslot som vanligt och lägg till <strong>“Veckoscramble”</strong> i kassan eller receptionen.</li>
-                <li>Drop-in i mån av plats – först till kvarn.</li>
-              </ul>
+              <h3 className="font-horus text-2xl">Kom igång</h3>
+              <Text>
+                Boka din simulatorspelstid som vanligt via Sweetspot. Innan ni startar rundan fyller ni i ert utomhushandicap. 
+                Ingen extra avgift – ni betalar endast för bokad speltid.
+              </Text>
               <div>
                 <a href="https://book.sweetspot.io/clubs/use-golf/" className="inline-flex items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">Boka speltid</a>
               </div>
@@ -159,6 +123,6 @@ export default function VeckoscramblePage() {
 }
 
 export const metadata: Metadata = {
-  title: "Veckoscramble – 2-mannascramble",
-  description: "Ny bana varje vecka. Spelas mån–sön, valfri tid. 200 kr/lag + simulatorhyra.",
+  title: "2-manna scramble",
+  description: "Lågtrösklig scrambletävling med attraktiva priser. Ingen anmälningsavgift – betala endast för bokad speltid.",
 };

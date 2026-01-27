@@ -15,7 +15,7 @@ export default async function UserPassesSection() {
   };
 
   return (
-    <Section id="spelpott" className="pt-10 pb-6 -mt-10 sm:-mt-18">
+    <Section id="spelpott" className="pt-10 pb-6 -mt-10 sm:-mt-18 max-w-screen-2xl mx-auto">
       <div className="space-y-6">
         <Heading as={2}>User Passes</Heading>
         <Text className="max-w-3xl">

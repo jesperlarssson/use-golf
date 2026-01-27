@@ -16,7 +16,7 @@ export default function Page({ variant = "subpage", className = "", children }: 
 
   return (
     <div className={`${topOffsetClass} ${sidePaddingClass}`}>
-      <div className={`mx-auto w-full min-h-screen ${maxWidthClass} ${className}`}>{children}</div>
+      <div className={`mx-auto w-full ${maxWidthClass} ${className}`}>{children}</div>
     </div>
   );
 }

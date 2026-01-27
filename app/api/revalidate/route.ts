@@ -83,7 +83,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Revalidera även via cache-taggar om de används
-    revalidateTag("sanity", "max");
+    revalidateTag("sanity");
 
     return NextResponse.json({
       revalidated: true,

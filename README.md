@@ -50,6 +50,21 @@ INQUIRY_FROM=no-reply@usegolf.se # Avsändare för förfrågan
 INQUIRY_AUTOREPLY_FROM=no-reply@usegolf.se # (valfritt) autosvar
 ```
 
+## Sanity (Drafts i development)
+
+För att se events i DRAFT-stadie i development, lägg till:
+
+```
+SANITY_API_READ_TOKEN=...    # API token från Sanity (hittas i Sanity Studio under API > Tokens)
+```
+
+**Hur man hittar token:**
+1. Gå till [sanity.io/manage](https://sanity.io/manage)
+2. Välj ditt projekt
+3. Gå till **API** > **Tokens**
+4. Skapa en ny token med **Read**-behörighet
+5. Kopiera token och lägg till i `.env.local`
+
 API-endpoints:
 - `POST /api/contact` – fält: `name`, `email`, `phone?`, `message?`, `hp?` (honeypot)
 - `POST /api/inquiry` – fält: `company`, `name`, `email`, `phone?`, `date?`, `start?`, `duration?`, `message?`, `hp?`
