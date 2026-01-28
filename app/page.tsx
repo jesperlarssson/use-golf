@@ -200,7 +200,7 @@ export default async function Landing2DemoPage() {
                   <FadeIn delay={0.2}>
                     <div className="flex flex-wrap gap-4 pt-4">
                       <a
-                        href="https://book.sweetspot.io/clubs/use-golf/"
+                        href="https://book.sweetspot.io/clubs/use-golf/2129/tee-sheet"
                         className="inline-flex items-center justify-center bg-[var(--brand-secondary)] text-[var(--brand-primary)] px-6 py-3 text-base font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition transform hover:scale-105"
                         data-cursor-target
                         data-cursor-padding="10"
