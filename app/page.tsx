@@ -353,7 +353,7 @@ export default async function Landing2DemoPage() {
                 </Text>
                 <div className="flex flex-wrap gap-4">
                   <a
-                    href="https://book.sweetspot.io/clubs/use-golf/"
+                    href="https://book.sweetspot.io/clubs/use-golf/2129/tee-sheet"
                     className="inline-flex items-center justify-center bg-[var(--brand-accent-amber)] text-[var(--brand-olive-900)] px-8 py-4 text-lg font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition transform hover:scale-105"
                   >
                     Boka nu

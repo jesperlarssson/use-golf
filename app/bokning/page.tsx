@@ -114,7 +114,7 @@ export default async function BookingPage() {
                       Boka enstaka tider direkt via vårt bokningssystem. Välj dag, tid och antal simulatorer.
                     </Text>
                     <div className="mt-auto">
-                      <a href="https://book.sweetspot.io/clubs/use-golf/" className="inline-flex w-full items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">
+                      <a href="https://book.sweetspot.io/clubs/use-golf/2129/tee-sheet" className="inline-flex w-full items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition" data-cursor-target data-cursor-padding="10">
                         Boka nu
                       </a>
                     </div>
