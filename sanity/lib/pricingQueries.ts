@@ -9,7 +9,7 @@ export interface PricingTimeSlot {
 
 export interface PricingDocument {
   _id: string
-  dayType: 'monday-thursday' | 'friday-saturday' | 'sunday'
+  dayType: 'monday-friday' | 'saturday' | 'sunday'
   timeSlots: PricingTimeSlot[]
 }
 
@@ -78,13 +78,13 @@ export async function getPricingData(): Promise<PricingData | null> {
     const pricingMap: Partial<PricingData> = {}
     
     pricing.forEach((doc) => {
-      if (doc.dayType === 'monday-thursday' || doc.dayType === 'friday-saturday' || doc.dayType === 'sunday') {
+      if (doc.dayType === 'monday-friday' || doc.dayType === 'saturday' || doc.dayType === 'sunday') {
         pricingMap[doc.dayType] = doc.timeSlots
       }
     })
     
     // Kontrollera att alla DayTypes finns
-    if (!pricingMap['monday-thursday'] || !pricingMap['friday-saturday'] || !pricingMap['sunday']) {
+    if (!pricingMap['monday-friday'] || !pricingMap['saturday'] || !pricingMap['sunday']) {
       console.warn('Not all pricing day types found in Sanity, returning null')
       return null
     }

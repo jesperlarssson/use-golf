@@ -11,8 +11,8 @@ export default defineType({
       type: 'string',
       options: {
         list: [
-          { title: 'Måndag–Torsdag', value: 'monday-thursday' },
-          { title: 'Fredag–Lördag', value: 'friday-saturday' },
+          { title: 'Måndag–Fredag', value: 'monday-friday' },
+          { title: 'Lördag', value: 'saturday' },
           { title: 'Söndag', value: 'sunday' },
         ],
       },
@@ -63,8 +63,8 @@ export default defineType({
     },
     prepare({ dayType }: { dayType: string }) {
       const labels: Record<string, string> = {
-        'monday-thursday': 'Måndag–Torsdag',
-        'friday-saturday': 'Fredag–Lördag',
+        'monday-friday': 'Måndag–Fredag',
+        'saturday': 'Lördag',
         'sunday': 'Söndag',
       }
       return {

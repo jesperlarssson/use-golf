@@ -191,7 +191,7 @@ export default async function Landing2DemoPage() {
                       GOLF
                     </h1>
                     <Lead className="text-lg md:text-xl lg:text-2xl text-[var(--brand-primary)]/90 max-w-2xl leading-relaxed">
-                      Europas största TrackMan-simulatorer i Hovås. Spela, träna och umgås året runt - Get used to it
+                      Spela, träna och umgås året runt - Get used to it
                     </Lead>
                   </FadeIn>
 
