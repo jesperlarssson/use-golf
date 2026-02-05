@@ -208,7 +208,7 @@ export default async function BookingPage() {
               </FadeIn>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-                {(["monday-thursday", "friday-saturday", "sunday"] as DayType[])
+                {(["monday-friday", "saturday", "sunday"] as DayType[])
                   .filter(dayType => pricingDataToUse[dayType])
                   .map((dayType, index) => (
                   <FadeIn key={dayType} delay={index * 0.1}>

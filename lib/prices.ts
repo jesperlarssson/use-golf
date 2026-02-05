@@ -10,7 +10,7 @@
  * Om inga parametrar skickas, används fallback-värdena nedan.
  */
 
-export type DayType = "monday-thursday" | "friday-saturday" | "sunday";
+export type DayType = "monday-friday" | "saturday" | "sunday";
 
 export type TimeSlot = {
   time: string;
@@ -23,14 +23,14 @@ export type PricingData = {
 
 // Fallback priser om Sanity-data inte finns
 export const defaultPricingData: PricingData = {
-  "monday-thursday": [
+  "monday-friday": [
     { time: "07:00–10:00", price: 330 },
     { time: "10:00–16:00", price: 425 },
     { time: "16:00–19:00", price: 495 },
     { time: "19:00–22:00", price: 450 },
     { time: "22:00–23:00", price: 300 },
   ],
-  "friday-saturday": [
+  "saturday": [
     { time: "07:00–09:00", price: 425 },
     { time: "09:00–16:00", price: 495 },
     { time: "16:00–22:00", price: 450 },
@@ -49,8 +49,8 @@ export const defaultPricingData: PricingData = {
 export const pricingData = defaultPricingData;
 
 export const dayLabels: Record<DayType, string> = {
-  "monday-thursday": "Måndag–Torsdag",
-  "friday-saturday": "Fredag–Lördag",
+  "monday-friday": "Måndag–Fredag",
+  "saturday": "Lördag",
   "sunday": "Söndag",
 };
 
@@ -73,10 +73,10 @@ export function getDayTypeFromWeekday(weekday: Weekday): DayType {
     case "tuesday":
     case "wednesday":
     case "thursday":
-      return "monday-thursday";
     case "friday":
+      return "monday-friday";
     case "saturday":
-      return "friday-saturday";
+      return "saturday";
     case "sunday":
       return "sunday";
   }
@@ -248,9 +248,9 @@ export function getRecommendedUserPass(totalPrice: number, passes?: Record<UserP
 // Boka hela lokalen - baspriser för hela lokalen (minst 2h)
 // Fallback värden om Sanity-data inte finns
 export const defaultBokaLokalenBasPriser: Record<DayType, number> = {
-  "monday-thursday": 16000, // Måndag–Tisdag: 16 000 kr, Onsdag–Torsdag: 20 000 kr
-  "friday-saturday": 24000, // Fredag–Söndag: 24 000 kr
-  "sunday": 24000, // Fredag–Söndag: 24 000 kr
+  "monday-friday": 18000, // Måndag–Fredag: 18 000 kr (genomsnitt)
+  "saturday": 24000, // Lördag: 24 000 kr
+  "sunday": 24000, // Söndag: 24 000 kr
 };
 
 // Boka hela lokalen - tilläggspriser

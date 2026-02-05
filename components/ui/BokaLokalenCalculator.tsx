@@ -35,7 +35,7 @@ export default function BokaLokalenCalculator({ closures = [], venuePricing }: B
   const [timmar, setTimmar] = useState(MIN_TIMAR);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [startTid, setStartTid] = useState(() => {
-    const times = getAvailableStartTimes("monday-thursday");
+    const times = getAvailableStartTimes("monday-friday");
     return times.length > 0 ? times[0] : "07:00";
   });
   const [harSnackspaket, setHarSnackspaket] = useState(false);
@@ -57,7 +57,7 @@ export default function BokaLokalenCalculator({ closures = [], venuePricing }: B
 
   // Konvertera veckodag till DayType (prisspann)
   const dag = useMemo(() => {
-    if (!veckodag) return "monday-thursday";
+    if (!veckodag) return "monday-friday";
     return getDayTypeFromWeekday(veckodag);
   }, [veckodag]);
 

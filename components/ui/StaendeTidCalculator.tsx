@@ -29,7 +29,7 @@ export default function StaendeTidCalculator({ pricingData, closures = [] }: Sta
   const availableStartTimes = useMemo(() => getAvailableStartTimes(dag, pricing), [dag, pricing]);
   
   // Sätt starttid baserat på tillgängliga tider
-  const initialTimes = useMemo(() => getAvailableStartTimes("monday-thursday", pricing), [pricing]);
+  const initialTimes = useMemo(() => getAvailableStartTimes("monday-friday", pricing), [pricing]);
   const [startTid, setStartTid] = useState(() => {
     return initialTimes.length > 0 ? initialTimes[0] : "07:00";
   });
