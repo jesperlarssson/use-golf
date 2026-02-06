@@ -159,16 +159,8 @@ export default defineType({
     defineField({
       name: 'category',
       title: 'Kategori',
-      type: 'string',
-      options: {
-        list: [
-          { title: 'Tävlingar', value: 'tavlingar' },
-          { title: 'Kurser & Träning', value: 'kurser' },
-          { title: 'Ligor', value: 'ligor' },
-          { title: 'Erbjudanden', value: 'erbjudanden' },
-        ],
-        layout: 'radio',
-      },
+      type: 'reference',
+      to: [{ type: 'eventCategory' }],
       description: 'Välj kategori för eventet',
       validation: (Rule) => Rule.required(),
     }),
@@ -233,23 +225,17 @@ export default defineType({
       subtitle: 'subtitle',
       media: 'image',
       order: 'order',
-      category: 'category',
+      category: 'category.title',
       slug: 'slug.current',
       hasExternalLink: 'hasExternalLink',
     },
     prepare({ title, subtitle, media, order, category, slug, hasExternalLink }) {
-      const categoryLabels: Record<string, string> = {
-        tavlingar: 'Tävlingar',
-        kurser: 'Kurser',
-        ligor: 'Ligor',
-        erbjudanden: 'Erbjudanden',
-      };
       const linkInfo = hasExternalLink ? 'Extern länk' : slug ? `/events/${slug}` : 'Ingen länk';
       return {
         title: title || 'Namnlöst event',
         subtitle: [
           subtitle,
-          categoryLabels[category] || category,
+          category?.title || 'Ingen kategori',
           linkInfo,
           `Ordning: ${order || 0}`
         ].filter(Boolean).join(' • '),

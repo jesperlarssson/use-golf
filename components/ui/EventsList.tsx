@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import type { EventDocument } from "@/sanity/lib/queries";
+import type { EventDocument, EventCategoryDocument } from "@/sanity/lib/queries";
 import EventCard from "./EventCard";
 import FadeIn from "./FadeIn";
 
@@ -13,20 +13,55 @@ function EventsList({ events }: EventsListProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
-  const categories = [
-    { value: "all", label: "Alla" },
-    { value: "tavlingar", label: "Tävlingar" },
-    { value: "kurser", label: "Kurser & Träning" },
-    { value: "ligor", label: "Ligor" },
-    { value: "erbjudanden", label: "Erbjudanden" },
-  ];
+  // Extrahera unika kategorier från events
+  const categories = useMemo(() => {
+    const categoryMap = new Map<string, { value: string; label: string }>();
+    categoryMap.set("all", { value: "all", label: "Alla" });
+    
+    events.forEach((event) => {
+      if (typeof event.category === 'object' && event.category !== null && 'title' in event.category) {
+        // Det är ett kategori-objekt från Sanity
+        const cat = event.category as EventCategoryDocument;
+        if (!categoryMap.has(cat._id)) {
+          categoryMap.set(cat._id, { value: cat._id, label: cat.title });
+        }
+      } else if (typeof event.category === 'string') {
+        // Bakåtkompatibilitet: det är en string
+        const fallbackLabels: Record<string, string> = {
+          tavlingar: "Tävlingar",
+          kurser: "Kurser & Träning",
+          ligor: "Ligor",
+          erbjudanden: "Erbjudanden",
+        };
+        if (!categoryMap.has(event.category)) {
+          categoryMap.set(event.category, { value: event.category, label: fallbackLabels[event.category] || event.category });
+        }
+      }
+    });
+    
+    return Array.from(categoryMap.values()).sort((a, b) => {
+      // "Alla" ska alltid vara först
+      if (a.value === "all") return -1;
+      if (b.value === "all") return 1;
+      return a.label.localeCompare(b.label);
+    });
+  }, [events]);
 
   const filteredEvents = useMemo(() => {
     let filtered = [...events];
 
     // Filtrera på kategori
     if (selectedCategory !== "all") {
-      filtered = filtered.filter((event) => event.category === selectedCategory);
+      filtered = filtered.filter((event) => {
+        if (typeof event.category === 'object' && event.category !== null && '_id' in event.category) {
+          // Det är ett kategori-objekt från Sanity
+          return (event.category as EventCategoryDocument)._id === selectedCategory;
+        } else if (typeof event.category === 'string') {
+          // Bakåtkompatibilitet: det är en string
+          return event.category === selectedCategory;
+        }
+        return false;
+      });
     }
 
     // Filtrera på sökterm

@@ -46,8 +46,8 @@ function formatContent(text: string) {
   return <>{parts}</>;
 }
 
-// Kategori-färger och labels
-const categoryConfig = {
+// Fallback kategori-färger och labels för bakåtkompatibilitet
+const categoryConfig: Record<string, { label: string; color: string; bgColor: string }> = {
   tavlingar: {
     label: "Tävlingar",
     color: "var(--brand-accent-amber)",
@@ -72,8 +72,25 @@ const categoryConfig = {
 
 export default function EventCard({ event, variant = "default", className = "" }: EventCardProps) {
   const [showInterestForm, setShowInterestForm] = useState(false);
-  const category = event.category || "erbjudanden";
-  const categoryInfo = categoryConfig[category] || categoryConfig.erbjudanden;
+  
+  // Hantera kategori som objekt eller string (bakåtkompatibilitet)
+  let categoryInfo: { label: string; color: string; bgColor: string };
+  if (typeof event.category === 'object' && event.category !== null && 'title' in event.category) {
+    // Det är ett kategori-objekt från Sanity
+    const categorySlug = event.category.title.toLowerCase().replace(/\s+/g, '-');
+    // Använd fallback-färger baserat på kategori-titel eller standard
+    categoryInfo = categoryConfig[categorySlug] || {
+      label: event.category.title,
+      color: "var(--brand-secondary)",
+      bgColor: "var(--brand-secondary)/10",
+    };
+  } else if (typeof event.category === 'string') {
+    // Bakåtkompatibilitet: det är en string
+    categoryInfo = categoryConfig[event.category] || categoryConfig.erbjudanden;
+  } else {
+    // Fallback
+    categoryInfo = categoryConfig.erbjudanden;
+  }
 
   const handleCtaClick = (e: React.MouseEvent) => {
     if (event.requiresInterestForm) {

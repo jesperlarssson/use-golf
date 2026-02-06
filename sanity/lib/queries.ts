@@ -161,6 +161,11 @@ export function transformFAQ(faq: FAQ): FAQDocument {
 }
 
 // Event queries
+export interface EventCategory {
+  _id: string
+  title: string
+}
+
 export interface Event {
   _id: string
   title: string
@@ -182,12 +187,17 @@ export interface Event {
   ctaLabel?: string
   order?: number
   showOnLandingPage?: boolean
-  category?: 'tavlingar' | 'kurser' | 'ligor' | 'erbjudanden'
+  category?: EventCategory | { _ref: string; _type: string }
   requiresInterestForm?: boolean
   eventType?: 'recurring' | 'single' | 'specific'
   recurringDay?: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday'
   eventDate?: string
   eventEndDate?: string
+}
+
+export interface EventCategoryDocument {
+  _id: string
+  title: string
 }
 
 export interface EventDocument {
@@ -203,7 +213,7 @@ export interface EventDocument {
   ctaHref?: string
   ctaLabel?: string
   order?: number
-  category?: 'tavlingar' | 'kurser' | 'ligor' | 'erbjudanden'
+  category?: EventCategoryDocument | string // String för bakåtkompatibilitet med dummy-data
   requiresInterestForm?: boolean
   eventType?: 'recurring' | 'single' | 'specific'
   recurringDay?: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday'
@@ -234,7 +244,10 @@ export const allEventsQuery = groq`*[_type == "event"] | order(order asc) {
   ctaLabel,
   order,
   showOnLandingPage,
-  category,
+  category-> {
+    _id,
+    title
+  },
   requiresInterestForm,
   eventType,
   recurringDay,
@@ -265,7 +278,10 @@ export const landingPageEventsQuery = groq`*[_type == "event" && showOnLandingPa
   ctaLabel,
   order,
   showOnLandingPage,
-  category,
+  category-> {
+    _id,
+    title
+  },
   requiresInterestForm,
   eventType,
   recurringDay,
@@ -296,7 +312,10 @@ export const eventBySlugQuery = groq`*[_type == "event" && slug.current == $slug
   ctaLabel,
   order,
   showOnLandingPage,
-  category,
+  category-> {
+    _id,
+    title
+  },
   requiresInterestForm,
   eventType,
   recurringDay,
@@ -325,6 +344,22 @@ export function transformEvent(event: Event): EventDocument {
     ? event.content 
     : event.excerpt || '';
   
+  // Transformera kategori från referens till objekt eller behåll string för bakåtkompatibilitet
+  let category: EventCategoryDocument | string | undefined;
+  if (event.category) {
+    if (typeof event.category === 'object' && '_id' in event.category && 'title' in event.category) {
+      // Det är en expanderad kategori-referens
+      const cat = event.category as EventCategory;
+      category = {
+        _id: cat._id,
+        title: cat.title,
+      };
+    } else if (typeof event.category === 'string') {
+      // Bakåtkompatibilitet: behåll string om det är en string
+      category = event.category;
+    }
+  }
+  
   return {
     _id: event._id,
     title: event.title,
@@ -338,7 +373,7 @@ export function transformEvent(event: Event): EventDocument {
     ctaHref: finalCtaHref,
     ctaLabel: event.ctaLabel || 'Läs mer',
     order: event.order,
-    category: event.category,
+    category: category,
     requiresInterestForm: event.requiresInterestForm,
     eventType: event.eventType,
     recurringDay: event.recurringDay,
