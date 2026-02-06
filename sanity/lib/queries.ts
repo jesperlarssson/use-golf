@@ -187,7 +187,7 @@ export interface Event {
   ctaLabel?: string
   order?: number
   showOnLandingPage?: boolean
-  category?: EventCategory | { _ref: string; _type: string }
+  category?: EventCategory | { _ref: string; _type: string } | string // string för bakåtkompatibilitet med dummy-data
   requiresInterestForm?: boolean
   eventType?: 'recurring' | 'single' | 'specific'
   recurringDay?: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday'
