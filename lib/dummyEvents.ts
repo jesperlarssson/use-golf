@@ -1,4 +1,4 @@
-import { Event, EventDocument } from "@/sanity/lib/queries";
+import { Event, EventDocument, EventCategory, EventCategoryDocument } from "@/sanity/lib/queries";
 
 /**
  * Dummy events för development/testing
@@ -780,6 +780,23 @@ export function transformDummyEvent(event: Event): EventDocument {
     finalCtaHref = event.ctaHref;
   }
   
+  // Transformera kategori från referens till objekt eller behåll string för bakåtkompatibilitet
+  let category: string | EventCategoryDocument | undefined;
+  if (event.category) {
+    if (typeof event.category === 'object' && '_id' in event.category && 'title' in event.category) {
+      // Det är en expanderad kategori-referens från Sanity
+      const cat = event.category as EventCategory;
+      category = {
+        _id: cat._id,
+        title: cat.title,
+      };
+    } else if (typeof event.category === 'string') {
+      // Bakåtkompatibilitet: behåll string om det är en string (dummy-data)
+      category = event.category;
+    }
+    // Om det är en referens-objekt ({ _ref, _type }), ignorera det eftersom vi inte kan expandera det här
+  }
+  
   return {
     _id: event._id,
     title: event.title,
@@ -792,7 +809,7 @@ export function transformDummyEvent(event: Event): EventDocument {
     hasExternalLink: event.hasExternalLink,
     ctaHref: finalCtaHref,
     ctaLabel: event.ctaLabel || "Läs mer",
-    category: event.category,
+    category: category,
     requiresInterestForm: event.requiresInterestForm,
     eventType: event.eventType,
     recurringDay: event.recurringDay,

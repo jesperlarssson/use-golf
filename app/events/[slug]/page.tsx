@@ -127,10 +127,12 @@ export default async function EventDetailPage({
                         backgroundColor: 'rgba(255, 255, 255, 0.25)',
                       }}
                     >
-                      {event.category === 'tavlingar' ? 'Tävlingar' :
-                       event.category === 'kurser' ? 'Kurser & Träning' :
-                       event.category === 'ligor' ? 'Ligor' :
-                       'Erbjudanden'}
+                      {typeof event.category === 'object' && event.category !== null && 'title' in event.category
+                        ? event.category.title
+                        : event.category === 'tavlingar' ? 'Tävlingar' :
+                          event.category === 'kurser' ? 'Kurser & Träning' :
+                          event.category === 'ligor' ? 'Ligor' :
+                          'Erbjudanden'}
                     </span>
                   </div>
                 )}
