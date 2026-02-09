@@ -43,8 +43,12 @@ export default function Footer() {
           <h4 className="font-semibold mb-3">Kontakt</h4>
           <p className="text-sm">Krogabäcksvägen 2</p>
           <p className="text-sm">436 53 Hovås</p>
-          <p className="text-sm mt-2">hello@usegolf.se</p>
-
+          <p className="text-sm mt-2">
+            <a href="mailto:hello@usegolf.se" className="hover:underline">hello@usegolf.se</a>
+          </p>
+          <p className="text-sm mt-2">
+            <a href="tel:+46767174034" className="hover:underline">+46 76-717 40 34</a>
+          </p>
         </div>
       </div>
 
@@ -59,8 +63,12 @@ export default function Footer() {
           <h4 className="font-semibold mb-3">Kontakt</h4>
           <p className="text-sm">Krogabäcksvägen 2</p>
           <p className="text-sm">436 53 Hovås</p>
-          <p className="text-sm mt-2">hello@usegolf.se</p>
-         
+          <p className="text-sm mt-2">
+            <a href="mailto:hello@usegolf.se" className="hover:underline">hello@usegolf.se</a>
+          </p>
+          <p className="text-sm mt-2">
+            <a href="tel:+46767174034" className="hover:underline">+46 76-717 40 34</a>
+          </p>
         </div>
       </div>
     </footer>

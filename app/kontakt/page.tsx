@@ -50,7 +50,12 @@ export default function KontaktPage() {
                     </div>
                     <div>
                       <h3 className="font-horus text-xl md:text-2xl mb-3 text-[var(--brand-primary)]">Kontakt</h3>
-                      <Text className="text-[var(--brand-primary)]">hello@usegolf.se</Text>
+                      <Text className="text-[var(--brand-primary)]">
+                        <a href="mailto:hello@usegolf.se" className="hover:underline">hello@usegolf.se</a>
+                      </Text>
+                      <Text className="text-[var(--brand-primary)]">
+                        <a href="tel:+46767174034" className="hover:underline">+46 76-717 40 34</a>
+                      </Text>
                     </div>
                     <div>
                       <h3 className="font-horus text-xl md:text-2xl mb-3 text-[var(--brand-primary)]">Öppettider</h3>
