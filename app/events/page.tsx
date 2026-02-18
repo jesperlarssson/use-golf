@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import Page from "@/components/ui/Page";
 import Section from "@/components/ui/Section";
 import FullBleed from "@/components/ui/FullBleed";
@@ -169,7 +170,9 @@ export default async function EventsPage() {
         <Page variant="subpage">
           {/* Events med sökfunktion */}
           <Section className="py-20 -mt-10 sm:-mt-18 max-w-screen-2xl mx-auto">
-            <EventsList events={allEvents} />
+            <Suspense fallback={<div className="text-sm opacity-70 py-8">Laddar events…</div>}>
+              <EventsList events={allEvents} />
+            </Suspense>
           </Section>
 
           {/* Boka hela lokalen - Special section */}
