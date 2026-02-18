@@ -33,7 +33,7 @@ export default async function EventsPage() {
       imageUrl: "/images/invigning/DSC06519.jpg",
       imageAlt: "Pensionärsgolf",
       excerpt: "Spela dagtid med **medlemsförmån** mellan kl. **09.00–15.00**. Möjlighet till stående tider, flexibelt upplägg och kaffe på plats.",
-      ctaHref: "/events/pensionarsgolf",
+      ctaHref: "/pensionar",
       ctaLabel: "Läs mer",
       category: "erbjudanden",
       slug: "pensionarsgolf",

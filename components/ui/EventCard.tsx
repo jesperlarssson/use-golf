@@ -107,6 +107,16 @@ export default function EventCard({ event, variant = "default", className = "" }
   // Kolla om eventet har Sweetspot-länk (specifikt kolla efter "sweetspot" i URL:en)
   const hasSweetspotLink = event.ctaHref && event.ctaHref.toLowerCase().includes('sweetspot');
 
+  // Länk till detaljsida: använd ctaHref om det är en intern sida (t.ex. /pensionar), annars /events/slug
+  const detailHref =
+    event.ctaHref &&
+    !hasSweetspotLink &&
+    event.ctaHref.startsWith('/')
+      ? event.ctaHref
+      : event.slug
+        ? `/events/${event.slug}`
+        : undefined;
+
   return (
     <div className={`overflow-hidden border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] flex flex-col h-full ${className}`}>
       {/* Bild */}
@@ -178,7 +188,7 @@ export default function EventCard({ event, variant = "default", className = "" }
         ) : (
           <div className="mt-auto pt-4">
             {/* Om både Sweetspot-länk och rich content finns, visa båda knapparna bredvid varandra */}
-            {hasSweetspotLink && hasRichContent && event.ctaHref && event.slug ? (
+            {hasSweetspotLink && hasRichContent && event.ctaHref && detailHref ? (
               <div className="flex flex-wrap gap-2">
                 {/* Primär knapp: Boka nu */}
                 <a
@@ -193,7 +203,7 @@ export default function EventCard({ event, variant = "default", className = "" }
                 </a>
                 {/* Sekundär knapp: Läs mer */}
                 <Link
-                  href={`/events/${event.slug}`}
+                  href={detailHref}
                   className="inline-flex flex-1 items-center justify-center border-2 border-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-secondary)] font-semibold uppercase tracking-wider rounded-none hover:bg-[var(--brand-secondary)]/10 transition"
                   data-cursor-target
                   data-cursor-padding="10"
@@ -218,9 +228,9 @@ export default function EventCard({ event, variant = "default", className = "" }
                 )}
 
                 {/* Rich text content: Visa "Läs mer" knapp till detaljsidan */}
-                {hasRichContent && event.slug && !hasSweetspotLink && (
+                {hasRichContent && detailHref && !hasSweetspotLink && (
                   <Link
-                    href={`/events/${event.slug}`}
+                    href={detailHref}
                     className="inline-flex w-full items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition"
                     data-cursor-target
                     data-cursor-padding="10"
@@ -233,9 +243,9 @@ export default function EventCard({ event, variant = "default", className = "" }
 
             {/* Fallback för requiresInterestForm */}
             {event.requiresInterestForm && !hasRichContent && !hasSweetspotLink && (
-              event.slug ? (
+              detailHref ? (
                 <Link
-                  href={`/events/${event.slug}`}
+                  href={detailHref}
                   className="inline-flex w-full items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition"
                   data-cursor-target
                   data-cursor-padding="10"
@@ -253,9 +263,9 @@ export default function EventCard({ event, variant = "default", className = "" }
             )}
 
             {/* Fallback för event utan rich content eller Sweetspot-länk */}
-            {!hasRichContent && !hasSweetspotLink && !event.requiresInterestForm && event.slug && (
+            {!hasRichContent && !hasSweetspotLink && !event.requiresInterestForm && detailHref && (
               <Link
-                href={`/events/${event.slug}`}
+                href={detailHref}
                 className="inline-flex w-full items-center justify-center bg-[var(--brand-secondary)] px-5 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition"
                 data-cursor-target
                 data-cursor-padding="10"

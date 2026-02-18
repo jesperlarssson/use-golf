@@ -415,7 +415,7 @@ export const dummyEvents: Event[] = [
       current: "dummy-pensionarsgolf",
     },
     hasExternalLink: false,
-    ctaHref: undefined,
+    ctaHref: "/pensionar",
     ctaLabel: "Läs mer",
     order: 4,
     showOnLandingPage: false,
@@ -770,9 +770,11 @@ export function transformDummyEvent(event: Event): EventDocument {
   const imageRef = event.image?.asset?._ref || "";
   const imageUrl = imageMap[imageRef] || "/images/placeholder.png";
   
-  // Bestäm ctaHref baserat på hasExternalLink och slug
+  // Bestäm ctaHref baserat på hasExternalLink, custom intern länk och slug
   let finalCtaHref: string | undefined;
   if (event.hasExternalLink && event.ctaHref) {
+    finalCtaHref = event.ctaHref;
+  } else if (event.ctaHref && event.ctaHref.startsWith('/') && !event.ctaHref.toLowerCase().includes('sweetspot')) {
     finalCtaHref = event.ctaHref;
   } else if (event.slug?.current) {
     finalCtaHref = `/events/${event.slug.current}`;
