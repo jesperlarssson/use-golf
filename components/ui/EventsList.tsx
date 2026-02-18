@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import type { EventDocument, EventCategoryDocument } from "@/sanity/lib/queries";
 import EventCard from "./EventCard";
 import FadeIn from "./FadeIn";
@@ -9,9 +10,46 @@ interface EventsListProps {
   events: EventDocument[];
 }
 
+function normalizeCategoryValue(value?: string | null): string {
+  return value?.trim().toLowerCase() || "";
+}
+
+function slugifyCategoryTitle(value?: string): string {
+  return normalizeCategoryValue(value)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function getCategoryValue(category: EventCategoryDocument): string {
+  return (
+    normalizeCategoryValue(category.slug) ||
+    slugifyCategoryTitle(category.title) ||
+    normalizeCategoryValue(category._id)
+  );
+}
+
 function EventsList({ events }: EventsListProps) {
+  const searchParams = useSearchParams();
+  const requestedCategory = normalizeCategoryValue(searchParams.get("category"));
+  const hasRequestedCategory = requestedCategory
+    ? events.some((event) => {
+        if (typeof event.category === "object" && event.category !== null && "_id" in event.category) {
+          const categoryObject = event.category as EventCategoryDocument;
+          return getCategoryValue(categoryObject) === requestedCategory;
+        }
+        if (typeof event.category === "string") {
+          return normalizeCategoryValue(event.category) === requestedCategory;
+        }
+        return false;
+      })
+    : false;
+
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [selectedCategory, setSelectedCategory] = useState<string>(
+    hasRequestedCategory ? requestedCategory : "all"
+  );
 
   // Extrahera unika kategorier från events
   const categories = useMemo(() => {
@@ -22,8 +60,9 @@ function EventsList({ events }: EventsListProps) {
       if (typeof event.category === 'object' && event.category !== null && 'title' in event.category) {
         // Det är ett kategori-objekt från Sanity
         const cat = event.category as EventCategoryDocument;
-        if (!categoryMap.has(cat._id)) {
-          categoryMap.set(cat._id, { value: cat._id, label: cat.title });
+        const categoryValue = getCategoryValue(cat);
+        if (categoryValue && !categoryMap.has(categoryValue)) {
+          categoryMap.set(categoryValue, { value: categoryValue, label: cat.title });
         }
       } else if (typeof event.category === 'string') {
         // Bakåtkompatibilitet: det är en string
@@ -33,8 +72,12 @@ function EventsList({ events }: EventsListProps) {
           ligor: "Ligor",
           erbjudanden: "Erbjudanden",
         };
-        if (!categoryMap.has(event.category)) {
-          categoryMap.set(event.category, { value: event.category, label: fallbackLabels[event.category] || event.category });
+        const fallbackValue = normalizeCategoryValue(event.category);
+        if (fallbackValue && !categoryMap.has(fallbackValue)) {
+          categoryMap.set(fallbackValue, {
+            value: fallbackValue,
+            label: fallbackLabels[fallbackValue] || event.category,
+          });
         }
       }
     });
@@ -47,6 +90,16 @@ function EventsList({ events }: EventsListProps) {
     });
   }, [events]);
 
+  useEffect(() => {
+    if (!requestedCategory) {
+      setSelectedCategory("all");
+      return;
+    }
+
+    const hasRequestedCategory = categories.some((category) => category.value === requestedCategory);
+    setSelectedCategory(hasRequestedCategory ? requestedCategory : "all");
+  }, [requestedCategory, categories]);
+
   const filteredEvents = useMemo(() => {
     let filtered = [...events];
 
@@ -55,10 +108,12 @@ function EventsList({ events }: EventsListProps) {
       filtered = filtered.filter((event) => {
         if (typeof event.category === 'object' && event.category !== null && '_id' in event.category) {
           // Det är ett kategori-objekt från Sanity
-          return (event.category as EventCategoryDocument)._id === selectedCategory;
+          const categoryObject = event.category as EventCategoryDocument;
+          const categoryValue = getCategoryValue(categoryObject);
+          return categoryValue === selectedCategory;
         } else if (typeof event.category === 'string') {
           // Bakåtkompatibilitet: det är en string
-          return event.category === selectedCategory;
+          return normalizeCategoryValue(event.category) === selectedCategory;
         }
         return false;
       });

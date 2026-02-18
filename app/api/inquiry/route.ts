@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { company, name, email, phone, date, start, duration, message, hp, type, partnerLevel, subject: subjectFromClient } = body || {};
+    const { company, name, email, phone, date, start, message, hp, type, partnerLevel, subject: subjectFromClient } = body || {};
 
     // Honeypot
     if (typeof hp === "string" && hp.trim() !== "") {
@@ -71,7 +71,6 @@ export async function POST(req: NextRequest) {
       phone ? `<p><strong>Telefon:</strong> ${phone}</p>` : "",
       date ? `<p><strong>Önskat datum:</strong> ${date}</p>` : "",
       start ? `<p><strong>Starttid:</strong> ${start}</p>` : "",
-      duration ? `<p><strong>Varaktighet:</strong> ${duration}</p>` : "",
       `<p><strong>Önskemål/beskrivning:</strong></p>`,
       `<p>${(message || "").replace(/\n/g, "<br/>")}</p>`,
     ].filter(Boolean);

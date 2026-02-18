@@ -164,6 +164,20 @@ export function transformFAQ(faq: FAQ): FAQDocument {
 export interface EventCategory {
   _id: string
   title: string
+  slug?: {
+    current: string
+  } | string
+  description?: string
+  actionLabel?: string
+  link?: string
+  order?: number
+  image?: {
+    asset: {
+      _ref: string
+      _type: string
+    }
+    alt?: string
+  }
 }
 
 export interface Event {
@@ -198,6 +212,13 @@ export interface Event {
 export interface EventCategoryDocument {
   _id: string
   title: string
+  slug?: string
+  description?: string
+  actionLabel?: string
+  link?: string
+  imageUrl?: string
+  imageAlt?: string
+  order?: number
 }
 
 export interface EventDocument {
@@ -246,7 +267,8 @@ export const allEventsQuery = groq`*[_type == "event"] | order(order asc) {
   showOnLandingPage,
   category-> {
     _id,
-    title
+    title,
+    "slug": slug.current
   },
   requiresInterestForm,
   eventType,
@@ -280,7 +302,8 @@ export const landingPageEventsQuery = groq`*[_type == "event" && showOnLandingPa
   showOnLandingPage,
   category-> {
     _id,
-    title
+    title,
+    "slug": slug.current
   },
   requiresInterestForm,
   eventType,
@@ -314,7 +337,8 @@ export const eventBySlugQuery = groq`*[_type == "event" && slug.current == $slug
   showOnLandingPage,
   category-> {
     _id,
-    title
+    title,
+    "slug": slug.current
   },
   requiresInterestForm,
   eventType,
@@ -326,14 +350,18 @@ export const eventBySlugQuery = groq`*[_type == "event" && slug.current == $slug
 export function transformEvent(event: Event): EventDocument {
   const imageUrl = event.image?.asset ? getImageUrl(event.image) : undefined
   
-  // Bestäm ctaHref baserat på hasExternalLink och slug
+  // Bestäm ctaHref baserat på hasExternalLink, custom intern länk och slug
+  const slug = typeof event.slug === 'string' ? event.slug : event.slug?.current;
   let finalCtaHref: string | undefined;
   if (event.hasExternalLink && event.ctaHref) {
     // Externa länkar (t.ex. Sweetspot)
     finalCtaHref = event.ctaHref;
-  } else if (event.slug) {
-    // Interna sidor
-    finalCtaHref = `/events/${event.slug}`;
+  } else if (event.ctaHref && event.ctaHref.startsWith('/') && !event.ctaHref.toLowerCase().includes('sweetspot')) {
+    // Custom intern länk (t.ex. /pensionar)
+    finalCtaHref = event.ctaHref;
+  } else if (slug) {
+    // Standard interna sidor
+    finalCtaHref = `/events/${slug}`;
   } else if (event.ctaHref) {
     // Fallback till ctaHref om inget annat finns
     finalCtaHref = event.ctaHref;
@@ -353,6 +381,7 @@ export function transformEvent(event: Event): EventDocument {
       category = {
         _id: cat._id,
         title: cat.title,
+        slug: typeof cat.slug === 'string' ? cat.slug : cat.slug?.current,
       };
     } else if (typeof event.category === 'string') {
       // Bakåtkompatibilitet: behåll string om det är en string
@@ -379,6 +408,82 @@ export function transformEvent(event: Event): EventDocument {
     recurringDay: event.recurringDay,
     eventDate: event.eventDate,
     eventEndDate: event.eventEndDate,
+  }
+}
+
+export interface LandingPageEventCategory {
+  _id: string
+  title: string
+  slug?: {
+    current: string
+  } | string
+  description?: string
+  actionLabel?: string
+  link?: string
+  order?: number
+  image?: {
+    asset: {
+      _ref: string
+      _type: string
+    }
+    alt?: string
+  }
+}
+
+export const landingPageEventCategoriesQuery = groq`*[_type == "eventCategory"] | order(order asc, title asc) {
+  _id,
+  title,
+  "slug": slug.current,
+  description,
+  actionLabel,
+  link,
+  order,
+  image {
+    asset,
+    alt
+  }
+}`
+
+function normalizeCategorySlug(value?: string): string {
+  return (
+    value
+      ?.trim()
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '') || ''
+  )
+}
+
+export function transformEventCategory(category: LandingPageEventCategory): EventCategoryDocument {
+  const explicitSlug = typeof category.slug === 'string' ? category.slug : category.slug?.current
+  const slug = normalizeCategorySlug(explicitSlug) || normalizeCategorySlug(category.title)
+  const fallbackLink = slug ? `/events?category=${encodeURIComponent(slug)}` : '/events'
+
+  return {
+    _id: category._id,
+    title: category.title,
+    slug,
+    description: category.description,
+    actionLabel: category.actionLabel || 'Se event',
+    link: category.link || fallbackLink,
+    order: category.order,
+    imageUrl: category.image?.asset ? getImageUrl(category.image) : '/images/placeholder.png',
+    imageAlt: category.image?.alt || category.title,
+  }
+}
+
+export async function getLandingPageEventCategories(): Promise<EventCategoryDocument[]> {
+  try {
+    const categories = await client.fetch<LandingPageEventCategory[]>(landingPageEventCategoriesQuery)
+    if (categories && categories.length > 0) {
+      return categories.map(transformEventCategory)
+    }
+    return []
+  } catch (error) {
+    console.error('Error fetching landing page categories:', error)
+    return []
   }
 }
 
@@ -500,4 +605,3 @@ export async function getPostBySlug(slug: string): Promise<PostDocument | null> 
     return null;
   }
 }
-

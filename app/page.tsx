@@ -10,43 +10,20 @@ import type { FAQItem } from "@/components/ui/FAQ";
 import { getUserPasses } from "@/sanity/lib/pricingQueries";
 import { defaultUserPasses, type UserPassType } from "@/lib/prices";
 import JournalCard from "@/components/ui/JournalCard";
-import PortableText from "@/components/ui/PortableText";
 import Link from "next/link";
 import { client } from "@/sanity/lib/client";
-import { allPostsQuery, transformPost, PostDocument, Post, allFAQQuery, transformFAQ, type FAQ as SanityFAQ, type FAQDocument, getLandingPageEvents, EventDocument } from "@/sanity/lib/queries";
-
-// Helper function för att formatera text med **fet text**
-function formatContent(text: string) {
-  const parts: React.ReactNode[] = []
-  const boldRegex = /\*\*([^*]+)\*\*/g
-  const matches = Array.from(text.matchAll(boldRegex))
-
-  if (matches.length === 0) {
-    return <Text>{text}</Text>
-  }
-
-  let lastIndex = 0
-  let keyCounter = 0
-
-  matches.forEach((match) => {
-    if (match.index !== undefined) {
-      if (match.index > lastIndex) {
-        const beforeText = text.substring(lastIndex, match.index)
-        if (beforeText) {
-          parts.push(<span key={`text-${keyCounter++}`}>{beforeText}</span>)
-        }
-      }
-      parts.push(<strong key={`bold-${keyCounter++}`}>{match[1]}</strong>)
-      lastIndex = match.index + match[0].length
-    }
-  })
-
-  if (lastIndex < text.length) {
-    parts.push(<span key={`text-${keyCounter++}`}>{text.substring(lastIndex)}</span>)
-  }
-
-  return <Text>{parts}</Text>
-}
+import {
+  allPostsQuery,
+  transformPost,
+  PostDocument,
+  Post,
+  allFAQQuery,
+  transformFAQ,
+  type FAQ as SanityFAQ,
+  type FAQDocument,
+  getLandingPageEventCategories,
+  EventCategoryDocument,
+} from "@/sanity/lib/queries";
 
 async function getLatestPosts(limit: number = 3): Promise<PostDocument[]> {
   try {
@@ -73,7 +50,7 @@ async function getFAQ(): Promise<FAQDocument[]> {
 export default async function Landing2DemoPage() {
   const latestPosts = await getLatestPosts(3);
   const faqItems = await getFAQ();
-  const landingPageEvents = await getLandingPageEvents();
+  const landingPageEventCategories = await getLandingPageEventCategories();
   
   // Hämta User Passes från Sanity, fallback till default om det misslyckas
   const sanityPasses = await getUserPasses();
@@ -112,34 +89,51 @@ export default async function Landing2DemoPage() {
 
   const faqData = faqItems.length > 0 ? faqItems : defaultFAQ;
 
-  // Fallback events
-  const defaultEvents: EventDocument[] = [
+  // Fallback kategorier till startsidan
+  const defaultEventCategories: EventCategoryDocument[] = [
+    {
+      _id: "default-0",
+      title: "Pensionärer",
+      slug: "pensionarer",
+      imageUrl: "/images/invigning/DSC06519.jpg",
+      imageAlt: "Pensionärsgolf",
+      description: "Förmånliga pensionärspriser dagtid. Gemenskap, Facebookgrupp och trivsam miljö.",
+      actionLabel: "Läs mer",
+      link: "/pensionar",
+    },
     {
       _id: "default-1",
-      title: "Onsdagsgolfen",
-      subtitle: "",
+      title: "Damer",
+      slug: "damer",
       imageUrl: "/images/invigning/DSC06600.jpg",
-      imageAlt: "Onsdagsgolfen",
-      excerpt: "Varje onsdag spelar vi en social tävling för max 24 medlemmar. Två starttider – **13.00–15.00** eller **17.00–19.00** – och fyra omväxlande format gör det både lekfullt och tävlingsinriktat.",
-      ctaHref: "https://book.sweetspot.io/clubs/use-golf/passes/3d4941fe-3d67-4e7b-9fd2-c9a4aee12b1c",
-      ctaLabel: "Anmäl dig",
-      hasExternalLink: true,
-      category: "ligor",
+      imageAlt: "Damer",
+      description: "Kurser, träning och community för damer på alla nivåer.",
+      actionLabel: "Se event",
+      link: "/events?category=damer",
     },
     {
       _id: "default-2",
-      title: "Juniorligan",
-      subtitle: "Hösten",
+      title: "Junior",
+      slug: "junior",
       imageUrl: "/images/invigning/DSC06511.jpg",
-      imageAlt: "Juniorligan Hösten",
-      excerpt: "Start **18 november**. 3 spelare/simulator, 9 hål + fri lek efteråt. Kostnad **1 250 kr** per person. Medlemskap **Junior User** krävs.",
-      ctaHref: "/events/juniorligan",
-      ctaLabel: "Läs mer",
-      category: "ligor",
+      imageAlt: "Junior",
+      description: "Ligaspel, utveckling och roliga aktiviteter för yngre golfare.",
+      actionLabel: "Se event",
+      link: "/events?category=junior",
+    },
+    {
+      _id: "default-3",
+      title: "Företag / Partner",
+      slug: "partner",
+      imageUrl: "/images/render2.PNG",
+      imageAlt: "Företag och partner",
+      description: "Kickoff, kundevent och partnersamarbeten i en social golfmiljö.",
+      actionLabel: "Se partners",
+      link: "/partner",
     },
   ];
 
-  const programItems = landingPageEvents.length > 0 ? landingPageEvents : defaultEvents;
+  const categoryItems = landingPageEventCategories.length > 0 ? landingPageEventCategories : defaultEventCategories;
 
   // Formatera datum för visning
   function dateFormatter(publishedAt: string): string {
@@ -384,7 +378,7 @@ export default async function Landing2DemoPage() {
           </div>
         </Section>
 
-        {/* Event & Community - Tydligare grid och layout */}
+        {/* Community-kategorier */}
         <Section className="py-20 bg-[var(--brand-primary)]">
           <div className="space-y-8">
             <div className="flex items-end justify-between">
@@ -394,10 +388,10 @@ export default async function Landing2DemoPage() {
                     Community
                   </span>
                   <Heading as={2} className="text-4xl md:text-5xl mb-4">
-                    Event & ligor
+                    Aktiviteter för alla
                   </Heading>
                   <Text className="text-lg max-w-2xl">
-                    Återkommande aktiviteter och ligor för alla nivåer – häng med!
+                    Vi har event för alla, från tävlingar till ligor och sociala kvällar.
                   </Text>
                 </FadeIn>
               </div>
@@ -406,7 +400,7 @@ export default async function Landing2DemoPage() {
                   href="/events"
                   className="hidden md:inline-flex items-center gap-2 text-[var(--brand-olive-900)] hover:text-[var(--brand-secondary)] transition uppercase tracking-wider text-sm"
                 >
-                  Visa alla
+                  Visa alla event
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
@@ -414,63 +408,66 @@ export default async function Landing2DemoPage() {
               </FadeIn>
             </div>
 
-            <div className="grid grid-cols-12 gap-6 md:gap-8">
-              {programItems.map((item, index) => (
-                <FadeIn
-                  key={`${item.title}-${item.subtitle}`}
-                  delay={index * 0.1}
-                  className={`col-span-12 md:col-span-6 ${index === 0 ? 'lg:col-span-8' : 'lg:col-span-4'}`}
-                >
-                  <div className="overflow-hidden border-4 border-[var(--brand-secondary)] bg-[var(--brand-primary)] flex flex-col h-full">
-                    <div className={`relative ${index === 0 ? 'h-64 md:h-80' : 'h-48 md:h-64'} border-b-4 border-[var(--brand-secondary)]`}>
-                      <Image
-                        src={item.imageUrl || '/images/placeholder.png'}
-                        alt={item.imageAlt || item.title}
-                        fill
-                        loading={index < 2 ? "eager" : "lazy"}
-                        className="object-cover"
-                        sizes={index === 0 ? "(max-width: 1024px) 100vw, 66vw" : "(max-width: 1024px) 100vw, 33vw"}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-                      <div className="absolute bottom-0 left-0 right-0 p-6">
-                        <h3 className="font-horus text-3xl md:text-4xl text-[var(--brand-primary)] mb-1">
-                          {item.title}
-                        </h3>
-                        {item.subtitle && (
-                          <p className="text-[var(--brand-primary)]/80 uppercase tracking-wider text-sm">
-                            {item.subtitle}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                    <div className="p-6 space-y-4 flex-1 flex flex-col">
-                      <div className="text-base md:text-lg flex-1">
-                        {item.excerpt ? (
-                          Array.isArray(item.excerpt) ? (
-                            <PortableText content={item.excerpt} />
-                          ) : typeof item.excerpt === 'string' ? (
-                            formatContent(item.excerpt)
-                          ) : null
-                        ) : item.content && Array.isArray(item.content) ? (
-                          <PortableText content={item.content} />
-                        ) : typeof item.content === 'string' ? (
-                          formatContent(item.content)
-                        ) : null}
-                      </div>
-                      {item.ctaHref ? (
-                        <div className="pt-4">
-                          <a
-                            href={item.ctaHref}
-                            className="inline-flex items-center justify-center bg-[var(--brand-secondary)] text-[var(--brand-primary)] px-6 py-3 font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition"
-                          >
-                            {item.ctaLabel ?? "Läs mer"}
-                          </a>
-                        </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+              {categoryItems.map((item, index) => {
+                const href =
+                  item.link ||
+                  (item.slug ? `/events?category=${encodeURIComponent(item.slug)}` : "/events");
+                const isExternalLink = /^https?:\/\//i.test(href);
+
+                const card = (
+                  <div className="group relative overflow-hidden border-4 border-[var(--brand-secondary)] bg-[var(--brand-primary)] h-full aspect-[16/9] hover:border-[var(--brand-accent-amber)] transition-colors">
+                    <Image
+                      src={item.imageUrl || "/images/placeholder.png"}
+                      alt={item.imageAlt || item.title}
+                      fill
+                      loading={index < 3 ? "eager" : "lazy"}
+                      className="object-cover blur-xs group-hover:scale-[1.04] transition-transform duration-500"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-black/10" />
+                    <div className="absolute inset-x-0 bottom-0 p-6">
+                      <h3 className="font-horus text-3xl md:text-4xl text-[var(--brand-primary)] leading-none">
+                        {item.title}
+                      </h3>
+                      {item.description ? (
+                        <p className="text-[var(--brand-primary)]/85 mt-2 text-sm md:text-base">
+                          {item.description}
+                        </p>
                       ) : null}
+                      <span className="inline-flex items-center gap-2 mt-4 text-[var(--brand-primary)] uppercase tracking-wider text-xs md:text-sm font-semibold">
+                        {item.actionLabel || "Se event"}
+                        <span className="inline-block transition-transform duration-300 group-hover:translate-x-1 group-focus-within:translate-x-1">
+                          →
+                        </span>
+                      </span>
                     </div>
                   </div>
-                </FadeIn>
-              ))}
+                );
+
+                return (
+                  <FadeIn
+                    key={item._id}
+                    delay={index * 0.1}
+                    className="h-full"
+                  >
+                    {isExternalLink ? (
+                      <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block h-full"
+                      >
+                        {card}
+                      </a>
+                    ) : (
+                      <Link href={href} className="block h-full">
+                        {card}
+                      </Link>
+                    )}
+                  </FadeIn>
+                );
+              })}
             </div>
           </div>
         </Section>

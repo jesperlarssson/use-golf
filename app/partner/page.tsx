@@ -8,99 +8,148 @@ import InquiryForm from "@/components/ui/InquiryForm";
 import Image from "next/image";
 import FadeIn from "@/components/ui/FadeIn";
 import SectionHeader from "@/components/ui/SectionHeader";
+import Link from "next/link";
 
-export default function ForetagseventPage() {
+export default function PartnerPage() {
+  const boxClass =
+    "border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] overflow-hidden flex flex-col h-full";
+  const boxImageClass = "relative h-48 border-b-2 border-[var(--brand-secondary)]";
+  const boxContentClass = "p-6 space-y-4 flex-1 flex flex-col";
+  const ctaClass =
+    "inline-flex w-full items-center justify-center bg-[var(--brand-secondary)] px-4 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition";
+
   return (
     <FullBleed>
       {/* Hero Banner */}
       <div className="relative w-full min-h-[50vh] sm:min-h-[60vh] overflow-hidden border-b border-[var(--brand-secondary)]">
         <Image
           src="/images/render2.PNG"
-          alt="Partner"
+          alt="Företag / Partner"
           fill
           priority
           className="object-cover filter blur-sm brightness-90 scale-110"
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/40 to-black/20" />
-        <div className="relative z-10 flex items-center justify-center min-h-[50vh] sm:min-h-[60vh]">
-          <div className="w-full max-w-screen-2xl px-4 sm:px-6 py-20">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
-              {/* Vänster kolumn - SectionHeader */}
-              <FadeIn>
-                <SectionHeader
-                  label="Partner"
-                  heading="Partnernivåer"
-                  description="Syns, spela och nätverka med USE Golf. Välj nivå som passar er närvaro, från återkommande tider till hela anläggningen för event. Vi erbjuder två partnernivåer för företag som vill ha en fast närvaro och exponering hos USE Golf."
-                  align="left"
-                  labelColor="rgb(255, 255, 255)"
-                  headingColor="rgb(255, 255, 255)"
-                  textColor="rgba(255, 255, 255, 0.9)"
-                  maxWidth="full"
-                />
-              </FadeIn>
-              
-              {/* Höger kolumn - Fördelar med glassy effekt */}
-              <FadeIn delay={0.1}>
-                <div className="backdrop-blur-md bg-[var(--brand-primary)]/20 border-2 border-[var(--brand-primary)]/30 p-6 md:p-8">
-                  <p className="font-horus text-xl md:text-2xl mb-6 text-[var(--brand-primary)]">Varför bli partner?</p>
-                  <div className="space-y-4">
-                    <div className="flex items-start gap-3">
-                      <span className="text-[var(--brand-primary)] mt-1 text-lg">•</span>
-                      <div>
-                        <strong className="text-[var(--brand-primary)] block">Synlighet</strong>
-                        <p className="text-sm text-[var(--brand-primary)]/80 mt-1">Exponering på partner-tavla och hemsida.</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <span className="text-[var(--brand-primary)] mt-1 text-lg">•</span>
-                      <div>
-                        <strong className="text-[var(--brand-primary)] block">Återkommande tider</strong>
-                        <p className="text-sm text-[var(--brand-primary)]/80 mt-1">Möjlighet att boka stående tider varje vecka.</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <span className="text-[var(--brand-primary)] mt-1 text-lg">•</span>
-                      <div>
-                        <strong className="text-[var(--brand-primary)] block">Nätverkande</strong>
-                        <p className="text-sm text-[var(--brand-primary)]/80 mt-1">Perfekt för kunder, personal eller nätverk.</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <span className="text-[var(--brand-primary)] mt-1 text-lg">•</span>
-                      <div>
-                        <strong className="text-[var(--brand-primary)] block">Företagsevent</strong>
-                        <p className="text-sm text-[var(--brand-primary)]/80 mt-1">Möjlighet till exklusiva event med hela lokalen.</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </FadeIn>
-            </div>
+        <div className="relative z-10 flex flex-col min-h-[50vh] sm:min-h-[60vh] justify-center">
+          <div className="w-full max-w-screen-2xl px-4 sm:px-6 py-20 mx-auto">
+            <FadeIn>
+              <Link
+                href="/"
+                className="inline-flex items-center gap-2 text-white/90 hover:text-white transition group mb-8"
+              >
+                <svg className="w-5 h-5 transform group-hover:-translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                <span className="text-sm uppercase tracking-wider">Tillbaka till startsidan</span>
+              </Link>
+              <SectionHeader
+                label="Företag / Partner"
+                heading="Företagsevent, konferens & partner"
+                description="Hyr hela lokalen för exklusiva event, boka konferens med golf som aktivitet – eller bli partner hos USE Golf. Vi tar hand om allt."
+                align="left"
+                labelColor="rgb(255, 255, 255)"
+                headingColor="rgb(255, 255, 255)"
+                textColor="rgba(255, 255, 255, 0.9)"
+                maxWidth="full"
+              />
+            </FadeIn>
           </div>
         </div>
       </div>
 
       <div className="border-y border-[var(--brand-secondary)] pt-10">
         <Page variant="subpage">
-
-          {/* Partnernivåer */}
+          {/* Fyra boxar: Hyr hela lokalen + Konferens överst, Partner + Official Partner under */}
           <Section className="py-20 -mt-10 sm:-mt-18">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-screen-2xl mx-auto">
-              {/* Partner */}
+              {/* Rad 1: Hyr hela lokalen */}
               <FadeIn>
-                <div className="border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] overflow-hidden flex flex-col h-full">
-                  <div className="relative h-48 border-b-2 border-[var(--brand-secondary)]">
+                <div className={boxClass}>
+                  <div className={boxImageClass}>
+                    <Image src="/images/render2.PNG" alt="Hyr hela lokalen" fill className="object-cover blur-xs scale-105 brightness-90" />
+                    <div className="absolute inset-0 bg-black/20" />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <h4 className="font-horus text-2xl sm:text-3xl md:text-4xl text-[var(--brand-primary)] text-center px-4">
+                        Hyr hela lokalen
+                      </h4>
+                    </div>
+                  </div>
+                  <div className={boxContentClass}>
+                    <Heading as={3} className="text-lg font-horus">
+                      Hyr hela lokalen hos USE Golf
+                    </Heading>
+                    <ul className="list-disc pl-5 space-y-2 text-sm flex-1">
+                      <li>Exklusiv tillgång till hela anläggningen – en privat och personlig upplevelse</li>
+                      <li>Ett perfekt val för företagsevent, kickoff, konferens och kundaktiviteter</li>
+                      <li>Moderna golfsimulatorer anpassade för både tävlingsmoment och socialt spel</li>
+                      <li>Stora, öppna ytor som bjuder in till mingel, umgänge och gemenskap</li>
+                      <li>Möjlighet till scramble, tävlingsupplägg eller helt skräddarsydda aktiviteter</li>
+                      <li>Mat, fika och dryck kan ordnas helt efter era önskemål</li>
+                      <li>Professionella golftränare kan bokas som anpassar genomgång och träning efter gruppens nivå</li>
+                      <li>Alltid personal på plats som tar hand om helheten, så ni kan fokusera på upplevelsen</li>
+                      <li>En aktivitet där alla kan delta, oavsett tidigare golfvana</li>
+                      <li>Flexibla tider – dag, kväll eller helg</li>
+                    </ul>
+                    <div className="pt-4">
+                      <a href="?type=event#forfragan" className={ctaClass}>
+                        Skicka förfrågan
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </FadeIn>
+
+              {/* Rad 1: Konferens */}
+              <FadeIn delay={0.1}>
+                <div className={boxClass}>
+                  <div className={boxImageClass}>
+                    <Image src="/images/invigning/DSC06600.jpg" alt="Konferens" fill className="object-cover blur-xs scale-105 brightness-90" />
+                    <div className="absolute inset-0 bg-black/20" />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <h4 className="font-horus text-2xl sm:text-3xl md:text-4xl text-[var(--brand-primary)] text-center px-4">
+                        Konferens
+                      </h4>
+                    </div>
+                  </div>
+                  <div className={boxContentClass}>
+                    <Heading as={3} className="text-lg font-horus">
+                      Konferens hos USE Golf
+                    </Heading>
+                    <ul className="list-disc pl-5 space-y-2 text-sm flex-1">
+                      <li>Konferens i moderna och unika lokaler som bryter av från det traditionella</li>
+                      <li>Lunch inkluderad – smidigt och bekvämt för hela gruppen</li>
+                      <li>Golf i simulatorer som aktivitet under valfri speltid</li>
+                      <li>Golfklubbor finns på plats – alla kan delta direkt</li>
+                      <li>Inspirerande introduktion till golfen för nybörjare</li>
+                      <li>Möjlighet att boka utbildade tränare som leder gruppen genom spelets moment</li>
+                      <li>En perfekt mix av fokus, energi och socialt umgänge</li>
+                      <li>En konferens som stärker teamkänslan och skapar samtal även efteråt</li>
+                    </ul>
+                    <Text className="text-sm font-medium">
+                      Vi tar hand om allt – skicka in en intresseanmälan så tar vi kontakt och sätter ihop en dag ni sent glömmer.
+                    </Text>
+                    <div className="pt-4">
+                      <a href="?type=konferens#forfragan" className={ctaClass}>
+                        Skicka förfrågan
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </FadeIn>
+
+              {/* Rad 2: Partner */}
+              <FadeIn delay={0.2}>
+                <div className={boxClass}>
+                  <div className={boxImageClass}>
                     <Image src="/images/baller2.png" alt="Partner" fill className="object-cover blur-xs scale-105 brightness-90" />
                     <div className="absolute inset-0 bg-black/20" />
                     <div className="absolute inset-0 flex items-center justify-center">
                       <h4 className="font-horus text-3xl sm:text-4xl text-[var(--brand-primary)]">Partner</h4>
                     </div>
                   </div>
-                  <div className="p-6 space-y-4 flex-1 flex flex-col">
-                    <div>
-                      <Text className="text-lg font-semibold">Pris: 35 000 kr / år</Text>
-                    </div>
+                  <div className={boxContentClass}>
+                    <Text className="text-lg font-semibold">Pris: 35 000 kr / år</Text>
                     <Text className="text-sm">Perfekt för företag som vill ha återkommande tider för kunder, personal eller nätverk.</Text>
                     <ul className="list-disc pl-5 space-y-2 text-sm flex-1">
                       <li>30 timmars speltid per år</li>
@@ -112,28 +161,26 @@ export default function ForetagseventPage() {
                     </ul>
                     <Text className="text-sm">Ett paket för företag som vill synas och ha en fast närvaro på anläggningen.</Text>
                     <div className="pt-4">
-                      <a href="?type=partner&level=Partner#forfragan" className="inline-flex w-full items-center justify-center bg-[var(--brand-secondary)] px-4 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition">
+                      <a href="?type=partner&level=Partner#forfragan" className={ctaClass}>
                         Skicka förfrågan
                       </a>
                     </div>
                   </div>
                 </div>
               </FadeIn>
-              
-              {/* Official Partner */}
-              <FadeIn delay={0.1}>
-                <div className="border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] overflow-hidden flex flex-col h-full">
-                  <div className="relative h-48 border-b-2 border-[var(--brand-secondary)]">
+
+              {/* Rad 2: Official Partner */}
+              <FadeIn delay={0.3}>
+                <div className={boxClass}>
+                  <div className={boxImageClass}>
                     <Image src="/images/baller2-front.png" alt="Official Partner" fill className="object-cover blur-xs scale-105 brightness-90" />
                     <div className="absolute inset-0 bg-black/20" />
                     <div className="absolute inset-0 flex items-center justify-center">
                       <h4 className="font-horus text-3xl sm:text-4xl text-[var(--brand-primary)]">Official Partner</h4>
                     </div>
                   </div>
-                  <div className="p-6 space-y-4 flex-1 flex flex-col">
-                    <div>
-                      <Text className="text-lg font-semibold">Pris: 60 000 kr / år</Text>
-                    </div>
+                  <div className={boxContentClass}>
+                    <Text className="text-lg font-semibold">Pris: 60 000 kr / år</Text>
                     <Text className="text-sm">För företag som vill ha en större närvaro, exponering och fler möjligheter hos USE Golf.</Text>
                     <ul className="list-disc pl-5 space-y-2 text-sm flex-1">
                       <li>Företagstävling med hela lokalen i 2 timmar (6 simulatorer)</li>
@@ -149,7 +196,7 @@ export default function ForetagseventPage() {
                     </ul>
                     <Text className="text-sm">Ett premiumkoncept för företag som vill skapa upplevelser, bygga relationer och få maximal synlighet – både digitalt och på plats.</Text>
                     <div className="pt-4">
-                      <a href="?type=partner&level=Official%20Partner#forfragan" className="inline-flex w-full items-center justify-center bg-[var(--brand-secondary)] px-4 py-2 text-[var(--brand-primary)] font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition">
+                      <a href="?type=partner&level=Official%20Partner#forfragan" className={ctaClass}>
                         Skicka förfrågan
                       </a>
                     </div>
@@ -166,7 +213,7 @@ export default function ForetagseventPage() {
                 <SectionHeader
                   label="Förfrågan"
                   heading="Skicka förfrågan"
-                  description="Fyll i formuläret nedan så hör vi av oss med mer information om våra partnernivåer."
+                  description="Fyll i formuläret nedan så hör vi av oss med mer information. Välj ärende – hyr hela lokalen, konferens eller partnernivå."
                   align="left"
                   maxWidth="full"
                   variant="small"
@@ -174,7 +221,7 @@ export default function ForetagseventPage() {
               </FadeIn>
               <FadeIn delay={0.1}>
                 <Suspense fallback={<div className="text-sm opacity-70">Laddar formulär…</div>}>
-                  <InquiryForm subject="Förfrågan Partner" defaultType="partner" />
+                  <InquiryForm subject="Förfrågan Företag / Partner" />
                 </Suspense>
               </FadeIn>
             </div>
@@ -186,8 +233,6 @@ export default function ForetagseventPage() {
 }
 
 export const metadata: Metadata = {
-  title: "Partner",
-  description: "Partnernivåer för företag – syns, spelar och nätverkar med USE Golf. Välj nivå som passar er närvaro.",
+  title: "Företag / Partner | USE Golf",
+  description: "Hyr hela lokalen, boka konferens eller bli partner. Företagsevent, kickoff och kundaktiviteter hos USE Golf Göteborg.",
 };
-
-

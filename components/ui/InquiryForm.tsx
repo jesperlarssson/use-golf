@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 
-type InquiryType = "paket" | "event" | "partner";
+type InquiryType = "paket" | "event" | "konferens" | "partner";
 type PartnerLevel = "Partner" | "Official Partner";
 
 type InquiryFormProps = {
@@ -27,7 +27,6 @@ export default function InquiryForm({ to = "hello@usegolf.se", subject = "Förfr
   const [phone, setPhone] = useState("");
   const [date, setDate] = useState("");
   const [start, setStart] = useState("");
-  const [duration, setDuration] = useState("2 timmar");
   const [message, setMessage] = useState("");
   const [hp, setHp] = useState("");
   const [inquiryType, setInquiryType] = useState<InquiryType>(initialType);
@@ -43,7 +42,7 @@ export default function InquiryForm({ to = "hello@usegolf.se", subject = "Förfr
       const res = await fetch("/api/inquiry", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ company, name, email, phone, date, start, duration, message, hp, type: inquiryType, partnerLevel: partnerLevel || undefined, subject }),
+        body: JSON.stringify({ company, name, email, phone, date, start, message, hp, type: inquiryType, partnerLevel: partnerLevel || undefined, subject }),
       });
       const data = await res.json();
       if (!res.ok || !data.ok) throw new Error(data.error || "Kunde inte skicka");
@@ -54,7 +53,6 @@ export default function InquiryForm({ to = "hello@usegolf.se", subject = "Förfr
       setPhone("");
       setDate("");
       setStart("");
-      setDuration("2 timmar");
       setMessage("");
       setHp("");
       setInquiryType(initialType);
@@ -73,6 +71,7 @@ export default function InquiryForm({ to = "hello@usegolf.se", subject = "Förfr
         <select value={inquiryType} onChange={(e) => setInquiryType(e.target.value as InquiryType)} className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] px-3 py-2 rounded-none">
           <option value="paket">Simulatorpaket</option>
           <option value="event">Event (hela lokalen)</option>
+          <option value="konferens">Konferens</option>
           <option value="partner">Partnernivå</option>
         </select>
       </div>
@@ -114,17 +113,9 @@ export default function InquiryForm({ to = "hello@usegolf.se", subject = "Förfr
             <label className="block text-sm mb-1">Starttid</label>
             <input type="time" value={start} onChange={(e) => setStart(e.target.value)} className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] px-3 py-2 rounded-none" />
           </div>
-          <div>
-            <label className="block text-sm mb-1">Varaktighet</label>
-            <select value={duration} onChange={(e) => setDuration(e.target.value)} className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] px-3 py-2 rounded-none">
-              <option>2 timmar</option>
-              <option>3 timmar</option>
-            </select>
-          </div>
         </>
       ) : (
         <>
-          <div />
           <div />
           <div />
         </>
