@@ -46,7 +46,6 @@ function EventsList({ events }: EventsListProps) {
       })
     : false;
 
-  const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>(
     hasRequestedCategory ? requestedCategory : "all"
   );
@@ -119,33 +118,6 @@ function EventsList({ events }: EventsListProps) {
       });
     }
 
-    // Filtrera på sökterm
-    if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase();
-      filtered = filtered.filter((event) => {
-        const titleMatch = event.title.toLowerCase().includes(query);
-        const subtitleMatch = event.subtitle?.toLowerCase().includes(query) || false;
-        
-        // Hantera excerpt som kan vara string eller rich text array
-        let excerptMatch = false;
-        if (event.excerpt) {
-          if (typeof event.excerpt === 'string') {
-            excerptMatch = event.excerpt.toLowerCase().includes(query);
-          } else if (Array.isArray(event.excerpt)) {
-            const excerptText = event.excerpt
-              .map((block: any) => 
-                block.children?.map((child: any) => child.text || '').join('') || ''
-              )
-              .join(' ')
-              .toLowerCase();
-            excerptMatch = excerptText.includes(query);
-          }
-        }
-        
-        return titleMatch || subtitleMatch || excerptMatch;
-      });
-    }
-
     // Sortera kronologiskt
     filtered.sort((a, b) => {
       // Återkommande events först (sorterade efter dag)
@@ -181,37 +153,12 @@ function EventsList({ events }: EventsListProps) {
     });
 
     return filtered;
-  }, [events, searchQuery, selectedCategory]);
+  }, [events, selectedCategory]);
 
   return (
     <div className="space-y-8">
-      {/* Sök och filter */}
+      {/* Kategori-filter */}
       <div className="space-y-6">
-        {/* Sökfält */}
-        <div className="relative">
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Sök events..."
-            className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] px-6 py-4 text-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-secondary)]/50 transition"
-          />
-          <svg
-            className="absolute right-6 top-1/2 -translate-y-1/2 w-6 h-6 text-[var(--brand-olive-700)] pointer-events-none"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            />
-          </svg>
-        </div>
-
-        {/* Kategori-filter */}
         <div className="flex flex-wrap gap-3">
           {categories.map((category) => (
             <button
@@ -227,11 +174,6 @@ function EventsList({ events }: EventsListProps) {
             </button>
           ))}
         </div>
-
-        {/* Resultat-räknare */}
-        <div className="text-sm text-[var(--brand-olive-700)]">
-          Visar {filteredEvents.length} av {events.length} events
-        </div>
       </div>
 
       {/* Events grid */}
@@ -246,7 +188,7 @@ function EventsList({ events }: EventsListProps) {
       ) : (
         <div className="text-center py-12">
           <p className="text-lg text-[var(--brand-olive-700)]">
-            Inga events hittades. Prova att ändra söktermen eller kategori.
+            Inga events hittades. Prova att ändra kategori.
           </p>
         </div>
       )}

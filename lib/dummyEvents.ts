@@ -631,16 +631,16 @@ export const dummyEvents: Event[] = [
   },
   {
     _id: "dummy-event-7",
-    title: "TrackMan Challenge",
-    subtitle: "Veckans tävling",
+    title: "Friday Scratch Scramble",
+    subtitle: "",
     image: {
       asset: {
         _ref: "dummy-ref-7",
         _type: "reference",
       },
-      alt: "TrackMan Challenge",
+      alt: "Friday Scratch Scramble",
     },
-    excerpt: "Varje vecka kör vi en ny TrackMan Challenge där du kan mäta dig mot andra spelare. **Vinn priser** och förbättra ditt spel samtidigt!",
+    excerpt: "Varje fredag kör vi en scratch scramble – perfekt för att avsluta veckan med en rolig tävling bland vänner. **Ingen anmälningsavgift** – du betalar bara din simulatortid.",
     content: [
       {
         _type: "block",
@@ -650,7 +650,7 @@ export const dummyEvents: Event[] = [
           {
             _type: "span",
             _key: "span1",
-            text: "TrackMan Challenge är vår veckovisa tävling där alla kan delta. Varje vecka väljer vi en ny bana och utmaning som passar alla nivåer.",
+            text: "Friday Scratch Scramble är vår fredagstävling där alla är välkomna. Bilda lag, spela scratch scramble och tävla om veckans priser i en avslappnad stämning.",
             marks: [],
           },
         ],
@@ -659,12 +659,12 @@ export const dummyEvents: Event[] = [
       {
         _type: "block",
         _key: "block2",
-        style: "h2",
+        style: "h3",
         children: [
           {
             _type: "span",
             _key: "span2",
-            text: "Hur det fungerar",
+            text: "Så funkar det",
             marks: [],
           },
         ],
@@ -679,7 +679,7 @@ export const dummyEvents: Event[] = [
           {
             _type: "span",
             _key: "span3",
-            text: "Boka din tid när som helst under veckan",
+            text: "Ingen anmälningsavgift – du betalar bara simulatortid",
             marks: [],
           },
         ],
@@ -694,7 +694,7 @@ export const dummyEvents: Event[] = [
           {
             _type: "span",
             _key: "span4",
-            text: "Spela utmaningen på din bokade tid",
+            text: "Bilda lag om 2 personer och spela scratch scramble",
             marks: [],
           },
         ],
@@ -709,22 +709,7 @@ export const dummyEvents: Event[] = [
           {
             _type: "span",
             _key: "span5",
-            text: "Se din placering på leaderboard",
-            marks: [],
-          },
-        ],
-        markDefs: [],
-      },
-      {
-        _type: "block",
-        _key: "block6",
-        style: "normal",
-        listItem: "bullet",
-        children: [
-          {
-            _type: "span",
-            _key: "span6",
-            text: "Vinn priser om du hamnar i topp!",
+            text: "Priser från våra sponsorer varje vecka",
             marks: ["strong"],
           },
         ],
@@ -732,19 +717,223 @@ export const dummyEvents: Event[] = [
       },
     ],
     slug: {
-      current: "dummy-trackman-challenge",
+      current: "friday-scratch-scramble",
     },
-    hasExternalLink: true,
-    ctaHref: "https://book.sweetspot.io/clubs/use-golf/",
-    ctaLabel: "Boka nu",
+    hasExternalLink: false,
+    ctaHref: undefined,
+    ctaLabel: "Läs mer",
     order: 7,
     showOnLandingPage: true,
     category: "tavlingar",
     requiresInterestForm: false,
     eventType: "recurring",
-    recurringDay: "monday",
+    recurringDay: "friday",
     eventDate: undefined,
     eventEndDate: undefined,
+  },
+  {
+    _id: "dummy-event-8",
+    title: "Ladies Tuesday",
+    subtitle: "",
+    image: {
+      asset: {
+        _ref: "dummy-ref-8",
+        _type: "reference",
+      },
+      alt: "Ladies Tuesday",
+    },
+    excerpt: "Tisdagar tillägnade damgolf – oavsett om du är nybörjare eller van spelare. **Träning, tävling och gemenskap** i en trygg och inspirerande miljö.",
+    content: [
+      {
+        _type: "block",
+        _key: "block1",
+        style: "normal",
+        children: [
+          {
+            _type: "span",
+            _key: "span1",
+            text: "Ladies Tuesday är vår veckliga golfkväll för damer. Här blandas träning, tävling och social gemenskap i en välkomnande miljö. Perfekt för dig som vill utvecklas och träffa andra golfintresserade kvinnor.",
+            marks: [],
+          },
+        ],
+        markDefs: [],
+      },
+      {
+        _type: "block",
+        _key: "block2",
+        style: "h3",
+        children: [
+          {
+            _type: "span",
+            _key: "span2",
+            text: "Vad ingår",
+            marks: [],
+          },
+        ],
+        markDefs: [],
+      },
+      {
+        _type: "block",
+        _key: "block3",
+        style: "normal",
+        listItem: "bullet",
+        children: [
+          {
+            _type: "span",
+            _key: "span3",
+            text: "Träning med instruktör för alla nivåer",
+            marks: [],
+          },
+        ],
+        markDefs: [],
+      },
+      {
+        _type: "block",
+        _key: "block4",
+        style: "normal",
+        listItem: "bullet",
+        children: [
+          {
+            _type: "span",
+            _key: "span4",
+            text: "Social tävling i avslappnad stämning",
+            marks: [],
+          },
+        ],
+        markDefs: [],
+      },
+      {
+        _type: "block",
+        _key: "block5",
+        style: "normal",
+        listItem: "bullet",
+        children: [
+          {
+            _type: "span",
+            _key: "span5",
+            text: "Inga förkunskaper krävs – alla är välkomna",
+            marks: ["strong"],
+          },
+        ],
+        markDefs: [],
+      },
+    ],
+    slug: {
+      current: "ladies-tuesday",
+    },
+    hasExternalLink: false,
+    ctaHref: undefined,
+    ctaLabel: "Läs mer",
+    order: 8,
+    showOnLandingPage: false,
+    category: "erbjudanden",
+    requiresInterestForm: true,
+    eventType: "recurring",
+    recurringDay: "tuesday",
+    eventDate: undefined,
+    eventEndDate: undefined,
+  },
+  {
+    _id: "dummy-event-9",
+    title: "Simulator Scramble",
+    subtitle: "Oktober – Mars",
+    image: {
+      asset: {
+        _ref: "dummy-ref-9",
+        _type: "reference",
+      },
+      alt: "Simulator Scramble",
+    },
+    excerpt: "Säsongens scrambletävling som pågår **oktober till mars**. Boka simulator, spela tävlingen direkt och jämför ditt resultat med andra lag under hela säsongen.",
+    content: [
+      {
+        _type: "block",
+        _key: "block1",
+        style: "normal",
+        children: [
+          {
+            _type: "span",
+            _key: "span1",
+            text: "Simulator Scramble är vår säsongsbaserade tävling som körs oktober till mars. Du bokar en simulator och spelar tävlingen direkt – enkelt och flexibelt. Resultaten samlas under hela säsongen och vinnarna koras i mars.",
+            marks: [],
+          },
+        ],
+        markDefs: [],
+      },
+      {
+        _type: "block",
+        _key: "block2",
+        style: "h3",
+        children: [
+          {
+            _type: "span",
+            _key: "span2",
+            text: "Så funkar det",
+            marks: [],
+          },
+        ],
+        markDefs: [],
+      },
+      {
+        _type: "block",
+        _key: "block3",
+        style: "normal",
+        listItem: "bullet",
+        children: [
+          {
+            _type: "span",
+            _key: "span3",
+            text: "Boka en simulator och spela tävlingen direkt",
+            marks: [],
+          },
+        ],
+        markDefs: [],
+      },
+      {
+        _type: "block",
+        _key: "block4",
+        style: "normal",
+        listItem: "bullet",
+        children: [
+          {
+            _type: "span",
+            _key: "span4",
+            text: "Fritt antal försök under säsongen (oktober–mars)",
+            marks: [],
+          },
+        ],
+        markDefs: [],
+      },
+      {
+        _type: "block",
+        _key: "block5",
+        style: "normal",
+        listItem: "bullet",
+        children: [
+          {
+            _type: "span",
+            _key: "span5",
+            text: "Leaderboard uppdateras löpande – vinnare koras i mars",
+            marks: ["strong"],
+          },
+        ],
+        markDefs: [],
+      },
+    ],
+    slug: {
+      current: "simulator-scramble",
+    },
+    hasExternalLink: false,
+    ctaHref: undefined,
+    ctaLabel: "Läs mer",
+    order: 9,
+    showOnLandingPage: true,
+    category: "tavlingar",
+    requiresInterestForm: false,
+    eventType: "single",
+    recurringDay: undefined,
+    eventDate: "2025-10-01T00:00:00Z",
+    eventEndDate: "2026-03-31T00:00:00Z",
   },
 ];
 
@@ -760,6 +949,8 @@ const imageMap: Record<string, string> = {
   "dummy-ref-5": "/images/invigning/DSC06519.jpg",
   "dummy-ref-6": "/images/invigning/DSC06673.jpg",
   "dummy-ref-7": "/images/invigning/DSC06527.jpg",
+  "dummy-ref-8": "/images/invigning/DSC06673.jpg",
+  "dummy-ref-9": "/images/invigning/DSC06519.jpg",
 };
 
 /**
