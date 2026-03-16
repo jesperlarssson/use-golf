@@ -93,6 +93,16 @@ export default async function Landing2DemoPage() {
   const defaultEventCategories: EventCategoryDocument[] = [
     {
       _id: "default-0",
+      title: "Event / Tävlingar",
+      slug: "tavlingar",
+      imageUrl: "/images/invigning/DSC06527.jpg",
+      imageAlt: "Event och tävlingar",
+      description: "Scrambletävlingar, ligor och sociala golfkvällar för alla nivåer.",
+      actionLabel: "Se event",
+      link: "/events",
+    },
+    {
+      _id: "default-1",
       title: "Pensionärer",
       slug: "pensionarer",
       imageUrl: "/images/invigning/DSC06519.jpg",
@@ -102,7 +112,27 @@ export default async function Landing2DemoPage() {
       link: "/pensionar",
     },
     {
-      _id: "default-1",
+      _id: "default-2",
+      title: "Tränare / Kurser",
+      slug: "kurser",
+      imageUrl: "/images/invigning/DSC06519.jpg",
+      imageAlt: "Tränare och kurser",
+      description: "Privatlektioner, gruppträning och utvecklingsplaner med erfarna tränare.",
+      actionLabel: "Läs mer",
+      link: "/events?category=kurser",
+    },
+    {
+      _id: "default-3",
+      title: "Juniorer",
+      slug: "junior",
+      imageUrl: "/images/invigning/DSC06511.jpg",
+      imageAlt: "Juniorer",
+      description: "Ligaspel, utveckling och roliga aktiviteter för yngre golfare.",
+      actionLabel: "Se event",
+      link: "/events?category=junior",
+    },
+    {
+      _id: "default-4",
       title: "Damer",
       slug: "damer",
       imageUrl: "/images/invigning/DSC06600.jpg",
@@ -112,17 +142,7 @@ export default async function Landing2DemoPage() {
       link: "/events?category=damer",
     },
     {
-      _id: "default-2",
-      title: "Junior",
-      slug: "junior",
-      imageUrl: "/images/invigning/DSC06511.jpg",
-      imageAlt: "Junior",
-      description: "Ligaspel, utveckling och roliga aktiviteter för yngre golfare.",
-      actionLabel: "Se event",
-      link: "/events?category=junior",
-    },
-    {
-      _id: "default-3",
+      _id: "default-5",
       title: "Företag / Partner",
       slug: "partner",
       imageUrl: "/images/render2.PNG",
@@ -283,102 +303,7 @@ export default async function Landing2DemoPage() {
           </div>
         </section>
 
-        {/* Value Proposition Section - Tydligare och mer visuell */}
-        <Section className="py-20 bg-[var(--brand-primary)]">
-          <div className="grid grid-cols-12 gap-6 md:gap-8">
-            <div className="col-span-12 lg:col-span-6">
-              <FadeIn>
-                <div className="relative h-[400px] md:h-[500px] border-4 border-[var(--brand-secondary)] overflow-hidden">
-                  <Image
-                    src="/images/invigning/DSC06426.jpg"
-                    alt="TrackMan Simulator"
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[var(--brand-olive-900)]/80 to-transparent" />
-                 
-                </div>
-              </FadeIn>
-            </div>
-
-            <div className="col-span-12 lg:col-span-6 flex items-center">
-              <FadeIn delay={0.1}>
-                <div className="space-y-6">
-                  <div>
-                    <span className="text-[var(--brand-secondary)] font-horus text-xl uppercase tracking-widest mb-4 block">
-                      Varför USE Golf?
-                    </span>
-                    <Heading as={2} className="text-4xl md:text-5xl mb-6">
-                      Spela året runt
-                    </Heading>
-                  </div>
-                  <Text className="text-lg leading-relaxed max-w-xl">
-                    Vi erbjuder premium-simulatorer från TrackMan, ett café med enklare mat och dryck samt events och ligor för både privatpersoner och företag.
-                  </Text>
-                
-                  <div className="pt-4">
-                    <a
-                      href="/bokning"
-                      className="inline-flex items-center justify-center bg-[var(--brand-olive-900)] text-[var(--brand-primary)] px-8 py-4 font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition"
-                    >
-                      Läs mer om bokning
-                    </a>
-                  </div>
-                </div>
-              </FadeIn>
-            </div>
-          </div>
-        </Section>
-
-        {/* CTA Section - Boka tid - Mer visuell och tydlig */}
-        <Section className="py-20 bg-[var(--brand-olive-900)] text-[var(--brand-primary)]">
-          <div className="grid grid-cols-12 gap-6 md:gap-8 items-center">
-            <div className="col-span-12 lg:col-span-7">
-              <FadeIn>
-                <span className="text-[var(--brand-accent-amber)] font-horus text-xl uppercase tracking-widest mb-4 block">
-                  Kom igång idag
-                </span>
-                <Heading as={2} className="text-4xl md:text-5xl lg:text-6xl mb-6 text-[var(--brand-primary)]">
-                  Boka din tid
-                </Heading>
-                <Text className="text-xl md:text-2xl text-[var(--brand-primary)]/90 max-w-2xl mb-8">
-                  Våra simulatorer är redo att bokas! Boka direkt via Sweetspot eller läs mer om stående tider och event.
-                </Text>
-                <div className="flex flex-wrap gap-4">
-                  <a
-                    href="https://book.sweetspot.io/clubs/use-golf/2129/tee-sheet"
-                    className="inline-flex items-center justify-center bg-[var(--brand-accent-amber)] text-[var(--brand-olive-900)] px-8 py-4 text-lg font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition transform hover:scale-105"
-                  >
-                    Boka nu
-                  </a>
-                  <a
-                    href="/bokning"
-                    className="inline-flex items-center justify-center border-2 border-[var(--brand-primary)] text-[var(--brand-primary)] px-8 py-4 text-lg font-semibold uppercase tracking-wider rounded-none hover:bg-[var(--brand-primary)]/10 transition"
-                  >
-                    Läs mer
-                  </a>
-                </div>
-              </FadeIn>
-            </div>
-            <div className="col-span-12 lg:col-span-5">
-              <FadeIn delay={0.1}>
-                <div className="relative h-[300px] md:h-[400px] border-4 border-[var(--brand-secondary)] overflow-hidden">
-                  <Image
-                    src="/images/invigning/DSC06519.jpg"
-                    alt="Boka tid"
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 1024px) 100vw, 40vw"
-                  />
-                  <div className="absolute inset-0 bg-[var(--brand-accent-amber)]/20" />
-                </div>
-              </FadeIn>
-            </div>
-          </div>
-        </Section>
-
-        {/* Community-kategorier */}
+        {/* Community-kategorier – Aktiviteter för alla */}
         <Section className="py-20 bg-[var(--brand-primary)]">
           <div className="space-y-8">
             <div className="flex items-end justify-between">
@@ -634,6 +559,53 @@ export default async function Landing2DemoPage() {
                   </FadeIn>
                 );
               })}
+            </div>
+          </div>
+        </Section>
+
+        {/* Spela året runt */}
+        <Section className="py-20 bg-[var(--brand-primary)]">
+          <div className="grid grid-cols-12 gap-6 md:gap-8">
+            <div className="col-span-12 lg:col-span-6">
+              <FadeIn>
+                <div className="relative h-[400px] md:h-[500px] border-4 border-[var(--brand-secondary)] overflow-hidden">
+                  <Image
+                    src="/images/invigning/DSC06426.jpg"
+                    alt="TrackMan Simulator"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[var(--brand-olive-900)]/80 to-transparent" />
+                </div>
+              </FadeIn>
+            </div>
+
+            <div className="col-span-12 lg:col-span-6 flex items-center">
+              <FadeIn delay={0.1}>
+                <div className="space-y-6">
+                  <div>
+                    <span className="text-[var(--brand-secondary)] font-horus text-xl uppercase tracking-widest mb-4 block">
+                      Varför USE Golf?
+                    </span>
+                    <Heading as={2} className="text-4xl md:text-5xl mb-6">
+                      Spela året runt
+                    </Heading>
+                  </div>
+                  <Text className="text-lg leading-relaxed max-w-xl">
+                    Vi erbjuder premium-simulatorer från TrackMan, ett café med enklare mat och dryck samt events och ligor för både privatpersoner och företag.
+                  </Text>
+
+                  <div className="pt-4">
+                    <a
+                      href="/bokning"
+                      className="inline-flex items-center justify-center bg-[var(--brand-olive-900)] text-[var(--brand-primary)] px-8 py-4 font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition"
+                    >
+                      Läs mer om bokning
+                    </a>
+                  </div>
+                </div>
+              </FadeIn>
             </div>
           </div>
         </Section>
