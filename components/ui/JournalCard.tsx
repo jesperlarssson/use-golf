@@ -43,8 +43,8 @@ export default function JournalCard({
       href={`/journal/${post.slug}`}
       className="group block"
     >
-      <article className="rounded-none overflow-hidden border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] h-full flex flex-col transition-all duration-300 hover:border-[var(--brand-secondary)]/80 hover:shadow-lg hover:scale-[1.02] cursor-pointer">
-        <div className={`relative ${height} border-b-2 border-[var(--brand-secondary)]`}>
+      <article className="rounded-none overflow-hidden border-4 border-[var(--brand-secondary)] bg-[var(--brand-primary)] h-full flex flex-col transition-all duration-300 hover:border-[var(--brand-secondary)]/80 hover:shadow-lg hover:scale-[1.02] cursor-pointer">
+        <div className={`relative ${height} border-b-4 border-[var(--brand-secondary)]`}>
           {post.coverImageUrl ? (
             <>
               <Image

@@ -52,7 +52,7 @@ export default async function MedlemsvillkorPage() {
                 <div className="backdrop-blur-md bg-[var(--brand-primary)]/20 border-2 border-[var(--brand-primary)]/30 p-6 md:p-8">
                   <div className="space-y-4">
                     <div>
-                      <h3 className="font-horus text-xl md:text-2xl mb-2 text-[var(--brand-primary)]">USE Golf Göteborg</h3>
+                      <h3 className="font-logo text-xl md:text-2xl mb-2 text-[var(--brand-primary)]">USE Golf Göteborg</h3>
                       <Text className="text-[var(--brand-primary)] italic">Krogabäcksvägen 2, Nya Hovås</Text>
                     </div>
                     <div>
