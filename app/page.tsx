@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Heading, Lead, Text } from "@/components/ui/Typography";
 import FadeIn from "@/components/ui/FadeIn";
 import SectionHeader from "@/components/ui/SectionHeader";
+import HeroSlideshow from "@/components/ui/HeroSlideshow";
 import FAQ from "@/components/ui/FAQ";
 import type { FAQItem } from "@/components/ui/FAQ";
 import { getUserPasses } from "@/sanity/lib/pricingQueries";
@@ -174,32 +175,35 @@ export default async function Landing2DemoPage() {
       <div className="relative">
         {/* Hero Section - Modernare och mer dramatisk */}
         <section className="relative w-full min-h-screen flex items-center overflow-hidden">
-          {/* Background Image */}
-          <div className="absolute inset-0">
-            <Image
-              src="/images/invigning/hero.png"
-              alt="USE Golf"
-              fill
-              priority
-              className="object-cover"
-              sizes="100vw"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60" />
-          </div>
+          {/* Background Slideshow */}
+          <HeroSlideshow
+            images={[
+              { src: "/slideshow/1.png", alt: "USE Golf – simulatorer" },
+              { src: "/slideshow/2.png", alt: "USE Golf – simulatorer" },
+              { src: "/slideshow/3.png", alt: "USE Golf – simulatorer" },
+              { src: "/slideshow/4.png", alt: "USE Golf – simulatorer" },
+              { src: "/slideshow/5.png", alt: "USE Golf – simulatorer" },
+              { src: "/slideshow/6.png", alt: "USE Golf – simulatorer" },
+       
+
+
+            ]}
+            interval={5000}
+          />
 
           {/* Content */}
           <div className="relative z-10 w-full">
             <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="grid grid-cols-12 gap-6 items-center min-h-screen py-20">
+              <div className={`grid grid-cols-12 gap-6 items-center min-h-screen py-20 ${postsToUse.length === 0 ? "justify-items-center text-center" : ""}`}>
                 {/* Left Column - Text */}
-                <div className="col-span-12 lg:col-span-7 space-y-8">
+                <div className={`space-y-8 col-span-12 ${postsToUse.length > 0 ? "lg:col-span-7" : "lg:col-span-8 lg:col-start-3"}`}>
                   <FadeIn>
                     <div className="inline-block mb-4">
-                      <span className="text-[var(--brand-accent-amber)]  text-xl md:text-2xl uppercase tracking-widest">
+                      <span className="text-[var(--brand-accent-amber)]  text-xl md:text-2xl font-label uppercase">
                         Göteborg
                       </span>
                     </div>
-                    <h1 className="font-horus text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-none text-[var(--brand-primary)] mb-6">
+                    <h1 className="font-logo text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-none text-[var(--brand-primary)] mb-6">
                       USE
 
                       GOLF
@@ -212,7 +216,7 @@ export default async function Landing2DemoPage() {
 
 
                   <FadeIn delay={0.2}>
-                    <div className="flex flex-wrap gap-4 pt-4">
+                    <div className={`flex flex-wrap gap-4 pt-4 ${postsToUse.length === 0 ? "justify-center" : ""}`}>
                       <a
                         href="https://book.sweetspot.io/clubs/use-golf/2129/tee-sheet"
                         className="inline-flex items-center justify-center bg-[var(--brand-secondary)] text-[var(--brand-primary)] px-6 py-3 text-base font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition transform hover:scale-105"
@@ -255,10 +259,10 @@ export default async function Landing2DemoPage() {
                           )}
                           <div className="relative h-full flex flex-col justify-between p-6 md:p-8">
                             <div>
-                              <div className="text-[var(--brand-accent-amber)] font-horus text-xl uppercase tracking-widest mb-4">
+                              <div className="text-[var(--brand-accent-amber)] font-label text-xl uppercase tracking-widest mb-4">
                                 USE JOURNAL - {dateFormatter(postsToUse[0].publishedAt)}
                               </div>
-                              <h3 className="uppercase font-semibold tracking-wide text-3xl md:text-4xl text-[var(--brand-primary)] mb-3 line-clamp-2 group-hover:text-[var(--brand-accent-amber)] transition-colors">
+                              <h3 className="font-horus text-3xl md:text-4xl text-[var(--brand-primary)] mb-3 line-clamp-2 group-hover:text-[var(--brand-accent-amber)] transition-colors">
                                 {postsToUse[0].title}
                               </h3>
                               {postsToUse[0].excerpt && (
@@ -309,7 +313,7 @@ export default async function Landing2DemoPage() {
             <div className="flex items-end justify-between">
               <div>
                 <FadeIn>
-                  <span className="text-[var(--brand-secondary)] font-horus text-xl uppercase tracking-widest mb-4 block">
+                  <span className="text-[var(--brand-secondary)] font-label text-xl uppercase tracking-widest mb-4 block">
                     Community
                   </span>
                   <Heading as={2} className="text-4xl md:text-5xl mb-4">
@@ -352,7 +356,7 @@ export default async function Landing2DemoPage() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-black/10" />
                     <div className="absolute inset-x-0 bottom-0 p-6">
-                      <h3 className="font-horus text-3xl md:text-4xl text-[var(--brand-primary)] leading-none">
+                      <h3 className="font-horus text-2xl md:text-3xl text-[var(--brand-primary)] leading-none">
                         {item.title}
                       </h3>
                       {item.description ? (
@@ -360,7 +364,7 @@ export default async function Landing2DemoPage() {
                           {item.description}
                         </p>
                       ) : null}
-                      <span className="inline-flex items-center gap-2 mt-4 text-[var(--brand-primary)] uppercase tracking-wider text-xs md:text-sm font-semibold">
+                      <span className="inline-flex items-center gap-2 mt-4 text-[var(--brand-primary)] uppercase tracking-wider text-xs md:text-sm font-semibold opacity-60">
                         {item.actionLabel || "Se event"}
                         <span className="inline-block transition-transform duration-300 group-hover:translate-x-1 group-focus-within:translate-x-1">
                           →
@@ -424,7 +428,7 @@ export default async function Landing2DemoPage() {
                       />
                       <div className="absolute inset-0 bg-black/30" />
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <h3 className="font-horus text-5xl md:text-6xl text-[var(--brand-primary)]">Use:r</h3>
+                        <h3 className="font-logo text-5xl md:text-5xl text-[var(--brand-primary)]">Use:r</h3>
                       </div>
                     </div>
                     <div className="p-8 space-y-4 flex flex-col justify-center">
@@ -469,7 +473,7 @@ export default async function Landing2DemoPage() {
                       />
                       <div className="absolute inset-0 bg-black/30" />
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <h3 className="font-horus text-5xl md:text-6xl text-[var(--brand-primary)]">Junior Use:r</h3>
+                        <h3 className="font-logo text-4xl md:text-4xl text-[var(--brand-primary)]">Junior Use:r</h3>
                       </div>
                     </div>
                     <div className="p-8 space-y-4 flex flex-col justify-center">
@@ -529,7 +533,7 @@ export default async function Landing2DemoPage() {
                     <div className="overflow-hidden border-4 border-[var(--brand-secondary)] bg-[var(--brand-primary)] flex flex-col">
                       <div className="p-8 space-y-6 flex-1 flex flex-col">
                         <div className="space-y-4">
-                          <h3 className="font-horus text-3xl md:text-4xl">{pass.name}</h3>
+                          <h3 className="font-horus text-3xl md:text-4xl text-[var(--brand-olive-900)]">{pass.name}</h3>
                           <hr className="border-[var(--brand-secondary)]/40" />
                           <div className="text-5xl font-semibold text-[var(--brand-olive-900)]">
                             {pass.price.toLocaleString("sv-SE")}&nbsp;kr
@@ -585,7 +589,7 @@ export default async function Landing2DemoPage() {
               <FadeIn delay={0.1}>
                 <div className="space-y-6">
                   <div>
-                    <span className="text-[var(--brand-secondary)] font-horus text-xl uppercase tracking-widest mb-4 block">
+                    <span className="text-[var(--brand-secondary)] font-label text-xl uppercase tracking-widest mb-4 block">
                       Varför USE Golf?
                     </span>
                     <Heading as={2} className="text-4xl md:text-5xl mb-6">
@@ -599,7 +603,7 @@ export default async function Landing2DemoPage() {
                   <div className="pt-4">
                     <a
                       href="/bokning"
-                      className="inline-flex items-center justify-center bg-[var(--brand-olive-900)] text-[var(--brand-primary)] px-8 py-4 font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition"
+                      className="inline-flex items-center justify-center bg-[var(--brand-olive-900)] text-[var(--brand-primary)] px-8 py-4 font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition transform hover:scale-105"
                     >
                       Läs mer om bokning
                     </a>
@@ -617,13 +621,13 @@ export default async function Landing2DemoPage() {
               <div className="flex items-end justify-between">
                 <div>
                   <FadeIn>
-                    <span className="text-[var(--brand-primary)] font-horus text-xl uppercase tracking-widest mb-4 block">
+                    <span className="text-[var(--brand-primary)] font-label text-xl uppercase tracking-widest mb-4 block">
                       Journal
                     </span>
                     <Heading as={2} className="text-4xl md:text-5xl mb-4 text-[var(--brand-primary)]">
                       USE Journal
                     </Heading>
-                    <Text className="text-lg max-w-2xl">
+                    <Text className="text-lg max-w-2xl text-[var(--brand-primary)]/80">
                       Läs våra senaste artiklar om golf, träning och events.
                     </Text>
                   </FadeIn>
@@ -656,7 +660,7 @@ export default async function Landing2DemoPage() {
           <div className="max-w-4xl mx-auto space-y-8">
             <FadeIn>
               <div className="text-center">
-                <span className="text-[var(--brand-accent-amber)] font-horus text-xl uppercase tracking-widest mb-4 block">
+                <span className="text-[var(--brand-primary)]/70 font-label text-xl uppercase tracking-widest mb-4 block">
                   Frågor & Svar
                 </span>
                 <Heading as={2} className="text-4xl md:text-5xl mb-6 text-[var(--brand-primary)]">

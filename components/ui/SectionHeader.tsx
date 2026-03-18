@@ -57,9 +57,9 @@ export default function SectionHeader({
 
   const getLabelClasses = () => {
     if (variant === "small") {
-      return "font-horus text-sm md:text-base uppercase tracking-widest mb-3 block";
+      return "font-label text-sm md:text-base uppercase tracking-widest mb-3 block";
     }
-    return "font-horus text-xl uppercase tracking-widest mb-4 block";
+    return "font-label text-xl uppercase tracking-widest mb-4 block";
   };
 
   const getDescriptionClasses = () => {

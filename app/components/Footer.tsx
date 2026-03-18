@@ -21,7 +21,7 @@ export default function Footer() {
       <div className="mx-auto max-w-6xl px-4 py-12 grid grid-cols-1 md:grid-cols-3 items-center gap-8">
         {/* Vänster: Företagsinfo */}
         <div className="hidden md:block justify-self-start">
-          <h3 className="font-horus text-lg mb-3">USE GOLF</h3>
+          <h3 className="font-logo text-lg mb-3">USE GOLF</h3>
           <p className="text-sm">Indoor golf & lifestyle</p>
           <p className="text-sm mt-2">© {new Date().getFullYear()} USE GOLF</p>
         </div>
@@ -55,7 +55,7 @@ export default function Footer() {
       {/* Mobil: staplade info-sektioner */}
       <div className="mx-auto max-w-6xl px-4 pb-12 grid gap-8 md:hidden">
         <div>
-          <h3 className="font-horus text-lg mb-3">USE GOLF</h3>
+          <h3 className="font-logo text-lg mb-3">USE GOLF</h3>
           <p className="text-sm">Indoor golf & lifestyle</p>
           <p className="text-sm mt-2">© {new Date().getFullYear()} USE GOLF</p>
         </div>

@@ -548,7 +548,7 @@ export default function Header() {
 
    
             <Link href="/" className=" flex flex-col ">
-              <span className={`whitespace-nowrap text-2xl font-horus leading-none transition-colors duration-300 ${scrolled ? "text-[var(--foreground)]" : "text-[var(--brand-primary)]"}`}>USE GOLF</span>
+              <span className={`whitespace-nowrap text-2xl font-logo leading-none transition-colors duration-300 ${scrolled ? "text-[var(--foreground)]" : "text-[var(--brand-primary)]"}`}>USE GOLF</span>
 
             </Link>
 
