@@ -3,6 +3,8 @@ import { client } from './client'
 import urlBuilder from '@sanity/image-url'
 import { projectId, dataset } from '../env'
 import { dummyEvents, transformDummyEvent, getDummyEvents, getDummyLandingPageEvents, getDummyEventBySlug } from '@/lib/dummyEvents'
+import { mergeEventsWithLocal } from '@/lib/mergeLocalEvents'
+import localEventCategories from '@/lib/data/eventCategories.json'
 
 const builder = urlBuilder({ projectId, dataset })
 
@@ -10,6 +12,9 @@ const builder = urlBuilder({ projectId, dataset })
 const USE_DUMMY_EVENTS = 
   process.env.USE_DUMMY_EVENTS === 'true' || 
   (process.env.USE_DUMMY_EVENTS !== 'false' && process.env.NODE_ENV === 'development')
+
+// Startsidans event-kategorier: lokalt JSON som standard. Sätt USE_SANITY_EVENT_CATEGORIES=true för att hämta från Sanity igen.
+const USE_SANITY_EVENT_CATEGORIES = process.env.USE_SANITY_EVENT_CATEGORIES === 'true'
 
 export interface Post {
   _id: string
@@ -475,6 +480,11 @@ export function transformEventCategory(category: LandingPageEventCategory): Even
 }
 
 export async function getLandingPageEventCategories(): Promise<EventCategoryDocument[]> {
+  if (!USE_SANITY_EVENT_CATEGORIES) {
+    const list = localEventCategories as EventCategoryDocument[]
+    return [...list].sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+  }
+
   try {
     const categories = await client.fetch<LandingPageEventCategory[]>(landingPageEventCategoriesQuery)
     if (categories && categories.length > 0) {
@@ -503,20 +513,20 @@ export async function getAllEvents(): Promise<EventDocument[]> {
   if (USE_DUMMY_EVENTS) {
     // Om USE_DUMMY_EVENTS är satt, använd alltid dummy-data
     console.log('Using dummy events (USE_DUMMY_EVENTS is enabled)');
-    return getDummyEvents();
+    return mergeEventsWithLocal(getDummyEvents());
   }
-  
+
   try {
     const events = await client.fetch<Event[]>(allEventsQuery);
     if (events && events.length > 0) {
-      return events.map(transformEvent);
+      return mergeEventsWithLocal(events.map(transformEvent));
     }
     // Om Sanity returnerar tom array, använd dummy-data som fallback
     console.warn('Sanity returned empty events array, using dummy events');
-    return getDummyEvents();
+    return mergeEventsWithLocal(getDummyEvents());
   } catch (error) {
     console.error('Error fetching events:', error);
-    return getDummyEvents();
+    return mergeEventsWithLocal(getDummyEvents());
   }
 }
 
@@ -529,7 +539,7 @@ export async function getLandingPageEvents(): Promise<EventDocument[]> {
     console.log('Using dummy landing page events (USE_DUMMY_EVENTS is enabled)');
     return getDummyLandingPageEvents();
   }
-  
+
   try {
     const events = await client.fetch<Event[]>(landingPageEventsQuery);
     if (events && events.length > 0) {

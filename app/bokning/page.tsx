@@ -6,7 +6,8 @@ import { Heading, Text } from "@/components/ui/Typography";
 import Image from "next/image";
 import FadeIn from "@/components/ui/FadeIn";
 import SectionHeader from "@/components/ui/SectionHeader";
-import { defaultPricingData, dayLabels, type DayType, type PricingData } from "@/lib/prices";
+import Link from "next/link";
+import { defaultPricingData, type PricingData } from "@/lib/prices";
 import { getPricingData } from "@/sanity/lib/pricingQueries";
 
 export const metadata: Metadata = {
@@ -26,7 +27,7 @@ export default async function BookingPage() {
       {/* Hero Banner */}
       <div className="relative w-full min-h-[50vh] sm:min-h-[60vh] overflow-hidden border-b border-[var(--brand-secondary)]">
         <Image
-          src="/images/render2.PNG"
+          src="/images/lokalen/2.png"
           alt="Bokning"
           fill
           priority
@@ -35,7 +36,16 @@ export default async function BookingPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/40 to-black/20" />
         <div className="relative z-10 flex items-center justify-center min-h-[50vh] sm:min-h-[60vh]">
-          <div className="w-full max-w-screen-2xl px-4 sm:px-6 py-20">
+          <div className="w-full max-w-screen-2xl px-4 sm:px-8 py-12 sm:py-20">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 text-white/90 hover:text-white transition group mb-8"
+            >
+              <svg className="w-5 h-5 transform group-hover:-translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              <span className="text-sm uppercase tracking-wider">Tillbaka till startsidan</span>
+            </Link>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
               {/* Vänster kolumn - SectionHeader */}
               <FadeIn>
@@ -103,7 +113,7 @@ export default async function BookingPage() {
               <FadeIn>
                 <div className="border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] overflow-hidden h-full flex flex-col">
                   <div className="relative h-44 border-b-2 border-[var(--brand-secondary)]">
-                    <Image src="/images/render2.PNG" alt="Boka simulator" fill className="object-cover blur-sm scale-105 brightness-90" />
+                    <Image src="/images/lokalen/2.png" alt="Boka simulator" fill className="object-cover blur-sm scale-105 brightness-90" />
                     <div className="absolute inset-0 bg-black/20" />
                     <div className="absolute inset-0 flex items-center justify-center">
                       <h3 className="font-horus text-2xl sm:text-3xl text-[var(--brand-primary)]">Boka simulator</h3>
@@ -126,7 +136,7 @@ export default async function BookingPage() {
               <FadeIn delay={0.1}>
                 <div className="border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] overflow-hidden h-full flex flex-col">
                   <div className="relative h-44 border-b-2 border-[var(--brand-secondary)]">
-                    <Image src="/images/club.png" alt="Stående tider" fill className="object-cover blur-sm scale-105 brightness-90" />
+                    <Image src="/images/swing/3.png" alt="Stående tider" fill className="object-cover blur-sm scale-105 brightness-90" />
                     <div className="absolute inset-0 bg-black/20" />
                     <div className="absolute inset-0 flex items-center justify-center">
                       <h3 className="font-horus text-2xl sm:text-3xl text-[var(--brand-primary)]">Stående tider</h3>
@@ -149,7 +159,7 @@ export default async function BookingPage() {
               <FadeIn delay={0.2}>
                 <div className="border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] overflow-hidden h-full flex flex-col">
                   <div className="relative h-44 border-b-2 border-[var(--brand-secondary)]">
-                    <Image src="/images/render2.PNG" alt="Boka hela lokalen" fill className="object-cover blur-sm scale-105 brightness-90" />
+                    <Image src="/images/lokalen/1.png" alt="Boka hela lokalen" fill className="object-cover blur-sm scale-105 brightness-90" />
                     <div className="absolute inset-0 bg-black/20" />
                     <div className="absolute inset-0 flex items-center justify-center">
                       <h3 className="font-horus text-2xl sm:text-3xl text-[var(--brand-primary)]">Boka hela lokalen</h3>
@@ -191,51 +201,6 @@ export default async function BookingPage() {
                 </ul>
               </div>
             </FadeIn>
-          </Section>
-
-          {/* Prislista */}
-          <Section className=" bg-[var(--brand-olive-700)]">
-            <div className="space-y-8 max-w-screen-2xl mx-auto">
-              <FadeIn>
-                <SectionHeader
-             
-                  heading="Prislista"
-                  description="Priser per timme för simulatorbokning."
-                  align="left"
-                  headingColor="var(--brand-primary)"
-                  variant="small"
-                />
-              </FadeIn>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-                {(["monday-friday", "saturday", "sunday"] as DayType[])
-                  .filter(dayType => pricingDataToUse[dayType])
-                  .map((dayType, index) => (
-                  <FadeIn key={dayType} delay={index * 0.1}>
-                    <div className="border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)]">
-                      <div className="bg-[var(--brand-secondary)] px-6 py-4">
-                        <h3 className="font-horus text-xl text-[var(--brand-primary)]">
-                          {dayLabels[dayType]}
-                        </h3>
-                      </div>
-                      <div className="p-6 space-y-3">
-                        {pricingDataToUse[dayType].map((slot, slotIndex) => (
-                          <div
-                            key={slotIndex}
-                            className="flex justify-between items-center py-2 border-b border-[var(--brand-secondary)]/20 last:border-0"
-                          >
-                            <Text className="text-sm">{slot.time}</Text>
-                            <Text className="font-semibold text-[var(--brand-secondary)]">
-                              {slot.price} kr/h
-                            </Text>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </FadeIn>
-                ))}
-              </div>
-            </div>
           </Section>
 
           {/* TrackMan-konto */}

@@ -60,6 +60,15 @@ body {
   font-family: "Aktiv Grotesk", Arial, Helvetica, sans-serif;
 }
 
+/* Scrollbar dold men scroll kvar (modaler m.m.) */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
 /* Custom cursor: behåll systempekaren synlig så båda syns */
 
 /* Tillåt pointer på explicita element om nödvändigt

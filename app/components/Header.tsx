@@ -23,17 +23,21 @@ type EventDocument = {
 const primaryNav: NavItem[] = [
   { href: "/bokning", label: "Boka simulator" },
   { href: "/medlemskap", label: "Medlemskap" },
-  { href: "/events", label: "Event & Community" },
-  { href: "/partner", label: "Partner" },
+  { href: "/events", label: "Event" },
+  { href: "/trana", label: "Träna" },
+  { href: "/foretag", label: "Företag" },
   { href: "/om", label: "Om oss" },
   { href: "/kontakt", label: "Kontakt" },
 ];
 
 // Sekundär navigation (under hamburgaren / mobilmeny)
 const secondaryNav: NavItem[] = [
-  { href: "/custom-fitting", label: "Custom Fitting" },
+  { href: "/customclubs", label: "CustomClubs" },
   { href: "/medlemsvillkor", label: "Medlemsvillkor" },
 ];
+
+/** Tills vidare: ingen event-lista under "Event" i navbar */
+const SHOW_EVENTS_NAV_DROPDOWN = false;
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -78,14 +82,14 @@ export default function Header() {
     if (path === "/bokning") {
       return {
         title: "Bokning",
-        imageSrc: "/images/render2.PNG",
+        imageSrc: "/images/lokalen/2.png",
         marqueeText: "Boka din tid idag — Välj hur du vill spela"
       };
     }
     if (path.startsWith("/medlemskap")) {
       return {
         title: "Medlemskap",
-        imageSrc: "/images/wall.png",
+        imageSrc: "/images/people/5.png",
         marqueeText: "Flexibla medlemskap — För alla nivåer",
         subTitle: "mer golf. mer fördelar"
       };
@@ -93,111 +97,117 @@ export default function Header() {
     if (path.startsWith("/bokning/boka-lokalen")) {
       return {
         title: "USE GOLF TAKEOVER",
-        imageSrc: "/images/club hit.png",
+        imageSrc: "/images/lokalen/1.png",
         marqueeText: "Ha hela lokalen för er själva"
       };
     }
     if (path.startsWith("/bokning/staende-tid")) {
       return {
         title: "stående tider",
-        imageSrc: "/images/club hit.png",
+        imageSrc: "/images/swing/3.png",
         marqueeText: "GETTING USED TO IT"
       };
     }
     if (path.startsWith("/events/juniorligan")) {
       return {
         title: "Juniorligan",
-        imageSrc: "/images/invigning/DSC06511.jpg",
+        imageSrc: "/images/people/3.png",
         marqueeText: "Ligan för unga golfare",
       };
     }
     if (path.startsWith("/events")) {
       return null; // Banner hanteras nu på events-sidan direkt
     }
-    if (path.startsWith("/partner")) {
+    if (path.startsWith("/foretag")) {
       return {
-        title: "Partner",
-        imageSrc: "/images/baller2-back.png",
-        marqueeText: "Fast närvaro på anläggningen — Synas, spela och nätverka",
+        title: "Företag",
+        imageSrc: "/images/lokalen/3.png",
+        marqueeText: "Företagsevent, exponering och nätverk — Official Partner",
         subTitle: "",
-        actionButton: { label: "Skicka förfrågan", href: "/partner#forfragan" }
+        actionButton: { label: "Skicka förfrågan", href: "/foretag#forfragan" }
       };
+    }
+    if (path.startsWith("/partner")) {
+      return null; // Redirect till /foretag
     }
     if (path.startsWith("/om")) {
       return {
         title: "Om USE GOLF",
-        imageSrc: "/images/render1.png",
+        imageSrc: "/images/people/7.png",
         marqueeText: "Möt teamet bakom USE GOLF"
       };
     }
     if (path.startsWith("/kontakt")) {
       return {
         title: "Kontakt",
-        imageSrc: "/images/club.png",
+        imageSrc: "/images/lokalen/4.png",
         marqueeText: "Hör av dig — Vi hjälper gärna till"
       };
     }
     if (path.startsWith("/sa-funkar-det")) {
       return {
         title: "Så funkar det",
-        imageSrc: "/images/baller3.png",
+        imageSrc: "/images/people/8.png",
         marqueeText: "Kom igång på minuter — Enkelt och smidigt"
       };
     }
     if (path.startsWith("/anlaggning")) {
       return {
         title: "Anläggning",
-        imageSrc: "/images/lobby casual.png",
+        imageSrc: "/images/lokalen/5.png",
         marqueeText: "Modern miljö — Skapad för fokus och flow"
       };
     }
     if (path.startsWith("/shop")) {
       return {
         title: "Shop",
-        imageSrc: "/images/ball.png",
+        imageSrc: "/images/swing/4.png",
         marqueeText: "Noga utvalda produkter — För din utveckling"
       };
     }
     if (path.startsWith("/presentkort")) {
       return {
         title: "Presentkort",
-        imageSrc: "/images/baller2-back.png",
+        imageSrc: "/images/people/9.png",
         marqueeText: "Ge golfglädje — Presentkort till vänner och familj"
       };
     }
     if (path.startsWith("/priser-presentkort")) {
       return {
         title: "Priser & Presentkort",
-        imageSrc: "/images/baller2-back.png",
+        imageSrc: "/images/people/10.png",
         marqueeText: "Ge golfglädje — Presentkort till vänner och familj"
       };
     }
     if (path.startsWith("/friskvard")) {
       return {
         title: "Friskvårdsbidrag",
-        imageSrc: "/images/baller2.png",
+        imageSrc: "/images/people/11.png",
         marqueeText: "Använd friskvårdsbidraget hos oss"
       };
     }
-    if (path.startsWith("/traning")) {
+    if (path.startsWith("/trana")) {
       return {
-        title: "Träning",
-        imageSrc: "/images/club hit.png",
-        marqueeText: "Träna smartare — Förbättra ditt spel"
+        title: "Träna",
+        imageSrc: "/images/swing/5.png",
+        marqueeText: "Lektion + egen träning — utveckling som sitter",
+        subTitle: "Träna smartare. Spela bättre.",
+      };
+    }
+    if (path.startsWith("/customclubs")) {
+      return {
+        title: "CustomClubs",
+        imageSrc: "/images/swing/6.png",
+        marqueeText: "Custom Fitting & Butik — Utrustning anpassad efter dig"
       };
     }
     if (path.startsWith("/custom-fitting")) {
-      return {
-        title: "Custom Fitting",
-        imageSrc: "/images/club hit.png",
-        marqueeText: "Personlig utprovning — Anpassa utrustningen efter dig",
-        subTitle: "Kommer snart"
-      };
+      return null; // Redirect till /customclubs
     }
     if (path.startsWith("/medlemsvillkor")) {
       return {
         title: "Medlemsvillkor",
-        imageSrc: "/images/ball.png",
+        imageSrc: "/images/people/12.png",
         marqueeText: "GET USED TO IT"
       };
     }
@@ -211,8 +221,9 @@ export default function Header() {
   const headerVariantClass = getHeaderVariant(pathname);
   const bannerConfig = hideHeader ? null : getBannerConfig(pathname);
 
-  // Hämta events från API
+  // Hämta events från API (endast om dropdown för Event är påslagen)
   useEffect(() => {
+    if (!SHOW_EVENTS_NAV_DROPDOWN) return;
     const fetchEvents = async () => {
       try {
         const response = await fetch('/api/events');
@@ -276,7 +287,7 @@ export default function Header() {
   // Enkla headerlänkar (utan sketch), med enradig ellips
   const renderHeaderItem = (item: NavItem, onClick?: () => void) => {
     // Specialhantering för Events med dropdown
-    if (item.href === "/events" && events.length > 0) {
+    if (SHOW_EVENTS_NAV_DROPDOWN && item.href === "/events" && events.length > 0) {
       return (
         <li
           key={item.href}
@@ -400,7 +411,7 @@ export default function Header() {
 
   // Dela upp primärmenyn i vänsterlänkar (Boka, Medlemskap) och resten
   const leftNav = primaryNav.filter(
-    (item) => item.href === "/bokning"  || item.href === "/medlemskap" || item.href === "/events"
+    (item) => item.href === "/bokning" || item.href === "/medlemskap" || item.href === "/events" || item.href === "/trana"
   );
   const restNav = primaryNav.filter(
     (item) => !leftNav.some((l) => l.href === item.href)
@@ -429,7 +440,7 @@ export default function Header() {
   // Länkrenderare för overlay (större typografi)
   const renderOverlayItem = (item: NavItem, onClick?: () => void) => {
     // Specialhantering för Events med expanderbar meny
-    if (item.href === "/events" && events.length > 0) {
+    if (SHOW_EVENTS_NAV_DROPDOWN && item.href === "/events" && events.length > 0) {
       return (
         <li key={item.href} className="space-y-2">
           <button
@@ -564,7 +575,7 @@ export default function Header() {
                   {leftNav.map((item) => {
                     const rendered = renderHeaderItem(item);
                     // Om det är Events med dropdown, returnera direkt (redan wrapped i li)
-                    if (item.href === "/events" && events.length > 0) {
+                    if (SHOW_EVENTS_NAV_DROPDOWN && item.href === "/events" && events.length > 0) {
                       return rendered;
                     }
                     return <li key={item.href}>{rendered}</li>;
@@ -627,7 +638,7 @@ export default function Header() {
                 {[...leftNav, ...restNav].map((item) => {
                   const rendered = renderOverlayItem(item, () => setMenuOpen(false));
                   // Om det är Events med expanderbar meny, returnera direkt (redan wrapped i li)
-                  if (item.href === "/events" && events.length > 0) {
+                  if (SHOW_EVENTS_NAV_DROPDOWN && item.href === "/events" && events.length > 0) {
                     return rendered;
                   }
                   return <li key={item.href}>{rendered}</li>;

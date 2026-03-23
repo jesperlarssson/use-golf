@@ -1,0 +1,62 @@
+[
+  {
+    "_id": "fc2ec465-97f6-496d-a755-d7c6975ee0ec",
+    "title": "Event / Tävlingar",
+    "slug": "event-taevlingar",
+    "actionLabel": "Se event",
+    "link": "/events?category=event-taevlingar",
+    "order": 1,
+    "imageUrl": "/images/people/9.png",
+    "imageAlt": "Event"
+  },
+  {
+    "_id": "ad271840-3cfa-4c61-9fac-5279e7ee56a5",
+    "title": "Pensionärer",
+    "slug": "pensionaerer",
+    "actionLabel": "Läs mer",
+    "link": "/pensionar",
+    "order": 2,
+    "imageUrl": "/images/people/10.png",
+    "imageAlt": "Simulator"
+  },
+  {
+    "_id": "37ddbfce-9a4b-496d-9ff9-11a8444e2d15",
+    "title": "Tränare / Kurser",
+    "slug": "traenare-kurser",
+    "actionLabel": "Läs mer",
+    "link": "/trana",
+    "order": 3,
+    "imageUrl": "/images/swing/2.png",
+    "imageAlt": "grip club"
+  },
+  {
+    "_id": "916430e8-92ef-4fb1-a81f-1e63c06fed5f",
+    "title": "Juniorer",
+    "slug": "juniorer",
+    "actionLabel": "Se event",
+    "link": "/events?category=juniorer",
+    "order": 4,
+    "imageUrl": "/images/people/3.png",
+    "imageAlt": "Junior golfer"
+  },
+  {
+    "_id": "2d3165df-ec73-4761-a1b0-25abf5d036ac",
+    "title": "Damer",
+    "slug": "damer",
+    "actionLabel": "Se event",
+    "link": "/events?category=damer",
+    "order": 5,
+    "imageUrl": "/images/swing/1.png",
+    "imageAlt": "Golf Simulator"
+  },
+  {
+    "_id": "58ae468d-e0e1-4db6-855d-e5d3155584c1",
+    "title": "Företag / Partner",
+    "slug": "partner",
+    "actionLabel": "Se partnerskap",
+    "link": "/partner",
+    "order": 6,
+    "imageUrl": "/images/lokalen/2.png",
+    "imageAlt": "Golf Club"
+  }
+]
