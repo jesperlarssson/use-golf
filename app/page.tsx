@@ -96,7 +96,7 @@ export default async function Landing2DemoPage() {
       _id: "default-0",
       title: "Event / Tävlingar",
       slug: "tavlingar",
-      imageUrl: "/images/invigning/DSC06527.jpg",
+      imageUrl: "/images/people/9.png",
       imageAlt: "Event och tävlingar",
       description: "Scrambletävlingar, ligor och sociala golfkvällar för alla nivåer.",
       actionLabel: "Se event",
@@ -106,7 +106,7 @@ export default async function Landing2DemoPage() {
       _id: "default-1",
       title: "Pensionärer",
       slug: "pensionarer",
-      imageUrl: "/images/invigning/DSC06519.jpg",
+      imageUrl: "/images/people/10.png",
       imageAlt: "Pensionärsgolf",
       description: "Förmånliga pensionärspriser dagtid. Gemenskap, Facebookgrupp och trivsam miljö.",
       actionLabel: "Läs mer",
@@ -114,19 +114,19 @@ export default async function Landing2DemoPage() {
     },
     {
       _id: "default-2",
-      title: "Tränare / Kurser",
-      slug: "kurser",
-      imageUrl: "/images/invigning/DSC06519.jpg",
-      imageAlt: "Tränare och kurser",
-      description: "Privatlektioner, gruppträning och utvecklingsplaner med erfarna tränare.",
+      title: "Träna",
+      slug: "trana",
+      imageUrl: "/images/swing/2.png",
+      imageAlt: "Träna hos USE Golf",
+      description: "Privatlektioner, kurser och utvecklingsplaner med erfarna tränare.",
       actionLabel: "Läs mer",
-      link: "/events?category=kurser",
+      link: "/trana",
     },
     {
       _id: "default-3",
       title: "Juniorer",
       slug: "junior",
-      imageUrl: "/images/invigning/DSC06511.jpg",
+      imageUrl: "/images/people/3.png",
       imageAlt: "Juniorer",
       description: "Ligaspel, utveckling och roliga aktiviteter för yngre golfare.",
       actionLabel: "Se event",
@@ -136,7 +136,7 @@ export default async function Landing2DemoPage() {
       _id: "default-4",
       title: "Damer",
       slug: "damer",
-      imageUrl: "/images/invigning/DSC06600.jpg",
+      imageUrl: "/images/swing/1.png",
       imageAlt: "Damer",
       description: "Kurser, träning och community för damer på alla nivåer.",
       actionLabel: "Se event",
@@ -144,13 +144,13 @@ export default async function Landing2DemoPage() {
     },
     {
       _id: "default-5",
-      title: "Företag / Partner",
-      slug: "partner",
-      imageUrl: "/images/render2.PNG",
-      imageAlt: "Företag och partner",
-      description: "Kickoff, kundevent och partnersamarbeten i en social golfmiljö.",
-      actionLabel: "Se partners",
-      link: "/partner",
+      title: "Företag",
+      slug: "foretag",
+      imageUrl: "/images/lokalen/2.png",
+      imageAlt: "Företag hos USE Golf",
+      description: "Företagsevent, Official Partner och exklusiva upplevelser.",
+      actionLabel: "Läs mer",
+      link: "/foretag",
     },
   ];
 
@@ -178,12 +178,12 @@ export default async function Landing2DemoPage() {
           {/* Background Slideshow */}
           <HeroSlideshow
             images={[
-              { src: "/slideshow/1.png", alt: "USE Golf – simulatorer" },
-              { src: "/slideshow/2.png", alt: "USE Golf – simulatorer" },
-              { src: "/slideshow/3.png", alt: "USE Golf – simulatorer" },
-              { src: "/slideshow/4.png", alt: "USE Golf – simulatorer" },
-              { src: "/slideshow/5.png", alt: "USE Golf – simulatorer" },
-              { src: "/slideshow/6.png", alt: "USE Golf – simulatorer" },
+              { src: "/hero/1.png", alt: "USE Golf – simulatorer" },
+              { src: "/hero/2.png", alt: "USE Golf – simulatorer" },
+              { src: "/hero/3.png", alt: "USE Golf – simulatorer" },
+              { src: "/hero/4.png", alt: "USE Golf – simulatorer" },
+              { src: "/hero/5.png", alt: "USE Golf – simulatorer" },
+              { src: "/hero/6.png", alt: "USE Golf – simulatorer" },
        
 
 
@@ -345,16 +345,40 @@ export default async function Landing2DemoPage() {
                 const isExternalLink = /^https?:\/\//i.test(href);
 
                 const card = (
-                  <div className="group relative overflow-hidden border-4 border-[var(--brand-secondary)] bg-[var(--brand-primary)] h-full aspect-[16/9] hover:border-[var(--brand-accent-amber)] transition-colors">
-                    <Image
-                      src={item.imageUrl || "/images/placeholder.png"}
-                      alt={item.imageAlt || item.title}
-                      fill
-                      loading={index < 3 ? "eager" : "lazy"}
-                      className="object-cover blur-xs group-hover:scale-[1.04] transition-transform duration-500"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  <div className="group relative overflow-hidden border-4 border-[var(--brand-secondary)] bg-[var(--brand-primary)] h-full aspect-[5/6] hover:border-[var(--brand-accent-amber)] transition-colors">
+                    <div className="absolute inset-0 transition-transform duration-500 ease-out group-hover:scale-[1.04]">
+                      <Image
+                        src={item.imageUrl || "/images/placeholder.png"}
+                        alt=""
+                        fill
+                        loading={index < 3 ? "eager" : "lazy"}
+                        className="object-cover"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      />
+                      <div
+                        className="pointer-events-none absolute inset-0"
+                        style={{
+                          maskImage:
+                            "linear-gradient(to top, black 0%, black 7%, transparent 24%)",
+                          WebkitMaskImage:
+                            "linear-gradient(to top, black 0%, black 7%, transparent 24%)",
+                        }}
+                        aria-hidden
+                      >
+                        <Image
+                          src={item.imageUrl || "/images/placeholder.png"}
+                          alt=""
+                          fill
+                          loading={index < 3 ? "eager" : "lazy"}
+                          className="object-cover blur-md scale-[1.06]"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        />
+                      </div>
+                    </div>
+                    <div
+                      className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.72)_0%,rgba(0,0,0,0.28)_22%,transparent_38%)]"
+                      aria-hidden
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-black/10" />
                     <div className="absolute inset-x-0 bottom-0 p-6">
                       <h3 className="font-horus text-2xl md:text-3xl text-[var(--brand-primary)] leading-none">
                         {item.title}
@@ -408,94 +432,49 @@ export default async function Landing2DemoPage() {
               <SectionHeader
                 label="Medlemskap"
                 heading="Spela mer, betala mindre"
-                description="Välj ett medlemskap och bli en del av vårt community. Förtur till event, rabatter och mer."
+                description="Bli en del av vårt community. Förtur till event, rabatter och exklusiva förmåner."
                 align="center"
               />
             </FadeIn>
 
-            <div className="grid grid-cols-12 gap-6 md:gap-8">
-              {/* Senior */}
-              <FadeIn delay={0.1} className="col-span-12 md:col-span-6">
+            <div className="max-w-5xl mx-auto">
+              <FadeIn delay={0.1}>
                 <div className="overflow-hidden border-4 border-[var(--brand-secondary)] bg-[var(--brand-primary)]">
-                  <div className="grid md:grid-cols-2">
-                    <div className="relative h-64 md:h-full min-h-[300px] border-b-4 md:border-b-0 md:border-r-4 border-[var(--brand-secondary)]">
+                  <div className="grid md:grid-cols-2 md:min-h-[min(28rem,70vh)]">
+                    <div className="relative h-80 sm:h-96 md:h-full min-h-[320px] md:min-h-[22rem] border-b-4 md:border-b-0 md:border-r-4 border-[var(--brand-secondary)]">
                       <Image
-                        src="/images/invigning/adam-hampus.png"
-                        alt="User"
+                        src="/images/people/6.png"
+                        alt="USE:R medlemskap"
                         fill
                         className="object-cover"
                         sizes="(max-width: 768px) 100vw, 50vw"
                       />
                       <div className="absolute inset-0 bg-black/30" />
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <h3 className="font-logo text-5xl md:text-5xl text-[var(--brand-primary)]">Use:r</h3>
+                        <h3 className="font-logo text-6xl md:text-7xl text-[var(--brand-primary)]">Use:r</h3>
                       </div>
                     </div>
-                    <div className="p-8 space-y-4 flex flex-col justify-center">
+                    <div className="p-10 md:p-12 lg:p-14 space-y-6 flex flex-col justify-center">
                       <div>
-                        <p className="text-2xl font-semibold uppercase tracking-wider text-[var(--brand-olive-900)] mb-2">
-                          från 600 kr/år
+                        <p className="text-3xl md:text-4xl font-semibold uppercase tracking-wider text-[var(--brand-olive-900)] mb-2">
+                          300 kr/år
                         </p>
-                        <div className="flex flex-wrap gap-2 mb-6">
-                          <span className="border-2 border-[var(--brand-secondary)] px-3 py-1 text-xs uppercase tracking-wider">
+                        <p className="text-base opacity-70 mb-4 max-w-md">Alla aktiviteter och tävlingar kräver medlemskap.</p>
+                        <div className="flex flex-wrap gap-3 mb-2">
+                          <span className="border-2 border-[var(--brand-secondary)] px-3 py-1.5 text-xs md:text-sm uppercase tracking-wider">
                             rabatt på bokningar
                           </span>
-                          <span className="border-2 border-[var(--brand-secondary)] px-3 py-1 text-xs uppercase tracking-wider">
+                          <span className="border-2 border-[var(--brand-secondary)] px-3 py-1.5 text-xs md:text-sm uppercase tracking-wider">
                             förtur till event
                           </span>
-                          <span className="border-2 border-[var(--brand-secondary)] px-3 py-1 text-xs uppercase tracking-wider">
+                          <span className="border-2 border-[var(--brand-secondary)] px-3 py-1.5 text-xs md:text-sm uppercase tracking-wider">
                             1h speltid ingår
                           </span>
                         </div>
                       </div>
                       <a
                         href="/medlemskap"
-                        className="inline-flex items-center justify-center bg-[var(--brand-olive-900)] text-[var(--brand-primary)] px-6 py-3 font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition"
-                      >
-                        Läs mer
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </FadeIn>
-
-              {/* Junior */}
-              <FadeIn delay={0.2} className="col-span-12 md:col-span-6">
-                <div className="overflow-hidden border-4 border-[var(--brand-secondary)] bg-[var(--brand-primary)]">
-                  <div className="grid md:grid-cols-2">
-                    <div className="relative h-64 md:h-full min-h-[300px] border-b-4 md:border-b-0 md:border-r-4 border-[var(--brand-secondary)]">
-                      <Image
-                        src="/images/invigning/junior.png"
-                        alt="Junior User"
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 768px) 100vw, 50vw"
-                      />
-                      <div className="absolute inset-0 bg-black/30" />
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <h3 className="font-logo text-4xl md:text-4xl text-[var(--brand-primary)]">Junior Use:r</h3>
-                      </div>
-                    </div>
-                    <div className="p-8 space-y-4 flex flex-col justify-center">
-                      <div>
-                        <p className="text-2xl font-semibold uppercase tracking-wider text-[var(--brand-olive-900)] mb-2">
-                          400 kr/år
-                        </p>
-                        <div className="flex flex-wrap gap-2 mb-6">
-                          <span className="border-2 border-[var(--brand-secondary)] px-3 py-1 text-xs uppercase tracking-wider">
-                            rabatt på bokningar
-                          </span>
-                          <span className="border-2 border-[var(--brand-secondary)] px-3 py-1 text-xs uppercase tracking-wider">
-                            förtur till event
-                          </span>
-                          <span className="border-2 border-[var(--brand-secondary)] px-3 py-1 text-xs uppercase tracking-wider">
-                            1h ingår
-                          </span>
-                        </div>
-                      </div>
-                      <a
-                        href="/medlemskap"
-                        className="inline-flex items-center justify-center bg-[var(--brand-olive-900)] text-[var(--brand-primary)] px-6 py-3 font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition"
+                        className="inline-flex items-center justify-center bg-[var(--brand-olive-900)] text-[var(--brand-primary)] px-8 py-3.5 text-base font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition w-fit"
                       >
                         Läs mer
                       </a>
@@ -574,8 +553,8 @@ export default async function Landing2DemoPage() {
               <FadeIn>
                 <div className="relative h-[400px] md:h-[500px] border-4 border-[var(--brand-secondary)] overflow-hidden">
                   <Image
-                    src="/images/invigning/DSC06426.jpg"
-                    alt="TrackMan Simulator"
+                    src="/images/swing/2.png"
+                    alt="Golf i simulator hos USE Golf"
                     fill
                     className="object-cover"
                     sizes="(max-width: 1024px) 100vw, 50vw"
@@ -677,33 +656,7 @@ export default async function Landing2DemoPage() {
           </div>
         </Section>
 
-        {/* Final CTA */}
-        <Section className="py-20 bg-[var(--brand-primary)]">
-          <div className="max-w-4xl mx-auto text-center space-y-8">
-            <FadeIn>
-              <Heading as={2} className="text-4xl md:text-5xl ">
-                Redo att komma igång?
-              </Heading>
-              <Text className="text-xl md:text-xl text-[var(--brand-olive-700)] mt-2 max-w-2xl mx-auto">
-                Boka din tid idag eller läs mer om våra erbjudanden.
-              </Text>
-              <div className="flex flex-wrap justify-center gap-4 pt-6">
-                <a
-                  href="https://book.sweetspot.io/clubs/use-golf/"
-                  className="inline-flex items-center justify-center bg-[var(--brand-secondary)] text-[var(--brand-primary)] px-10 py-5 text-lg font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition transform hover:scale-105"
-                >
-                  Boka tid
-                </a>
-                <a
-                  href="/events"
-                  className="inline-flex items-center justify-center border-2 border-[var(--brand-secondary)] text-[var(--brand-olive-900)] px-10 py-5 text-lg font-semibold uppercase tracking-wider rounded-none hover:bg-[var(--brand-secondary)]/10 transition"
-                >
-                  Se events
-                </a>
-              </div>
-            </FadeIn>
-          </div>
-        </Section>
+        
       </div>
     </Page>
   );

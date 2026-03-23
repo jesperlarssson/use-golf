@@ -13,7 +13,7 @@ export default function OmPage() {
       {/* Hero Banner */}
       <div className="relative w-full min-h-[50vh] sm:min-h-[60vh] overflow-hidden border-b border-[var(--brand-secondary)]">
         <Image
-          src="/images/invigning/DSC06527.jpg"
+          src="/images/people/7.png"
           alt="Om USE Golf"
           fill
           priority
@@ -22,7 +22,7 @@ export default function OmPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/40 to-black/20" />
         <div className="relative z-10 flex items-center justify-center min-h-[50vh] sm:min-h-[60vh]">
-          <div className="w-full max-w-screen-2xl px-4 sm:px-6 py-20">
+          <div className="w-full max-w-screen-2xl px-4 sm:px-8 py-12 sm:py-20">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
               {/* Vänster kolumn - SectionHeader */}
               <FadeIn>
@@ -85,7 +85,7 @@ export default function OmPage() {
                     </Text>
                   </div>
                   <div className="relative h-64 md:h-80 border-2 border-[var(--brand-secondary)] overflow-hidden">
-                    <Image src="/images/baller3.png" alt="USE Golf – bild på golfboll" fill className="object-cover" />
+                    <Image src="/images/people/8.png" alt="USE Golf" fill className="object-cover" />
                     <div className="absolute inset-0 bg-black/20" />
                   </div>
                 </div>

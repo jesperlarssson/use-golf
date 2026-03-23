@@ -287,14 +287,7 @@ export default function StaendeTidCalculator({ pricingData, closures = [] }: Sta
           </div>
         </div>
 
-        {/* User Pass rekommendation */}
-        {totalPris >= 5000 && (
-          <div className="pt-4 border-t border-[var(--brand-secondary)]/40">
-            <p className="text-sm text-[var(--brand-olive-900)] opacity-80">
-              Vid större bokningar rekommenderar vi ett av våra <Link href="/medlemskap" className="text-[var(--brand-secondary)] hover:underline font-horus ">user passes</Link> för upp till 20% mer spelvärde för pengarna
-            </p>
-          </div>
-        )}
+       
 
         {/* Datumlista */}
         {bookingDates.length > 0 && (
