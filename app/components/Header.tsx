@@ -36,6 +36,9 @@ const secondaryNav: NavItem[] = [
   { href: "/medlemsvillkor", label: "Medlemsvillkor" },
 ];
 
+/** Tills vidare: ingen event-lista under "Event" i navbar */
+const SHOW_EVENTS_NAV_DROPDOWN = false;
+
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -218,8 +221,9 @@ export default function Header() {
   const headerVariantClass = getHeaderVariant(pathname);
   const bannerConfig = hideHeader ? null : getBannerConfig(pathname);
 
-  // Hämta events från API
+  // Hämta events från API (endast om dropdown för Event är påslagen)
   useEffect(() => {
+    if (!SHOW_EVENTS_NAV_DROPDOWN) return;
     const fetchEvents = async () => {
       try {
         const response = await fetch('/api/events');
@@ -283,7 +287,7 @@ export default function Header() {
   // Enkla headerlänkar (utan sketch), med enradig ellips
   const renderHeaderItem = (item: NavItem, onClick?: () => void) => {
     // Specialhantering för Events med dropdown
-    if (item.href === "/events" && events.length > 0) {
+    if (SHOW_EVENTS_NAV_DROPDOWN && item.href === "/events" && events.length > 0) {
       return (
         <li
           key={item.href}
@@ -436,7 +440,7 @@ export default function Header() {
   // Länkrenderare för overlay (större typografi)
   const renderOverlayItem = (item: NavItem, onClick?: () => void) => {
     // Specialhantering för Events med expanderbar meny
-    if (item.href === "/events" && events.length > 0) {
+    if (SHOW_EVENTS_NAV_DROPDOWN && item.href === "/events" && events.length > 0) {
       return (
         <li key={item.href} className="space-y-2">
           <button
@@ -571,7 +575,7 @@ export default function Header() {
                   {leftNav.map((item) => {
                     const rendered = renderHeaderItem(item);
                     // Om det är Events med dropdown, returnera direkt (redan wrapped i li)
-                    if (item.href === "/events" && events.length > 0) {
+                    if (SHOW_EVENTS_NAV_DROPDOWN && item.href === "/events" && events.length > 0) {
                       return rendered;
                     }
                     return <li key={item.href}>{rendered}</li>;
@@ -634,7 +638,7 @@ export default function Header() {
                 {[...leftNav, ...restNav].map((item) => {
                   const rendered = renderOverlayItem(item, () => setMenuOpen(false));
                   // Om det är Events med expanderbar meny, returnera direkt (redan wrapped i li)
-                  if (item.href === "/events" && events.length > 0) {
+                  if (SHOW_EVENTS_NAV_DROPDOWN && item.href === "/events" && events.length > 0) {
                     return rendered;
                   }
                   return <li key={item.href}>{rendered}</li>;
