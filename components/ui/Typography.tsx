@@ -13,14 +13,15 @@ export function Heading({ as = 1, children, className = "", style }: HeadingProp
   const Tag = ("h" + as) as unknown as ElementType;
   const base = "tracking-tight";
   // Ta bort hårdkodad färg från size så att den kan överridas via className eller style
+  // Mobil: mitt emellan första (mindre) och andra (större) steget; sm/md oförändrade
   const size =
     as === 1
-      ? "text-3xl sm:text-5xl md:text-6xl font-horus"
+      ? "text-[2.0625rem] sm:text-5xl md:text-6xl font-horus"
       : as === 2
-      ? "text-xl sm:text-2xl md:text-3xl font-semibold uppercase tracking-wide"
+      ? "text-[1.375rem] sm:text-2xl md:text-3xl font-semibold uppercase tracking-wide"
       : as === 3
-      ? "text-lg md:text-xl uppercase tracking-wide"
-      : "text-lg sm:text-xl md:text-2xl font-semibold";
+      ? "text-[1.1875rem] md:text-xl uppercase tracking-wide"
+      : "text-[1.1875rem] sm:text-xl md:text-2xl font-semibold";
   
   // Standardfärg om ingen färg anges i className eller style
   // Kontrollera om className redan innehåller en text-färg klass

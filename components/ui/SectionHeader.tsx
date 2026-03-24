@@ -39,18 +39,18 @@ export default function SectionHeader({
     full: "max-w-full",
   };
 
-  // Bestäm heading-storlek baserat på variant
+  // Bestäm heading-storlek baserat på variant (mobil: något större rubrik)
   const getHeadingClasses = () => {
     if (variant === "small") {
       if (headingSize === 2) {
-        return "text-2xl md:text-3xl lg:text-4xl";
+        return "text-3xl md:text-3xl lg:text-4xl";
       }
       // För andra headingSize, använd mindre storlekar
       return "";
     }
     // Default variant
     if (headingSize === 2) {
-      return "text-4xl md:text-5xl";
+      return "text-5xl";
     }
     return "";
   };
@@ -70,7 +70,9 @@ export default function SectionHeader({
   };
 
   return (
-    <div className={`${alignClasses} ${maxWidthClasses[maxWidth]} ${className}`}>
+    <div
+      className={`${alignClasses} ${maxWidthClasses[maxWidth]} py-8 md:py-4 ${className}`}
+    >
       {label && (
         <span
           className={getLabelClasses()}
