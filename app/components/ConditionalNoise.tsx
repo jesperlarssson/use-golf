@@ -3,11 +3,13 @@
 import { usePathname } from 'next/navigation'
 import Noise from '@/components/ui/Noise'
 
+const GRAIN_ENABLED = false
+
 export default function ConditionalNoise() {
   const pathname = usePathname()
   const isStudio = pathname?.startsWith('/studio')
 
-  if (isStudio) {
+  if (!GRAIN_ENABLED || isStudio) {
     return null
   }
 
@@ -21,4 +23,3 @@ export default function ConditionalNoise() {
     />
   )
 }
-
