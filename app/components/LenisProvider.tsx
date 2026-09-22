@@ -9,6 +9,7 @@ export default function LenisProvider({ children }: { children: React.ReactNode 
   const pathname = usePathname();
 
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const lenis = new Lenis({
       duration: 1.1,
       smoothWheel: true
@@ -31,6 +32,7 @@ export default function LenisProvider({ children }: { children: React.ReactNode 
 
   // Scrolla till toppen vid sidnavigering
   useEffect(() => {
+    if (window.location.hash) return;
     if (lenisRef.current) {
       lenisRef.current.scrollTo(0, { immediate: true });
     } else {

@@ -3,87 +3,32 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import Logo from "@/components/ui/Logo";
-import SocialButtons from "@/components/ui/SocialButtons";
+
+const instagram = "https://www.instagram.com/use__golf/";
+const photos = [
+  { src: "/images/people/9.png", alt: "Vänner som umgås hos USE" },
+  { src: "/images/lokalen/1.png", alt: "Lounge och golf hos USE" },
+  { src: "/images/swing/2.png", alt: "Golfspel i TrackMan-simulator" },
+  { src: "/hero/1.png", alt: "En inblick i USE Golf i Nya Hovås" },
+];
 
 export default function Footer() {
   const pathname = usePathname();
-  const isStudio = pathname?.startsWith("/studio");
-
-  if (isStudio) {
-    return null;
-  }
-
-  return (
-    <footer className=" border-t border-[var(--brand-secondary)]/30 bg-[var(--brand-primary)] py-20 text-[var(--brand-secondary)]">
-
-      {/** LOGO + SOCIAL centered, med info på sidorna i en tredelad layout */}
-      <div className="mx-auto max-w-6xl px-4 py-12 grid grid-cols-1 md:grid-cols-3 items-center gap-8">
-        {/* Vänster: Företagsinfo */}
-        <div className="hidden md:block justify-self-start">
-          <h3 className="font-logo text-lg mb-3">USE GOLF</h3>
-          <p className="text-sm">Indoor golf & lifestyle</p>
-          <p className="text-sm mt-2">© {new Date().getFullYear()} USE GOLF</p>
-        </div>
-
-        {/* Mitten: Logo + social */}
-        <div className="flex flex-col items-center gap-6">
-          <Logo width={120} height={120} className="text-[var(--brand-secondary)]" />
-          <SocialButtons
-            size={44}
-            links={{
-              instagram: "https://instagram.com/use__golf",
-              facebook: "https://www.facebook.com/profile.php?id=61581723324567",
-            }}
-          />
-          <a
-            href="https://chat.whatsapp.com/L9pxBcSaTpB3BH4mdSb7v8"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm hover:underline transition"
-          >
-            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-            </svg>
-            WhatsApp Community
-          </a>
-        </div>
-
-        {/* Höger: Kontakt */}
-        <div className="hidden md:block justify-self-end text-right">
-          <h4 className="font-semibold mb-3">Kontakt</h4>
-          <p className="text-sm">Krogabäcksvägen 2</p>
-          <p className="text-sm">436 53 Hovås</p>
-          <p className="text-sm mt-2">
-            <a href="mailto:hello@usegolf.se" className="hover:underline">hello@usegolf.se</a>
-          </p>
-          <p className="text-sm mt-2">
-            <a href="tel:+46767174034" className="hover:underline">+46 76-717 40 34</a>
-          </p>
-        </div>
+  if (pathname.startsWith("/studio")) return null;
+  return <footer className="pb-24 lg:pb-0">
+    <section aria-labelledby="instagram-heading" className="border-t border-black/15 px-6 py-16 sm:px-10 lg:px-16 lg:py-20">
+      <div className="mx-auto max-w-screen-2xl">
+        <div className="mb-8 flex flex-col justify-between gap-5 sm:flex-row sm:items-end"><div><p className="mb-4 text-xs uppercase tracking-[.2em] text-[var(--brand-olive-900)]">Livet på USE</p><h2 id="instagram-heading" className="text-balance text-3xl font-normal tracking-[-.035em] sm:text-4xl">Vi ses mellan rundorna.</h2></div><a href={instagram} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-6 text-sm underline underline-offset-8">Följ @use__golf på Instagram <span aria-hidden="true">↗</span></a></div>
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-4">{photos.map(photo => <a key={photo.src} href={instagram} target="_blank" rel="noopener noreferrer" aria-label={`${photo.alt} – besök USE på Instagram`} className="group relative aspect-square overflow-hidden outline outline-1 -outline-offset-1 outline-black/10"><Image src={photo.src} alt={photo.alt} fill sizes="(max-width: 767px) 50vw, 25vw" className="object-cover transition-transform duration-500 motion-safe:group-hover:scale-[1.03]" /><span aria-hidden="true" className="absolute right-3 bottom-3 flex size-8 items-center justify-center bg-black/40 text-white">↗</span></a>)}</div>
       </div>
-
-      {/* Mobil: staplade info-sektioner */}
-      <div className="mx-auto max-w-6xl px-4 pb-12 grid gap-8 md:hidden">
-        <div>
-          <h3 className="font-logo text-lg mb-3">USE GOLF</h3>
-          <p className="text-sm">Indoor golf & lifestyle</p>
-          <p className="text-sm mt-2">© {new Date().getFullYear()} USE GOLF</p>
-        </div>
-        <div>
-          <h4 className="font-semibold mb-3">Kontakt</h4>
-          <p className="text-sm">Krogabäcksvägen 2</p>
-          <p className="text-sm">436 53 Hovås</p>
-          <p className="text-sm mt-2">
-            <a href="mailto:hello@usegolf.se" className="hover:underline">hello@usegolf.se</a>
-          </p>
-          <p className="text-sm mt-2">
-            <a href="tel:+46767174034" className="hover:underline">+46 76-717 40 34</a>
-          </p>
-        </div>
+    </section>
+    <div className="bg-[#293329] text-[var(--brand-primary)]">
+      <div className="mx-auto grid max-w-screen-2xl gap-10 px-6 py-16 sm:grid-cols-2 sm:px-10 lg:grid-cols-[1.5fr_1fr_1fr] lg:px-16">
+        <div><Link href="/" className="font-logo text-4xl">USE GOLF</Link><p className="mt-5 max-w-xs text-sm leading-relaxed text-white/70">Golf, människor och goda kvällar.<br />Året runt i Nya Hovås.</p></div>
+        <div><h3 className="mb-5 text-xs uppercase tracking-[.18em] text-white/60">Hitta hit</h3><p className="text-sm leading-relaxed">Krogabäcksvägen 2, plan 3<br />436 53 Hovås</p><Link href="/oppettider-kontakt" className="mt-3 inline-flex min-h-11 items-center text-sm underline underline-offset-4">Öppettider & kontakt</Link></div>
+        <div><h3 className="mb-5 text-xs uppercase tracking-[.18em] text-white/60">Säg hej</h3><a href="mailto:hello@usegolf.se" className="flex min-h-11 items-center text-sm hover:underline">hello@usegolf.se</a><a href="tel:+46767174034" className="flex min-h-11 items-center text-sm hover:underline">076-717 40 34</a><a href={instagram} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center text-sm hover:underline">Instagram ↗</a></div>
       </div>
-    </footer>
-  );
+      <div className="mx-auto flex max-w-screen-2xl flex-wrap justify-between gap-4 border-t border-white/15 px-6 py-6 text-xs text-white/65 sm:px-10 lg:px-16"><p>© {new Date().getFullYear()} USE Golf</p><Link href="/medlemsvillkor" className="underline underline-offset-4">Medlemsvillkor</Link></div>
+    </div>
+  </footer>;
 }
-
-

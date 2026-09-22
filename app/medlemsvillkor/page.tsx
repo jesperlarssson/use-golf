@@ -336,23 +336,7 @@ export default async function MedlemsvillkorPage() {
               <Text>Ett paket för företag som vill synas och ha en fast närvaro på anläggningen.</Text>
             </div>
 
-            <div className="space-y-4">
-              <Heading as={3}>Official Partner</Heading>
-              <Text><strong>Pris: 60 000 kr / år</strong> – För företag som vill ha en större närvaro, exponering och fler möjligheter hos USE Golf.</Text>
-              <ul className="list-disc pl-5 space-y-2">
-                <li>Företagstävling med hela lokalen i 2 timmar (6 simulatorer)</li>
-                <li>TrackMan-exponering i alla simulatorer under eventet</li>
-                <li>Möjlighet till unikt upplägg med Hole-in-One-priser och företagsbranding</li>
-                <li>40 timmars speltid per år utöver företagseventet</li>
-                <li>2 bagar i förvaring</li>
-                <li>Möjlighet att boka en stående tid varje vecka</li>
-                <li>Tillgång till fria låneklubbor för gäster</li>
-                <li>Kaffe, dryck och snacks vid varje speltillfälle</li>
-                <li>Möjlighet att lägga till matpaket som tillval</li>
-                <li>Företagets logo på partnerskärm</li>
-              </ul>
-              <Text>Ett premiumkoncept för företag som vill skapa upplevelser, bygga relationer och få maximal synlighet – både digitalt och på plats.</Text>
-            </div>
+
             </div>
           </FadeIn>
         </div>

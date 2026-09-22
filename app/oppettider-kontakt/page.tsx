@@ -1,26 +1,5 @@
-import type { Metadata } from "next";
-import Page from "@/components/ui/Page";
-import Section from "@/components/ui/Section";
-import { Heading, Text } from "@/components/ui/Typography";
+import { redirect } from "next/navigation";
 
-export default function KontaktPage() {
-  return (
-    <Page variant="subpage">
-      <Section>
-        <Heading as={2}>Öppettider & kontakt</Heading>
-        <div className="mt-4 space-y-3">
-          <Text className="font-semibold uppercase tracking-wide">Ordinarie öppettider</Text>
-          <Text>Alla dagar: 09:00–22:00</Text>
-        
-        </div>
-      </Section>
-    </Page>
-  );
+export default function OpeningHoursPage() {
+  redirect("/kontakt#oppettider");
 }
-
-export const metadata: Metadata = {
-  title: "Öppettider & kontakt",
-  description: "Aktuella öppettider och kontaktuppgifter till USE Golf i Hovås.",
-};
-
-
