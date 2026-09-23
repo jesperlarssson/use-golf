@@ -9,6 +9,8 @@ export default function LenisProvider({ children }: { children: React.ReactNode 
   const pathname = usePathname();
 
   useEffect(() => {
+    // Vi scrollar själva till toppen vid sidbyte, så webbläsarens egen återställning får inte slå in efteråt.
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const lenis = new Lenis({
       duration: 1.1,

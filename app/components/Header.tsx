@@ -22,7 +22,10 @@ export default function Header({ showJournal = false }: { showJournal?: boolean 
   const dialog = useRef<HTMLDialogElement>(null);
   const toggle = useRef<HTMLButtonElement>(null);
   const hidden = pathname.startsWith("/studio") || pathname === "/pre-access" || pathname.startsWith("/bli-medlem");
-  const light = pathname === "/" && !scrolled;
+  // Vercels ISR-regenerering renderar startsidan som "/index" på servern; behandla båda som start
+  // så att serverns HTML matchar klienten (React rättar inte klassnamn vid hydrering).
+  const isHome = pathname === "/" || pathname === "/index";
+  const light = isHome && !scrolled;
   const bookingVisible = showBooking && pathname !== "/bokning";
 
   useEffect(() => {
@@ -33,7 +36,16 @@ export default function Header({ showJournal = false }: { showJournal?: boolean 
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    // Läs av igen när webbläsaren återställt sidan (load, bfcache, flikbyte), annars kan headern fastna som solid.
+    window.addEventListener("load", onScroll);
+    window.addEventListener("pageshow", onScroll);
+    document.addEventListener("visibilitychange", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("load", onScroll);
+      window.removeEventListener("pageshow", onScroll);
+      document.removeEventListener("visibilitychange", onScroll);
+    };
   }, []);
 
   // Re-sync scroll state on route changes to handle Lenis/browser scroll restoration races
