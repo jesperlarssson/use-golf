@@ -29,6 +29,22 @@ export default function Header({ showJournal = false }: { showJournal?: boolean 
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Re-sync scroll state on route changes to handle Lenis/browser scroll restoration races
+  useEffect(() => {
+    // rAF ensures we read after potential Lenis immediate scrollTo(0) has applied
+    const rafId = requestAnimationFrame(() => {
+      setScrolled(window.scrollY > 24);
+    });
+    // Fallback timeout as defense-in-depth for cases where rAF isn't sufficient
+    const timeoutId = setTimeout(() => {
+      setScrolled(window.scrollY > 24);
+    }, 60);
+    return () => {
+      cancelAnimationFrame(rafId);
+      clearTimeout(timeoutId);
+    };
+  }, [pathname]);
+
   useEffect(() => {
     if (!menuOpen) return;
     const previous = document.body.style.overflow;

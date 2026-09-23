@@ -35,8 +35,16 @@ export default function LenisProvider({ children }: { children: React.ReactNode 
     if (window.location.hash) return;
     if (lenisRef.current) {
       lenisRef.current.scrollTo(0, { immediate: true });
+      // Säkerställ att komponenter med native scroll-lyssnare (t.ex. Header) uppdaterar sitt tillstånd
+      requestAnimationFrame(() => {
+        window.dispatchEvent(new Event("scroll"));
+      });
     } else {
       window.scrollTo(0, 0);
+      // Matcha beteendet även utan Lenis
+      requestAnimationFrame(() => {
+        window.dispatchEvent(new Event("scroll"));
+      });
     }
   }, [pathname]);
 
