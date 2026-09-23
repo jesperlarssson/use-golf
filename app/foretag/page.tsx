@@ -16,24 +16,23 @@ export default function ForetagPage() {
         <p className="mb-6 text-xs uppercase tracking-[.2em] text-white/80">Företag & event</p>
         <h1 className="max-w-3xl text-balance text-5xl font-normal leading-[1.06] tracking-[-.04em] sm:text-6xl lg:text-7xl">En bättre kväll<br />med kollegorna.</h1>
         <p className="mt-6 max-w-lg text-pretty text-lg leading-relaxed text-white/85">Byt mötesrummet mot golf, god mat och något att skåla i. Vi skapar ett event som passar er, oavsett golfvana.</p>
-        <a href="#forfragan" className="mt-8 inline-flex min-h-14 items-center gap-10 bg-[var(--brand-primary)] px-7 text-sm text-[var(--foreground)] transition-colors hover:bg-white">Planera ert event <span aria-hidden="true">↗</span></a>
+        <a href="#forfragan" className="cta-sweep mt-8 inline-flex min-h-14 items-center gap-10 bg-[var(--brand-primary)] px-7 text-sm text-[var(--foreground)] transition-colors">Planera ert event</a>
       </div>
     </section>
     <section className="mx-auto max-w-screen-2xl px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
-      <p className="mb-5 text-xs uppercase tracking-[.2em] text-[var(--brand-olive-900)]">Tre sätt att ses</p>
-      <h2 className="mb-12 text-balance text-4xl font-normal tracking-[-.035em] md:text-5xl">Ert sällskap. Er kväll.</h2>
+      <h2 className="mb-12 text-balance text-4xl font-normal tracking-[-.035em] md:text-5xl">Samla kollegor och kunder på USE.</h2>
       <div className="grid gap-10 md:grid-cols-3">{[
         { title: "After Work", image: "/images/people/9.png", text: "Runda av arbetsdagen med avslappnat spel och något gott i glaset. En enkel anledning att ses utanför kontoret." },
         { title: "Företagsevent", image: "/images/people/1.png", text: "Kickoff, kundkväll eller teambuilding. Vi hjälper er att kombinera golf, mat och dryck i ett gemensamt upplägg." },
         { title: "Hyr hela USE", image: "/images/lokalen/2.png", text: "Hela lokalen, alla sex TrackMan-simulatorer och en kväll bara för er. Gott om plats för både tävling och mingel." },
-      ].map((item, index) => <article key={item.title}>
+      ].map(item => <article key={item.title}>
         <div className="relative mb-6 aspect-[4/3] overflow-hidden outline outline-1 -outline-offset-1 outline-black/10"><Image src={item.image} alt={item.title + " hos USE Golf"} fill sizes="(max-width: 767px) 100vw, 33vw" className="object-cover" /></div>
-        <p className="mb-3 text-xs tabular-nums text-[var(--brand-olive-900)]">0{index + 1}</p><h3 className="text-2xl font-normal tracking-tight">{item.title}</h3><p className="mt-4 text-sm leading-relaxed text-[var(--foreground)]/75">{item.text}</p><a href="#forfragan" className="mt-5 inline-flex min-h-11 items-center gap-6 text-sm underline underline-offset-8">Planera ert event <span aria-hidden="true">↗</span></a>
+        <h3 className="text-2xl font-normal tracking-tight">{item.title}</h3><p className="mt-4 text-sm leading-relaxed text-[var(--foreground)]/75">{item.text}</p><a href="#forfragan" className="mt-5 inline-flex min-h-11 items-center gap-6 text-sm underline underline-offset-8">Planera ert event</a>
       </article>)}</div>
     </section>
     <section id="forfragan" className="scroll-mt-24 border-t border-black/10 bg-[#ebe8dc]">
       <div className="mx-auto grid max-w-screen-2xl gap-12 px-6 py-20 sm:px-10 lg:grid-cols-[.8fr_1.2fr] lg:px-16 lg:py-28">
-        <div><p className="mb-5 text-xs uppercase tracking-[.2em] text-[var(--brand-olive-900)]">Berätta om er kväll</p><h2 className="text-balance text-4xl font-normal tracking-[-.035em] md:text-5xl">Vi börjar med<br />ett förslag.</h2><p className="mt-6 max-w-sm text-base leading-relaxed text-[var(--foreground)]/75">Fyll i era uppgifter så hör vi av oss med ett upplägg för ert sällskap. Förfrågan är inte bindande.</p><p className="mt-8 text-sm">Vill du hellre prata med oss?<br /><a href="tel:+46767174034" className="inline-flex min-h-11 items-center underline underline-offset-4">076-717 40 34</a></p></div>
+        <div><h2 className="text-balance text-4xl font-normal tracking-[-.035em] md:text-5xl">Planera ert event.</h2><p className="mt-6 max-w-sm text-base leading-relaxed text-[var(--foreground)]/75">Fyll i era uppgifter så hör vi av oss med ett upplägg för ert sällskap. Förfrågan är inte bindande.</p><p className="mt-8 text-sm">Vill du hellre prata med oss?<br /><a href="tel:+46767174034" className="inline-flex min-h-11 items-center underline underline-offset-4">076-717 40 34</a></p></div>
         <InquiryForm />
       </div>
     </section>

@@ -158,18 +158,18 @@ export default function StaendeTidCalculator({ pricingData, closures = [] }: Sta
   }, [bookingDates]);
 
   return (
-    <div className="border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] p-6 space-y-6">
+    <div className="border-t border-black/20 bg-[var(--brand-primary)] py-8 space-y-8">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
         {/* Antal simulatorer */}
         <div className="space-y-2">
-          <label htmlFor="antal-sim" className="block text-sm font-semibold uppercase tracking-wider text-[var(--brand-secondary)]">
+          <label htmlFor="antal-sim" className="block text-sm font-medium text-[var(--foreground)]">
             Antal simulatorer
           </label>
           <select
             id="antal-sim"
             value={antalSim}
             onChange={(e) => setAntalSim(Number(e.target.value))}
-            className="w-full px-4 py-2 border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] text-[var(--brand-olive-900)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-secondary)]"
+            className="w-full min-h-12 px-4 py-3 border border-black/25 bg-[var(--brand-primary)] text-[var(--brand-olive-900)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-secondary)]"
           >
             {[1, 2, 3, 4, 5, 6].map((num) => (
               <option key={num} value={num}>
@@ -181,14 +181,14 @@ export default function StaendeTidCalculator({ pricingData, closures = [] }: Sta
 
         {/* Veckodag */}
         <div className="space-y-2">
-          <label htmlFor="veckodag" className="block text-sm font-semibold uppercase tracking-wider text-[var(--brand-secondary)]">
+          <label htmlFor="veckodag" className="block text-sm font-medium text-[var(--foreground)]">
             Veckodag
           </label>
           <select
             id="veckodag"
             value={veckodag}
             onChange={(e) => handleVeckodagChange(e.target.value as Weekday)}
-            className="w-full px-4 py-2 border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] text-[var(--brand-olive-900)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-secondary)]"
+            className="w-full min-h-12 px-4 py-3 border border-black/25 bg-[var(--brand-primary)] text-[var(--brand-olive-900)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-secondary)]"
           >
             {Object.entries(weekdayLabels).map(([value, label]) => (
               <option key={value} value={value}>
@@ -201,14 +201,14 @@ export default function StaendeTidCalculator({ pricingData, closures = [] }: Sta
 
         {/* Starttid */}
         <div className="space-y-2">
-          <label htmlFor="starttid" className="block text-sm font-semibold uppercase tracking-wider text-[var(--brand-secondary)]">
+          <label htmlFor="starttid" className="block text-sm font-medium text-[var(--foreground)]">
             Starttid
           </label>
           <select
             id="starttid"
             value={startTid}
             onChange={(e) => setStartTid(e.target.value)}
-            className="w-full px-4 py-2 border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] text-[var(--brand-olive-900)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-secondary)]"
+            className="w-full min-h-12 px-4 py-3 border border-black/25 bg-[var(--brand-primary)] text-[var(--brand-olive-900)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-secondary)]"
           >
             {availableStartTimes.map((time) => (
               <option key={time} value={time}>
@@ -220,14 +220,14 @@ export default function StaendeTidCalculator({ pricingData, closures = [] }: Sta
 
         {/* Tid (timmar) */}
         <div className="space-y-2">
-          <label htmlFor="timmar" className="block text-sm font-semibold uppercase tracking-wider text-[var(--brand-secondary)]">
+          <label htmlFor="timmar" className="block text-sm font-medium text-[var(--foreground)]">
             Antal timmar
           </label>
           <select
             id="timmar"
             value={timmar}
             onChange={(e) => setTimmar(Number(e.target.value))}
-            className="w-full px-4 py-2 border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] text-[var(--brand-olive-900)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-secondary)]"
+            className="w-full min-h-12 px-4 py-3 border border-black/25 bg-[var(--brand-primary)] text-[var(--brand-olive-900)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-secondary)]"
           >
             {[1, 2, 3, 4].map((num) => (
               <option key={num} value={num}>
@@ -239,14 +239,14 @@ export default function StaendeTidCalculator({ pricingData, closures = [] }: Sta
 
         {/* Period */}
         <div className="space-y-2">
-          <label htmlFor="period" className="block text-sm font-semibold uppercase tracking-wider text-[var(--brand-secondary)]">
+          <label htmlFor="period" className="block text-sm font-medium text-[var(--foreground)]">
             Period (veckor)
           </label>
           <select
             id="period"
             value={period}
             onChange={(e) => setPeriod(Number(e.target.value))}
-            className="w-full px-4 py-2 border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] text-[var(--brand-olive-900)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-secondary)]"
+            className="w-full min-h-12 px-4 py-3 border border-black/25 bg-[var(--brand-primary)] text-[var(--brand-olive-900)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-secondary)]"
           >
             {[5, 10, 15, 20, 25, 30].map((num) => (
               <option key={num} value={num}>
@@ -258,11 +258,11 @@ export default function StaendeTidCalculator({ pricingData, closures = [] }: Sta
       </div>
 
       {/* Resultat och knappar */}
-      <div className="border-t-2 border-[var(--brand-secondary)] pt-6 space-y-4">
+      <div className="border-t border-black/20 pt-6 space-y-4">
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
           <div className="flex-1">
             <p className="text-sm text-[var(--brand-olive-900)] opacity-80 mb-1">Estimerat pris (inkl. 6% moms):</p>
-            <p className="text-3xl font-semibold text-[var(--brand-secondary)]">
+            <p className="text-4xl font-normal tracking-tight text-[var(--brand-olive-900)]">
               {totalPris.toLocaleString("sv-SE")} kr
             </p>
             <p className="text-xs text-[var(--brand-olive-900)] opacity-60 mt-1">
@@ -280,7 +280,7 @@ export default function StaendeTidCalculator({ pricingData, closures = [] }: Sta
             <button
               type="button"
               onClick={() => setIsModalOpen(true)}
-              className="bg-[var(--brand-secondary)] text-[var(--brand-primary)] px-6 py-3 font-semibold uppercase tracking-wider hover:opacity-90 transition"
+              className="cta-sweep min-h-12 bg-[var(--brand-olive-900)] text-[var(--brand-primary)] px-6 py-3 text-sm hover:opacity-90"
             >
               Skicka förfrågan
             </button>

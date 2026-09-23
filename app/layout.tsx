@@ -1,3 +1,4 @@
+import { hasPublishedJournal } from "@/lib/journalAvailability";
 import type { Metadata } from "next";
 import "./globals.css";
 import Header from "./components/Header";
@@ -69,11 +70,12 @@ const structuredData = {
   logo: logoUrl,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const showJournal = await hasPublishedJournal();
   return (
     <html lang="sv">
       <head>
@@ -87,7 +89,7 @@ export default function RootLayout({
       <body className={`antialiased overflow-x-hidden ${robotoFlex.variable}`}>
         <LenisProvider>
           <ConditionalNoise />
-          <Header />
+          <Header showJournal={showJournal} />
           <main>{children}</main>
           <Footer />
         </LenisProvider>

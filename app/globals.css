@@ -344,3 +344,47 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/* A restrained colour sweep, shared by primary actions. */
+.cta-sweep {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  translate: none;
+  transform: none;
+  box-shadow: none;
+  transition: scale 160ms ease;
+}
+.cta-sweep::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: currentColor;
+  opacity: .12;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 300ms cubic-bezier(.2,.7,.2,1);
+  pointer-events: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .cta-sweep:not(:disabled):hover::before { transform: scaleX(1); }
+}
+.cta-sweep:hover { translate: none; transform: none; box-shadow: none; }
+.cta-sweep:focus-visible::before { transform: scaleX(1); }
+.cta-sweep:not(:disabled):active { scale: .96; }
+@media (prefers-reduced-motion: reduce) {
+  .cta-sweep:not(:disabled):active { scale: none; }
+  .cta-sweep::before { transition: none; }
+}
+
+.site-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: .018;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%23000' filter='url(%23n)' d='M0 0h180v180H0z'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+@media (forced-colors: active) { .site-grain { display: none; } }

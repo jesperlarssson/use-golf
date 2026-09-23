@@ -72,9 +72,8 @@ export default function ContactForm() {
         <textarea id="contact-message" name="message" value={message} onChange={(e) => setMessage(e.target.value)} className="scroll-mt-28 min-h-40 w-full resize-y border border-black/25 bg-[var(--brand-primary)] px-4 py-3 text-base" />
       </div>
       <div className="sm:col-span-2 flex flex-col items-start gap-4">
-        <button disabled={state === "submitting"} type="submit" className="inline-flex min-h-14 w-full items-center justify-center gap-10 bg-[var(--brand-olive-900)] px-7 text-sm text-white transition-colors hover:bg-[#3e4837] disabled:cursor-wait disabled:opacity-60 sm:w-auto">
+        <button disabled={state === "submitting"} type="submit" className="cta-sweep inline-flex min-h-14 w-full items-center justify-center gap-10 bg-[var(--brand-olive-900)] px-7 text-sm text-white transition-colors disabled:cursor-wait disabled:opacity-60 sm:w-auto">
           {state === "submitting" ? "Skickar…" : "Skicka meddelande"}
-          <span aria-hidden="true">↗</span>
         </button>
         <div aria-live="polite" aria-atomic="true">
         {state === "success" ? <span className="text-sm">Tack! Ditt meddelande är skickat.</span> : null}

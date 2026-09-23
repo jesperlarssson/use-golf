@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function KontaktPage() {
   return <>
     <EditorialHero label="Kontakt & hitta hit" title="Vi ses på USE." description="En fråga inför rundan eller en idé för nästa kväll med kollegorna? Hör av dig, så hjälper vi dig vidare." image="/images/lokalen/4.png" imageAlt="Välkommen in till USE Golf i Nya Hovås">
-      <a href="#meddelande" className="inline-flex min-h-14 items-center justify-center gap-10 bg-[var(--brand-primary)] px-7 text-sm text-[var(--foreground)] transition-colors hover:bg-white">Skriv till oss <span aria-hidden="true">↗</span></a>
+      <a href="#meddelande" className="cta-sweep inline-flex min-h-14 items-center justify-center gap-10 bg-[var(--brand-primary)] px-7 text-sm text-[var(--foreground)] transition-colors">Skriv till oss</a>
     </EditorialHero>
 
     <section aria-label="Kontaktuppgifter" className="mx-auto grid max-w-screen-2xl gap-10 px-6 py-16 sm:px-10 md:grid-cols-3 lg:px-16 lg:py-20">
@@ -22,7 +22,7 @@ export default function KontaktPage() {
 
     <section id="meddelande" className="scroll-mt-24 border-t border-black/10 bg-[#ebe8dc]">
       <div className="mx-auto grid max-w-screen-2xl gap-12 px-6 py-20 sm:px-10 lg:grid-cols-[.8fr_1.2fr] lg:px-16 lg:py-28">
-        <div><p className="mb-5 text-xs uppercase tracking-[.2em] text-[var(--brand-olive-900)]">Vi hjälper dig gärna</p><h2 className="text-balance text-4xl font-normal tracking-[-.035em] md:text-5xl">Vad funderar du på?</h2><p className="mt-6 max-w-sm text-base leading-relaxed text-[var(--foreground)]/75">Lämna ett meddelande så återkommer vi så snart vi kan.</p><Link href="/foretag#forfragan" className="mt-8 inline-flex min-h-11 items-center gap-6 text-sm underline underline-offset-8">Planerar ni ett företagsevent? <span aria-hidden="true">↗</span></Link></div>
+        <div><h2 className="text-balance text-4xl font-normal tracking-[-.035em] md:text-5xl">Vad funderar du på?</h2><p className="mt-6 max-w-sm text-base leading-relaxed text-[var(--foreground)]/75">Lämna ett meddelande så återkommer vi så snart vi kan.</p><Link href="/foretag#forfragan" className="mt-8 inline-flex min-h-11 items-center gap-6 text-sm underline underline-offset-8">Planerar ni ett företagsevent?</Link></div>
         <ContactForm />
       </div>
     </section>

@@ -1,3 +1,4 @@
+import membershipPricing from './membershipPricing'
 import post from './post'
 import category from './category'
 import pricing from './pricing'
@@ -8,4 +9,4 @@ import event from './event'
 import eventCategory from './eventCategory'
 import closure from './closure'
 
-export const schemaTypes = [post, category, pricing, userPass, venueBooking, faq, event, eventCategory, closure]
+export const schemaTypes = [post, category, pricing, userPass, venueBooking, faq, event, eventCategory, closure, membershipPricing]
