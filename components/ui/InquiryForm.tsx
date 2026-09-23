@@ -1,138 +1,43 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 
-type InquiryType = "paket" | "event" | "konferens" | "partner";
-type PartnerLevel = "Partner" | "Official Partner";
-
-type InquiryFormProps = {
-  to?: string;
-  subject?: string;
-  defaultType?: InquiryType;
-  defaultPartnerLevel?: PartnerLevel;
-};
-
-export default function InquiryForm({ to = "hello@usegolf.se", subject = "Förfrågan Företagsevent", defaultType, defaultPartnerLevel }: InquiryFormProps) {
-  const searchParams = useSearchParams();
-  const typeFromQuery = (searchParams.get("type") as InquiryType | null) || null;
-  const levelFromQuery = (searchParams.get("level") as PartnerLevel | null) || null;
-
-  const initialType: InquiryType = useMemo(() => typeFromQuery || defaultType || "paket", [typeFromQuery, defaultType]);
-  const initialLevel: PartnerLevel | "" = useMemo(() => levelFromQuery || defaultPartnerLevel || "", [levelFromQuery, defaultPartnerLevel]);
-
-  const [company, setCompany] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [date, setDate] = useState("");
-  const [start, setStart] = useState("");
-  const [message, setMessage] = useState("");
-  const [hp, setHp] = useState("");
-  const [inquiryType, setInquiryType] = useState<InquiryType>(initialType);
-  const [partnerLevel, setPartnerLevel] = useState<PartnerLevel | "">(initialLevel);
+export default function InquiryForm() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
-  const [error, setError] = useState<string>("");
 
-  const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  async function submit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (status === "submitting") return;
+    const form = event.currentTarget;
+    const fields = Object.fromEntries(new FormData(form));
     setStatus("submitting");
-    setError("");
     try {
-      const res = await fetch("/api/inquiry", {
+      const response = await fetch("/api/inquiry", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ company, name, email, phone, date, start, message, hp, type: inquiryType, partnerLevel: partnerLevel || undefined, subject }),
+        body: JSON.stringify({ ...fields, guests: Number(fields.guests), type: "event", subject: "Förfrågan företagsevent" }),
       });
-      const data = await res.json();
-      if (!res.ok || !data.ok) throw new Error(data.error || "Kunde inte skicka");
+      const result = await response.json();
+      if (!response.ok || !result.ok) throw new Error("Kunde inte skicka");
       setStatus("success");
-      setCompany("");
-      setName("");
-      setEmail("");
-      setPhone("");
-      setDate("");
-      setStart("");
-      setMessage("");
-      setHp("");
-      setInquiryType(initialType);
-      setPartnerLevel(initialLevel);
-    } catch (err: any) {
+      form.reset();
+    } catch {
       setStatus("error");
-      setError(err?.message || "Något gick fel");
     }
-  };
+  }
 
-  return (
-    <form onSubmit={onSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      <input type="text" value={hp} onChange={(e) => setHp(e.target.value)} className="hidden" tabIndex={-1} aria-hidden="true" />
-      <div>
-        <label className="block text-sm mb-1">Ärende</label>
-        <select value={inquiryType} onChange={(e) => setInquiryType(e.target.value as InquiryType)} className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] px-3 py-2 rounded-none">
-          <option value="paket">Simulatorpaket</option>
-          <option value="event">Event (hela lokalen)</option>
-          <option value="konferens">Konferens</option>
-          <option value="partner">Partnernivå</option>
-        </select>
-      </div>
-      {inquiryType === "partner" ? (
-        <div>
-          <label className="block text-sm mb-1">Partnernivå</label>
-          <select value={partnerLevel} onChange={(e) => setPartnerLevel(e.target.value as PartnerLevel)} className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] px-3 py-2 rounded-none">
-            <option value="">Välj nivå</option>
-            <option value="Partner">Partner</option>
-            <option value="Official Partner">Official Partner</option>
-          </select>
-        </div>
-      ) : (
-        <div />
-      )}
-      <div className="sm:col-span-2">
-        <label className="block text-sm mb-1">Företag</label>
-        <input value={company} onChange={(e) => setCompany(e.target.value)} className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] px-3 py-2 rounded-none" required />
-      </div>
-      <div>
-        <label className="block text-sm mb-1">Kontaktperson</label>
-        <input value={name} onChange={(e) => setName(e.target.value)} className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] px-3 py-2 rounded-none" required />
-      </div>
-      <div>
-        <label className="block text-sm mb-1">E-post</label>
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] px-3 py-2 rounded-none" required />
-      </div>
-      <div>
-        <label className="block text-sm mb-1">Telefon</label>
-        <input value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] px-3 py-2 rounded-none" />
-      </div>
-      {inquiryType !== "partner" ? (
-        <>
-          <div>
-            <label className="block text-sm mb-1">Önskat datum</label>
-            <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] px-3 py-2 rounded-none" />
-          </div>
-          <div>
-            <label className="block text-sm mb-1">Starttid</label>
-            <input type="time" value={start} onChange={(e) => setStart(e.target.value)} className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] px-3 py-2 rounded-none" />
-          </div>
-        </>
-      ) : (
-        <>
-          <div />
-          <div />
-        </>
-      )}
-      <div className="sm:col-span-2">
-        <label className="block text-sm mb-1">Önskemål/beskrivning</label>
-        <textarea value={message} onChange={(e) => setMessage(e.target.value)} className="w-full min-h-28 border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] px-3 py-2 rounded-none" />
-      </div>
-      <div className="sm:col-span-2">
-        <button disabled={status === "submitting"} type="submit" className="inline-flex items-center justify-center bg-[var(--brand-secondary)] text-[var(--brand-primary)] px-6 py-3 font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition disabled:opacity-70">
-          {status === "submitting" ? "Skickar..." : "Skicka förfrågan"}
-        </button>
-        {status === "success" ? <span className="ml-3 text-sm">Tack! Din förfrågan är skickad.</span> : null}
-        {status === "error" ? <span className="ml-3 text-sm text-red-500">{error}</span> : null}
-      </div>
-    </form>
-  );
+  return <form onSubmit={submit} className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+    <input type="text" name="hp" autoComplete="off" tabIndex={-1} aria-hidden="true" className="hidden" />
+    {[
+      { name: "company", label: "Företag", type: "text", autoComplete: "organization" },
+      { name: "name", label: "Kontaktperson", type: "text", autoComplete: "name" },
+      { name: "guests", label: "Antal personer", type: "number", autoComplete: "off" },
+      { name: "date", label: "Önskat datum", type: "date", autoComplete: "off" },
+      { name: "phone", label: "Telefon", type: "tel", autoComplete: "tel" },
+      { name: "email", label: "Mejl", type: "email", autoComplete: "email" },
+    ].map(field => <div key={field.name}><label htmlFor={`event-${field.name}`} className="mb-2 block text-sm">{field.label}</label><input id={`event-${field.name}`} name={field.name} type={field.type} autoComplete={field.autoComplete} required min={field.name === "guests" ? 1 : undefined} step={field.name === "guests" ? 1 : undefined} maxLength={field.type === "text" ? 200 : undefined} className="scroll-mt-28 min-h-12 w-full border border-black/25 bg-[var(--brand-primary)] px-4 py-3 text-base focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand-olive-900)]" /></div>)}
+    <div className="sm:col-span-2"><button disabled={status === "submitting"} type="submit" className="cta-sweep mt-3 inline-flex min-h-14 w-full items-center justify-center gap-10 bg-[var(--brand-olive-900)] px-7 text-sm text-white transition-colors disabled:cursor-wait disabled:opacity-60 sm:w-auto">{status === "submitting" ? "Skickar…" : "Skicka förfrågan"}</button>
+      <div aria-live="polite" aria-atomic="true" className="mt-4 text-sm leading-relaxed">{status === "success" && <p>Tack! Vi har tagit emot er förfrågan och hör av oss med ett förslag.</p>}{status === "error" && <p role="alert">Det gick inte att skicka just nu. Försök igen eller mejla <a href="mailto:hello@usegolf.se" className="underline">hello@usegolf.se</a>.</p>}</div>
+    </div>
+  </form>;
 }
-
-

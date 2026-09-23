@@ -1,3 +1,5 @@
+import { redirect } from "next/navigation";
+import { albaEnabled, bookingLinks } from "@/lib/bookingLinks";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -10,6 +12,7 @@ export default function BliMedlemLayout({
 }: {
   children: React.ReactNode;
 }) {
+  if (albaEnabled) redirect(bookingLinks.membership);
   return <>{children}</>;
 }
 

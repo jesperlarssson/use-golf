@@ -8,6 +8,7 @@ import Image from "next/image";
 import FadeIn from "@/components/ui/FadeIn";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { getClosures, getVenueBookingPricing } from "@/sanity/lib/pricingQueries";
+import { pageMetadata } from "@/lib/seo";
 
 export default async function BokaLokalenPage() {
   // Hämta stängningsdatum från Sanity
@@ -34,6 +35,7 @@ export default async function BokaLokalenPage() {
               {/* Vänster kolumn - SectionHeader */}
               <FadeIn>
                 <SectionHeader
+                  headingTag={1}
                   label="Företagsevent"
                   heading="Boka hela lokalen"
                   description="Samla kollegor, kunder eller samarbetspartners för en oförglömlig kväll på USE Golf. Ni får hela lokalen för er själva – sex TrackMan-simulatorer, lounge, café och musik. Perfekt för after work, kundevent eller en intern tävling."
@@ -153,10 +155,11 @@ export default async function BokaLokalenPage() {
   );
 }
 
-export const metadata: Metadata = {
-  title: "USE Golf Take over – Boka hela lokalen",
-  description: "Boka hela lokalen för en exklusiv kväll med golf, mat och gemenskap. Sex TrackMan-simulatorer, lounge, café och musik. Perfekt för after work, kundevent eller intern tävling.",
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Hyr hela lokalen",
+  description: "Hyr hela USE Golf för er grupp – sex TrackMan-simulatorer, lounge och bar. Räkna på priset och skicka en förfrågan.",
+  path: "/bokning/boka-lokalen",
+});
 
 // Revalidera sidan var 60:e sekund som fallback (webhook revaliderar omedelbart)
 export const revalidate = 60;

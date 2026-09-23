@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+import { albaEnabled } from "@/lib/bookingLinks";
 import Page from "@/components/ui/Page";
 import Section from "@/components/ui/Section";
 import FullBleed from "@/components/ui/FullBleed";
@@ -75,6 +76,7 @@ export default async function EventDetailPage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
+  if (albaEnabled) redirect("/events");
   const { slug } = await params;
   // Använder helper-funktion från queries.ts som automatiskt hanterar dummy-data
   const event = await getEventBySlug(slug);
@@ -259,6 +261,7 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
+  if (albaEnabled) return { title: "Aktuellt hos USE Golf" };
   const { slug } = await params;
   const event = await getEventBySlug(slug);
 

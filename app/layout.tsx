@@ -6,7 +6,9 @@ import ConditionalNoise from "./components/ConditionalNoise";
 import NoticeBar from "./components/NoticeBar";
 import GradualBlur from "@/components/ui/GradualBlur";
 import LenisProvider from "./components/LenisProvider";
+import ScrollReveal from "./components/ScrollReveal";
 import { Roboto_Flex } from "next/font/google";
+import { defaultOgImage, siteName, siteUrl } from "@/lib/seo";
 
 const robotoFlex = Roboto_Flex({
   subsets: ["latin"],
@@ -14,38 +16,27 @@ const robotoFlex = Roboto_Flex({
   axes: ["opsz"],
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
-const logoPath = "/logo-og.png";
-const logoUrl = new URL(logoPath, siteUrl).toString();
+const logoUrl = new URL("/logo-og.png", siteUrl).toString();
+const description = "USE Golf i Nya Hovås, Göteborg. Sex TrackMan-simulatorer, bar, mat och dryck – boka en runda, företagsevent eller bli medlem.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "USE GOLF",
+    default: "USE Golf – Indoor golf i Göteborg",
     template: "%s | USE GOLF",
   },
-  description: "USE Golf – inomhusgolf i Göteborg. TrackMan-simulatorer, ligor, företagsevent och träning. Get used to it.",
+  description,
   openGraph: {
-    title: "USE GOLF",
-    description: "Inomhusgolf i Göteborg – TrackMan, ligor, event och träning.",
-    url: "/",
-    siteName: "USE GOLF",
+    siteName,
     locale: "sv_SE",
     type: "website",
-    images: [
-      {
-        url: logoUrl,
-        width: 939,
-        height: 1032,
-        alt: "USE GOLF logotyp",
-      },
-    ],
+    description,
+    images: [defaultOgImage],
   },
   twitter: {
     card: "summary_large_image",
-    title: "USE GOLF",
-    description: "Inomhusgolf i Göteborg – TrackMan, ligor, event och träning.",
-    images: [logoUrl],
+    description,
+    images: [defaultOgImage.url],
   },
   icons: {
     icon: [
@@ -61,22 +52,45 @@ export const metadata: Metadata = {
   },
 };
 
+// Lokal verksamhet med adress och öppettider, så att Google kan visa USE i kartan och lokala sök.
 const structuredData = {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  name: "USE GOLF",
-  url: "https://usegolf.se",
+  "@type": "SportsActivityLocation",
+  "@id": `${siteUrl}/#business`,
+  name: "USE Golf",
+  url: siteUrl,
   logo: logoUrl,
+  image: new URL(defaultOgImage.url, siteUrl).toString(),
+  description,
+  telephone: "+46767174034",
+  email: "hello@usegolf.se",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Krogabäcksvägen 2, plan 3",
+    postalCode: "436 53",
+    addressLocality: "Hovås",
+    addressRegion: "Västra Götalands län",
+    addressCountry: "SE",
+  },
+  openingHoursSpecification: [{
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    opens: "09:00",
+    closes: "22:00",
+  }],
+  sameAs: ["https://www.instagram.com/use__golf/"],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="sv">
+    <html lang="sv" suppressHydrationWarning>
       <head>
+        {/* Döljer data-reveal-element före första målningen, bara när JS och rörelse är tillåtet. */}
+        <script dangerouslySetInnerHTML={{ __html: `if(!matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.classList.add("reveal-ready")` }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -86,6 +100,7 @@ export default function RootLayout({
       </head>
       <body className={`antialiased overflow-x-hidden ${robotoFlex.variable}`}>
         <LenisProvider>
+          <ScrollReveal />
           <ConditionalNoise />
           <Header />
           <main>{children}</main>

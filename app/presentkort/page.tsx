@@ -6,6 +6,7 @@ import { Heading, Text } from "@/components/ui/Typography";
 import Image from "next/image";
 import FadeIn from "@/components/ui/FadeIn";
 import SectionHeader from "@/components/ui/SectionHeader";
+import { pageMetadata } from "@/lib/seo";
 
 export default function PresentkortPage() {
   return (
@@ -27,6 +28,7 @@ export default function PresentkortPage() {
               {/* Vänster kolumn - SectionHeader */}
               <FadeIn>
                 <SectionHeader
+                  headingTag={1}
                   label="Presentkort"
                   heading="Ge golfglädje"
                   description="Våra presentkort är en enkel gåva till golfaren (eller den som vill bli en). Kom in till oss för att köpa ditt presentkort på plats – eller maila oss så löser vi det snabbt och smidigt."
@@ -133,22 +135,8 @@ export default function PresentkortPage() {
   );
 }
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Presentkort",
-  description: "Köp presentkort hos USE Golf – kom in till oss i Hovås eller maila hello@usegolf.se så hjälper vi dig.",
-  alternates: {
-    canonical: "/presentkort",
-  },
-  openGraph: {
-    title: "Presentkort – USE GOLF",
-    description: "Köp presentkort hos USE Golf – kom in till oss i Hovås eller maila hello@usegolf.se.",
-    url: "/presentkort",
-    locale: "sv_SE",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Presentkort – USE GOLF",
-    description: "Köp presentkort hos USE Golf – kom in till oss i Hovås eller maila hello@usegolf.se.",
-  },
-};
+  description: "Ge bort golf hos USE Golf i Nya Hovås. Köp presentkort på plats eller maila hello@usegolf.se så hjälper vi dig.",
+  path: "/presentkort",
+});

@@ -3,15 +3,13 @@ import { client } from './client'
 import urlBuilder from '@sanity/image-url'
 import { projectId, dataset } from '../env'
 import { dummyEvents, transformDummyEvent, getDummyEvents, getDummyLandingPageEvents, getDummyEventBySlug } from '@/lib/dummyEvents'
-import { mergeEventsWithLocal } from '@/lib/mergeLocalEvents'
+import { isCurrentPublicEvent } from '@/lib/currentEvents'
 import localEventCategories from '@/lib/data/eventCategories.json'
 
 const builder = urlBuilder({ projectId, dataset })
 
-// Använd dummy events om USE_DUMMY_EVENTS är satt till 'true', eller som fallback i development om det inte är explicit satt till 'false'
-const USE_DUMMY_EVENTS = 
-  process.env.USE_DUMMY_EVENTS === 'true' || 
-  (process.env.USE_DUMMY_EVENTS !== 'false' && process.env.NODE_ENV === 'development')
+// Demo-event måste aktiveras uttryckligen och passerar samma datumfilter.
+const USE_DUMMY_EVENTS = process.env.USE_DUMMY_EVENTS === 'true'
 
 // Startsidans event-kategorier: lokalt JSON som standard. Sätt USE_SANITY_EVENT_CATEGORIES=true för att hämta från Sanity igen.
 const USE_SANITY_EVENT_CATEGORIES = process.env.USE_SANITY_EVENT_CATEGORIES === 'true'
@@ -513,20 +511,18 @@ export async function getAllEvents(): Promise<EventDocument[]> {
   if (USE_DUMMY_EVENTS) {
     // Om USE_DUMMY_EVENTS är satt, använd alltid dummy-data
     console.log('Using dummy events (USE_DUMMY_EVENTS is enabled)');
-    return mergeEventsWithLocal(getDummyEvents());
+    return getDummyEvents().filter(event => isCurrentPublicEvent(event));
   }
 
   try {
     const events = await client.fetch<Event[]>(allEventsQuery);
     if (events && events.length > 0) {
-      return mergeEventsWithLocal(events.map(transformEvent));
+      return events.map(transformEvent).filter(event => isCurrentPublicEvent(event));
     }
-    // Om Sanity returnerar tom array, använd dummy-data som fallback
-    console.warn('Sanity returned empty events array, using dummy events');
-    return mergeEventsWithLocal(getDummyEvents());
+    return [];
   } catch (error) {
     console.error('Error fetching events:', error);
-    return mergeEventsWithLocal(getDummyEvents());
+    return [];
   }
 }
 
@@ -534,47 +530,30 @@ export async function getAllEvents(): Promise<EventDocument[]> {
  * Hämta landing page events från Sanity eller dummy-data
  */
 export async function getLandingPageEvents(): Promise<EventDocument[]> {
-  if (USE_DUMMY_EVENTS) {
-    // Om USE_DUMMY_EVENTS är satt, använd alltid dummy-data
-    console.log('Using dummy landing page events (USE_DUMMY_EVENTS is enabled)');
-    return getDummyLandingPageEvents();
-  }
-
+  if (USE_DUMMY_EVENTS) return getDummyLandingPageEvents().filter(event => isCurrentPublicEvent(event));
   try {
     const events = await client.fetch<Event[]>(landingPageEventsQuery);
-    if (events && events.length > 0) {
-      return events.map(transformEvent);
-    }
-    // Om Sanity returnerar tom array, använd dummy-data som fallback
-    console.warn('Sanity returned empty landing page events array, using dummy events');
-    return getDummyLandingPageEvents();
+    return (events ?? []).map(transformEvent).filter(event => isCurrentPublicEvent(event));
   } catch (error) {
     console.error('Error fetching landing page events:', error);
-    return getDummyLandingPageEvents();
+    return [];
   }
 }
 
-/**
- * Hämta event via slug från Sanity eller dummy-data
- */
+/** Withdrawn or past events are not offered for booking via old detail URLs. */
 export async function getEventBySlug(slug: string): Promise<EventDocument | null> {
   if (USE_DUMMY_EVENTS) {
-    // Om USE_DUMMY_EVENTS är satt, använd alltid dummy-data
-    console.log(`Using dummy event for slug: ${slug} (USE_DUMMY_EVENTS is enabled)`);
-    return getDummyEventBySlug(slug);
+    const event = getDummyEventBySlug(slug);
+    return event && isCurrentPublicEvent(event) ? event : null;
   }
-  
   try {
     const event = await client.fetch<Event | null>(eventBySlugQuery, { slug });
-    if (event) {
-      return transformEvent(event);
-    }
-    // Om Sanity inte hittar eventet, försök med dummy-data
-    console.warn(`Event not found in Sanity for slug: ${slug}, trying dummy events`);
-    return getDummyEventBySlug(slug);
+    if (!event) return null;
+    const transformed = transformEvent(event);
+    return isCurrentPublicEvent(transformed) ? transformed : null;
   } catch (error) {
     console.error('Error fetching event by slug:', error);
-    return getDummyEventBySlug(slug);
+    return null;
   }
 }
 

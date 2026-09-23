@@ -1,106 +1,32 @@
 import type { Metadata } from "next";
-import Page from "@/components/ui/Page";
-import Section from "@/components/ui/Section";
-import FullBleed from "@/components/ui/FullBleed";
-import { Heading, Text } from "@/components/ui/Typography";
 import Image from "next/image";
-import FadeIn from "@/components/ui/FadeIn";
-import SectionHeader from "@/components/ui/SectionHeader";
+import Link from "next/link";
+import EditorialHero from "@/components/ui/EditorialHero";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = pageMetadata({
+  title: "Om USE",
+  description: "Golf på dina villkor. Lär känna USE Golf i Nya Hovås – TrackMan-simulatorer, mat, dryck och gemenskap året runt.",
+  path: "/om",
+});
 
 export default function OmPage() {
-  return (
-    <FullBleed>
-      {/* Hero Banner */}
-      <div className="relative w-full min-h-[50vh] sm:min-h-[60vh] overflow-hidden border-b border-[var(--brand-secondary)]">
-        <Image
-          src="/images/people/7.png"
-          alt="Om USE Golf"
-          fill
-          priority
-          className="object-cover filter blur-sm brightness-90 scale-110"
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/40 to-black/20" />
-        <div className="relative z-10 flex items-center justify-center min-h-[50vh] sm:min-h-[60vh]">
-          <div className="w-full max-w-screen-2xl px-4 sm:px-8 py-12 sm:py-20">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
-              {/* Vänster kolumn - SectionHeader */}
-              <FadeIn>
-                <SectionHeader
-                  label="Om oss"
-                  heading="USE Golf – modern golfkultur i Göteborg"
-                  description="Vi startade USE Golf för att göra golfen mer tillgänglig, mer social och mer rolig. Alla ska kunna spela året runt, oavsett väder, och i en miljö som känns modern och inspirerande. Vi bygger en plats där golf möter kultur, design och community."
-                  align="left"
-                  labelColor="rgb(255, 255, 255)"
-                  headingColor="rgb(255, 255, 255)"
-                  textColor="rgba(255, 255, 255, 0.9)"
-                  maxWidth="full"
-                />
-              </FadeIn>
-              
-              {/* Höger kolumn - Värderingar med glassy effekt */}
-              <FadeIn delay={0.1}>
-                <div className="backdrop-blur-md bg-[var(--brand-primary)]/20 border-2 border-[var(--brand-primary)]/30 p-6 md:p-8">
-                  <p className="font-horus text-xl md:text-2xl mb-6 text-[var(--brand-primary)]">Vi står för:</p>
-                  <div className="space-y-4">
-                    <div className="flex items-start gap-3">
-                      <span className="text-[var(--brand-primary)] mt-1 text-lg">•</span>
-                      <div>
-                        <strong className="text-[var(--brand-primary)] block">Tillgänglighet</strong>
-                        <p className="text-sm text-[var(--brand-primary)]/80 mt-1">Golf för alla, året runt.</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <span className="text-[var(--brand-primary)] mt-1 text-lg">•</span>
-                      <div>
-                        <strong className="text-[var(--brand-primary)] block">Kvalitet</strong>
-                        <p className="text-sm text-[var(--brand-primary)]/80 mt-1">Bästa tekniken och bästa utrustningen.</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <span className="text-[var(--brand-primary)] mt-1 text-lg">•</span>
-                      <div>
-                        <strong className="text-[var(--brand-primary)] block">Gemenskap</strong>
-                        <p className="text-sm text-[var(--brand-primary)]/80 mt-1">En community som välkomnar alla.</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </FadeIn>
-            </div>
-          </div>
-        </div>
-      </div>
+  return <>
+    <EditorialHero label="Om USE Golf" title="Golf på dina villkor." description="Vi startade USE för att göra golfen mer tillgänglig, mer social och roligare. En plats att spela året runt – och gärna stanna en stund till." image="/images/people/7.png" imageAlt="Golf och gemenskap hos USE Golf">
+      <Link href="/bokning" className="cta-sweep inline-flex min-h-14 items-center justify-center gap-10 bg-[var(--brand-primary)] px-7 text-sm text-[var(--foreground)] transition-colors">Boka simulator</Link>
+    </EditorialHero>
 
-      <div className="border-y border-[var(--brand-secondary)] pt-10">
-        <Page variant="subpage">
-          {/* Innehåll */}
-          <Section className="py-20 -mt-10 sm:-mt-18">
-            <div className="max-w-screen-2xl mx-auto">
-              <FadeIn>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-                  <div className="space-y-6">
-                    <Text className="text-lg">
-                      En anläggning där du kan träna seriöst eller bara hänga med vänner. Vår filosofi är enkel: <strong>golf på dina villkor</strong>.
-                    </Text>
-                  </div>
-                  <div className="relative h-64 md:h-80 border-2 border-[var(--brand-secondary)] overflow-hidden">
-                    <Image src="/images/people/8.png" alt="USE Golf" fill className="object-cover" />
-                    <div className="absolute inset-0 bg-black/20" />
-                  </div>
-                </div>
-              </FadeIn>
-            </div>
-          </Section>
-        </Page>
-      </div>
-    </FullBleed>
-  );
+    <section className="mx-auto grid max-w-screen-2xl items-center gap-12 px-6 py-20 sm:px-10 md:grid-cols-2 lg:gap-20 lg:px-16 lg:py-28">
+      <div data-reveal><h2 className="max-w-lg text-balance text-4xl font-normal leading-[1.1] tracking-[-.035em] md:text-5xl">Golf och gemenskap i Nya Hovås.</h2><div className="mt-7 max-w-lg space-y-5 text-base leading-relaxed text-[var(--foreground)]/75"><p>En anläggning där du kan träna seriöst eller bara hänga med vänner. Hos oss möts golf, design och gemenskap i en avslappnad miljö i Nya Hovås.</p><p>Sex TrackMan-simulatorer gör det möjligt att spela oavsett väder. Mat, dryck och en fullständig bar gör det lätt att låta rundan bli en hel kväll.</p><p>Du behöver varken vara medlem eller erfaren golfare. Kom som du är, med ditt sällskap och din nyfikenhet på spelet.</p></div></div>
+      <div data-reveal="image" className="relative aspect-[4/5] overflow-hidden after:pointer-events-none after:absolute after:inset-0 after:z-10 after:border-4 after:border-[var(--brand-secondary)] after:content-['']"><Image src="/images/people/8.png" alt="Gäster som spelar och umgås hos USE" fill sizes="(max-width: 767px) 100vw, 50vw" className="object-cover" /></div>
+    </section>
+
+    <section className="border-y border-black/15"><div className="mx-auto grid max-w-screen-2xl gap-10 px-6 py-16 sm:px-10 md:grid-cols-3 lg:px-16 lg:py-20">{[
+      { title: "Golf för alla", text: "Första svingen eller nästa personbästa. Här finns plats för alla nivåer, alla årstider." },
+      { title: "Känsla för detaljer", text: "TrackMan-teknik och en genomtänkt miljö. För dig som uppskattar både spelet och allt runt omkring." },
+      { title: "Bättre tillsammans", text: "En runda med vänner, en kväll med kollegor eller nya bekantskaper. Människorna gör USE." },
+    ].map((item, index) => <div key={item.title} data-reveal><p className="mb-5 text-xs tabular-nums text-[var(--brand-olive-900)]">0{index + 1}</p><h2 className="text-2xl font-normal tracking-tight">{item.title}</h2><p className="mt-4 max-w-sm text-sm leading-relaxed text-[var(--foreground)]/75">{item.text}</p></div>)}</div></section>
+
+    <section className="bg-[var(--brand-olive-900)] text-[var(--brand-primary)]"><div className="mx-auto flex max-w-screen-2xl flex-col justify-between gap-8 px-6 py-16 sm:px-10 md:flex-row md:items-center lg:px-16 lg:py-20"><div data-reveal><p className="mb-5 text-xs uppercase tracking-[.2em] text-white/75">Välkommen till Nya Hovås</p><h2 className="text-3xl font-normal tracking-[-.035em] md:text-4xl">Gör nästa runda till en kväll.</h2></div><Link href="/kontakt" className="cta-sweep inline-flex min-h-14 items-center justify-center gap-10 border border-white/50 px-7 text-sm transition-colors">Hitta till USE</Link></div></section>
+  </>;
 }
-
-export const metadata: Metadata = {
-  title: "Om oss",
-  description: "USE Golf – modern golfkultur i Göteborg. Tillgänglig, social och rolig inomhusgolf året runt.",
-};
-
-

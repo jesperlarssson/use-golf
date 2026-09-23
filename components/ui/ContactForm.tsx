@@ -14,6 +14,7 @@ export default function ContactForm() {
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (state === "submitting") return;
     setState("submitting");
     setError("");
     try {
@@ -45,37 +46,39 @@ export default function ContactForm() {
       setPhone("");
       setMessage("");
       setHp("");
-    } catch (err: any) {
+    } catch (err: unknown) {
       setState("error");
-      setError(err?.message || "Något gick fel");
+      setError("Det gick inte att skicka just nu. Försök igen eller mejla hello@usegolf.se.");
     }
   };
 
   return (
-    <form onSubmit={onSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
+    <form onSubmit={onSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-5">
       <input type="text" value={hp} onChange={(e) => setHp(e.target.value)} className="hidden" tabIndex={-1} aria-hidden="true" />
       <div className="sm:col-span-2">
-        <label className="block text-sm mb-1">Namn</label>
-        <input value={name} onChange={(e) => setName(e.target.value)} className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] px-3 py-2 rounded-none" required />
+        <label htmlFor="contact-name" className="mb-2 block text-sm">Namn</label>
+        <input id="contact-name" name="name" autoComplete="name" value={name} onChange={(e) => setName(e.target.value)} className="scroll-mt-28 min-h-12 w-full border border-black/25 bg-[var(--brand-primary)] px-4 py-3 text-base" required />
       </div>
       <div>
-        <label className="block text-sm mb-1">E-post</label>
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] px-3 py-2 rounded-none" required />
+        <label htmlFor="contact-email" className="mb-2 block text-sm">Mejl</label>
+        <input id="contact-email" name="email" autoComplete="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="scroll-mt-28 min-h-12 w-full border border-black/25 bg-[var(--brand-primary)] px-4 py-3 text-base" required />
       </div>
       <div>
-        <label className="block text-sm mb-1">Telefon</label>
-        <input value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] px-3 py-2 rounded-none" />
+        <label htmlFor="contact-phone" className="mb-2 block text-sm">Telefon (valfritt)</label>
+        <input id="contact-phone" name="phone" type="tel" autoComplete="tel" value={phone} onChange={(e) => setPhone(e.target.value)} className="scroll-mt-28 min-h-12 w-full border border-black/25 bg-[var(--brand-primary)] px-4 py-3 text-base" />
       </div>
       <div className="sm:col-span-2">
-        <label className="block text-sm mb-1">Meddelande</label>
-        <textarea value={message} onChange={(e) => setMessage(e.target.value)} className="w-full min-h-28 border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] px-3 py-2 rounded-none" />
+        <label htmlFor="contact-message" className="mb-2 block text-sm">Meddelande</label>
+        <textarea id="contact-message" name="message" value={message} onChange={(e) => setMessage(e.target.value)} className="scroll-mt-28 min-h-40 w-full resize-y border border-black/25 bg-[var(--brand-primary)] px-4 py-3 text-base" />
       </div>
-      <div className="sm:col-span-2 flex items-center gap-4">
-        <button disabled={state === "submitting"} type="submit" className="inline-flex items-center justify-center bg-[var(--brand-secondary)] text-[var(--brand-primary)] px-6 py-3 font-semibold uppercase tracking-wider rounded-none hover:opacity-90 transition disabled:opacity-70">
-          {state === "submitting" ? "Skickar..." : "Skicka"}
+      <div className="sm:col-span-2 flex flex-col items-start gap-4">
+        <button disabled={state === "submitting"} type="submit" className="cta-sweep inline-flex min-h-14 w-full items-center justify-center gap-10 bg-[var(--brand-olive-900)] px-7 text-sm text-white transition-colors disabled:cursor-wait disabled:opacity-60 sm:w-auto">
+          {state === "submitting" ? "Skickar…" : "Skicka meddelande"}
         </button>
+        <div aria-live="polite" aria-atomic="true">
         {state === "success" ? <span className="text-sm">Tack! Ditt meddelande är skickat.</span> : null}
-        {state === "error" ? <span className="text-sm text-red-500">{error}</span> : null}
+        {state === "error" ? <span role="alert" className="text-sm leading-relaxed text-red-800">{error}</span> : null}
+        </div>
       </div>
     </form>
   );
