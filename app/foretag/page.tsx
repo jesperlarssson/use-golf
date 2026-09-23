@@ -3,11 +3,13 @@ import Image from "next/image";
 import InquiryForm from "@/components/ui/InquiryForm";
 import BokaLokalenCalculator from "@/components/ui/BokaLokalenCalculator";
 import { getClosures, getVenueBookingPricing } from "@/sanity/lib/pricingQueries";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Företag & event",
-  description: "After work, företagsevent eller hyr hela USE Golf i Nya Hovås. Planera en kväll med TrackMan, mat och dryck för ert team.",
-};
+  description: "Företagsevent, kundkväll eller hyr hela USE Golf i Nya Hovås, Göteborg. Räkna på priset och planera en kväll med TrackMan, mat och dryck för ert team.",
+  path: "/foretag",
+});
 
 // Kalkylatorns priser och stängda datum kommer från Sanity; webhooken revaliderar direkt.
 export const revalidate = 60;
@@ -26,12 +28,11 @@ export default async function ForetagPage() {
     </section>
     <section className="mx-auto max-w-screen-2xl px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
       <h2 data-reveal className="mb-12 text-balance text-4xl font-normal tracking-[-.035em] md:text-5xl">Samla kollegor och kunder på USE.</h2>
-      <div className="grid gap-10 md:grid-cols-3">{[
-        { title: "After Work", image: "/images/people/9.png", text: "Runda av arbetsdagen med avslappnat spel och något gott i glaset. En enkel anledning att ses utanför kontoret." },
+      <div className="grid gap-10 md:grid-cols-2">{[
         { title: "Företagsevent", image: "/images/people/1.png", text: "Kickoff, kundkväll eller teambuilding. Vi hjälper er att kombinera golf, mat och dryck i ett gemensamt upplägg." },
         { title: "Hyr hela USE", image: "/images/lokalen/2.png", text: "Hela lokalen, alla sex TrackMan-simulatorer och en kväll bara för er. Gott om plats för både tävling och mingel.", href: "#priskalkyl", cta: "Räkna på priset" },
       ].map(item => <article key={item.title} data-reveal>
-        <div data-reveal="image" className="relative mb-6 aspect-[4/3] overflow-hidden outline outline-1 -outline-offset-1 outline-black/10"><Image src={item.image} alt={item.title + " hos USE Golf"} fill sizes="(max-width: 767px) 100vw, 33vw" className="object-cover" /></div>
+        <div data-reveal="image" className="relative mb-6 aspect-[4/3] overflow-hidden outline outline-1 -outline-offset-1 outline-black/10"><Image src={item.image} alt={item.title + " hos USE Golf"} fill sizes="(max-width: 767px) 100vw, 50vw" className="object-cover" /></div>
         <h3 className="text-2xl font-normal tracking-tight">{item.title}</h3><p className="mt-4 text-sm leading-relaxed text-[var(--foreground)]/75">{item.text}</p><a href={item.href ?? "#forfragan"} className="mt-5 inline-flex min-h-11 items-center gap-6 text-sm underline underline-offset-8">{item.cta ?? "Planera ert event"}</a>
       </article>)}</div>
     </section>

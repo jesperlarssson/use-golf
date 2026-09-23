@@ -2,11 +2,13 @@ import { bookingLinks } from "@/lib/bookingLinks";
 import type { Metadata } from "next";
 import Link from "next/link";
 import EditorialHero from "@/components/ui/EditorialHero";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Boka simulator",
-  description: "Boka din nästa runda hos USE Golf i Nya Hovås. Sex TrackMan-simulatorer, golf året runt och plats för ditt sällskap.",
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Boka golfsimulator",
+  description: "Boka en TrackMan-simulator hos USE Golf i Nya Hovås, Göteborg. Sex simulatorer, golf året runt och plats för hela sällskapet – du behöver inte vara medlem.",
+  path: "/bokning",
+});
 
 // Destinationen styrs centralt så förhandsvisning och lansering använder samma flöde.
 const bookingUrl = bookingLinks.simulator;

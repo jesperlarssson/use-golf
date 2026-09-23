@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import ContactForm from "@/components/ui/ContactForm";
 import EditorialHero from "@/components/ui/EditorialHero";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Kontakt",
-  description: "Hitta till USE Golf i Nya Hovås. Kontaktuppgifter, öppettider och hjälp inför ditt besök.",
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Kontakt & hitta hit",
+  description: "Hitta till USE Golf på Krogabäcksvägen 2 i Nya Hovås. Öppet alla dagar 09–22, två timmars fri parkering. Kontakta oss inför ditt besök.",
+  path: "/kontakt",
+});
 
 export default function KontaktPage() {
   return <>

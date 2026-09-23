@@ -4,11 +4,13 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import EditorialHero from "@/components/ui/EditorialHero";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Medlemskap",
-  description: "Bli USE:R hos USE Golf. Rabatt på spel och merch, förtur till event och en timmes speltid vid registrering.",
-};
+  description: "Bli USE:R hos USE Golf i Göteborg. 10 % rabatt på spel och merch, förtur till event och en timmes speltid när du registrerar dig.",
+  path: "/medlemskap",
+});
 
 const membershipUrl = bookingLinks.membership;
 const benefits = [

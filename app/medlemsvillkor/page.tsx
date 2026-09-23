@@ -6,6 +6,7 @@ import FullBleed from "@/components/ui/FullBleed";
 import { Heading, Text, Lead } from "@/components/ui/Typography";
 import { defaultPricingData, dayLabels, type DayType, type PricingData } from "@/lib/prices";
 import { getPricingData } from "@/sanity/lib/pricingQueries";
+import { pageMetadata } from "@/lib/seo";
 
 export default async function MedlemsvillkorPage() {
   const membershipPricing = await getMembershipPricing();
@@ -183,32 +184,6 @@ export default async function MedlemsvillkorPage() {
             ))}
             </div>
           </div>
-
-          {/* 6. Företagspaket & Partnernivåer */}
-          <div>
-            <div className="space-y-6">
-              <h2 className="text-2xl font-normal tracking-tight sm:text-3xl">6. Partnernivåer</h2>
-            <Text>
-              USE Golf erbjuder företag möjligheten att synas, spela och nätverka på ett unikt sätt. Våra partnerpaket kombinerar exklusiv speltid i våra TrackMan-simulatorer med exponering, förmåner och skräddarsydda företagsupplevelser.
-            </Text>
-
-            <div className="space-y-4">
-              <h3 className="text-xl font-normal tracking-tight">Partner</h3>
-              <Text><strong>Pris: 35 000 kr / år</strong> – Perfekt för företag som vill ha återkommande tider för kunder, personal eller nätverk.</Text>
-              <ul className="list-disc pl-5 space-y-2">
-                <li>30 timmars speltid per år</li>
-                <li>Exponering av företagsnamn på vår partner-tavla i entrén</li>
-                <li>Företagsnamn på hemsidan under våra partners</li>
-                <li>2 bagar i förvaring</li>
-                <li>Möjlighet att boka en stående tid varje vecka</li>
-                <li>Kaffe, dryck och snacks vid varje speltillfälle</li>
-              </ul>
-              <Text>Ett paket för företag som vill synas och ha en fast närvaro på anläggningen.</Text>
-            </div>
-
-
-            </div>
-          </div>
         </div>
       </section>
       </div>
@@ -216,10 +191,11 @@ export default async function MedlemsvillkorPage() {
   );
 }
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Medlemsvillkor",
-  description: "Villkor för medlemskap, bokningar och spel hos USE Golf Göteborg.",
-};
+  description: "Villkor för medlemskap, bagförvaring, företagsevent och prislista för simulatorbokning hos USE Golf i Göteborg.",
+  path: "/medlemsvillkor",
+});
 
 // Revalidera sidan var 60:e sekund som fallback (webhook revaliderar omedelbart)
 export const revalidate = 60;

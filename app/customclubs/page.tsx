@@ -7,6 +7,7 @@ import Image from "next/image";
 import FadeIn from "@/components/ui/FadeIn";
 import SectionHeader from "@/components/ui/SectionHeader";
 import Link from "next/link";
+import { pageMetadata } from "@/lib/seo";
 
 export default function CustomClubsPage() {
   return (
@@ -36,6 +37,7 @@ export default function CustomClubsPage() {
               </Link>
               <div className="space-y-8 max-w-3xl">
                 <SectionHeader
+                  headingTag={1}
                   label="CustomClubs"
                   heading="Custom Fitting & Butik"
                   description="Vi är både glada och stolta över att ha CustomClubs under samma tak här i Nya Hovås. Tillsammans vill vi skapa en destination för golfare att umgås & utveckla sitt spel – oavsett om det handlar om simulatorspel, rätt utrustning eller professionell Custom Fitting."
@@ -203,7 +205,8 @@ export default function CustomClubsPage() {
   );
 }
 
-export const metadata: Metadata = {
-  title: "CustomClubs | USE Golf",
-  description: "CustomClubs – Custom Fitting & Golfbutik hos USE Golf i Nya Hovås. Ett av Europas bredaste fittingutbud med fri loft/lie-justering i 2 år.",
-};
+export const metadata: Metadata = pageMetadata({
+  title: "CustomClubs – Custom Fitting",
+  description: "Custom fitting och golfbutik hos USE Golf i Nya Hovås. Ett av Europas bredaste fittingutbud med fri loft- och lie-justering i två år.",
+  path: "/customclubs",
+});

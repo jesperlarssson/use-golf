@@ -2,11 +2,14 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import VenueHighlights from "@/components/ui/VenueHighlights";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Göteborgs premiumdestination för indoor golf",
-  description: "Spela på TrackMan, umgås och njut av mat och dryck hos USE Golf i Nya Hovås. Boka simulator eller planera ert nästa företagsevent.",
-};
+export const metadata: Metadata = pageMetadata({
+  title: "USE Golf – Indoor golf och TrackMan i Göteborg",
+  description: "Spela golf inomhus på sex TrackMan-simulatorer hos USE Golf i Nya Hovås, Göteborg. Boka simulator, planera ert företagsevent eller njut av mat och dryck.",
+  path: "/",
+  absoluteTitle: true,
+});
 
 const questions = [
   { q: "Behöver jag vara medlem för att spela?", a: "Nej, alla är välkomna. Som medlem får du rabatt på spel och fler förmåner.", href: "/medlemskap", label: "Se medlemskapet" },

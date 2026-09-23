@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import EditorialHero from "@/components/ui/EditorialHero";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Om USE",
-  description: "Golf på dina villkor. Lär känna USE Golf i Nya Hovås – TrackMan, mat, dryck och gemenskap året runt.",
-};
+  description: "Golf på dina villkor. Lär känna USE Golf i Nya Hovås – TrackMan-simulatorer, mat, dryck och gemenskap året runt.",
+  path: "/om",
+});
 
 export default function OmPage() {
   return <>

@@ -4,13 +4,15 @@ type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
 
 type HeadingProps = {
   as?: HeadingLevel;
+  // Semantisk nivå när den skiljer sig från den visuella (t.ex. h1 med h2-stil).
+  tag?: HeadingLevel;
   children: ReactNode;
   className?: string;
   style?: React.CSSProperties;
 };
 
-export function Heading({ as = 1, children, className = "", style }: HeadingProps) {
-  const Tag = ("h" + as) as unknown as ElementType;
+export function Heading({ as = 1, tag, children, className = "", style }: HeadingProps) {
+  const Tag = ("h" + (tag ?? as)) as unknown as ElementType;
   const base = "tracking-tight";
   // Ta bort hårdkodad färg från size så att den kan överridas via className eller style
   // Mobil: mitt emellan första (mindre) och andra (större) steget; sm/md oförändrade

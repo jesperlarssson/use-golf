@@ -8,11 +8,13 @@ import Image from "next/image";
 import FadeIn from "@/components/ui/FadeIn";
 import SectionHeader from "@/components/ui/SectionHeader";
 import JournalCard from "@/components/ui/JournalCard";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "USE Journal",
-  description: "Läs våra senaste artiklar om golf, träning och events i USE Journal.",
-};
+  description: "Artiklar om golf, träning och event från USE Golf i Göteborg.",
+  path: "/journal",
+});
 
 // Revalidera sidan var 60:e sekund som fallback (webhook revaliderar omedelbart)
 export const revalidate = 60;
@@ -49,6 +51,7 @@ export default async function JournalPage() {
               {/* Vänster kolumn - SectionHeader */}
               <FadeIn>
                 <SectionHeader
+                  headingTag={1}
                   label="USE Journal"
                   heading="Nyheter, tips & inspiration"
                   description="Håll dig uppdaterad med allt som händer på USE Golf. Här delar vi nyheter om event, träningar, tips och tricks – samt uppdateringar direkt från anläggningen för dig som vill få ut mer av varje besök."

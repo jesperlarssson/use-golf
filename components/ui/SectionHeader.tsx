@@ -10,6 +10,7 @@ interface SectionHeaderProps {
   headingColor?: string;
   textColor?: string;
   headingSize?: 1 | 2 | 3 | 4 | 5 | 6;
+  headingTag?: 1 | 2 | 3 | 4 | 5 | 6;
   variant?: "default" | "small";
   className?: string;
   maxWidth?: "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "full";
@@ -24,6 +25,7 @@ export default function SectionHeader({
   headingColor,
   textColor,
   headingSize = 2,
+  headingTag,
   variant = "default",
   className = "",
   maxWidth = "3xl",
@@ -83,6 +85,7 @@ export default function SectionHeader({
       )}
       <Heading
         as={headingSize}
+        tag={headingTag}
         className={`mb-6 ${getHeadingClasses()}`}
         style={headingColor ? { color: headingColor } : undefined}
       >

@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import EditorialHero from "@/components/ui/EditorialHero";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Händer hos oss",
-  description: "AfterWork Golf varje fredag och Medlemsgolf med ny bana varje vecka. Se vad som händer hos USE Golf i Nya Hovås.",
-};
+  description: "AfterWork Golf varje fredag och Medlemsgolf med ny bana varje vecka. Se vad som händer hos USE Golf i Nya Hovås, Göteborg.",
+  path: "/hander-hos-oss",
+});
 
 export default function HanderHosOssPage() {
   return <>

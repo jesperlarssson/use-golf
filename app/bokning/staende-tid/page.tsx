@@ -4,11 +4,13 @@ import EditorialHero from "@/components/ui/EditorialHero";
 import StaendeTidCalculator from "@/components/ui/StaendeTidCalculator";
 import { getPricingData, getClosures } from "@/sanity/lib/pricingQueries";
 import { defaultPricingData } from "@/lib/prices";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Stående tider",
-  description: "Spela på samma tid varje vecka hos USE Golf. Beräkna ett pris och skicka en förfrågan för ditt sällskap.",
-};
+  description: "Spela på samma tid varje vecka hos USE Golf i Göteborg. Beräkna ett pris och skicka en förfrågan för ditt sällskap.",
+  path: "/bokning/staende-tid",
+});
 export const revalidate = 60;
 
 export default async function StaendeTidPage() {
