@@ -7,6 +7,7 @@ import ConditionalNoise from "./components/ConditionalNoise";
 import NoticeBar from "./components/NoticeBar";
 import GradualBlur from "@/components/ui/GradualBlur";
 import LenisProvider from "./components/LenisProvider";
+import ScrollReveal from "./components/ScrollReveal";
 import { Roboto_Flex } from "next/font/google";
 
 const robotoFlex = Roboto_Flex({
@@ -77,8 +78,10 @@ export default async function RootLayout({
 }>) {
   const showJournal = await hasPublishedJournal();
   return (
-    <html lang="sv">
+    <html lang="sv" suppressHydrationWarning>
       <head>
+        {/* Döljer data-reveal-element före första målningen, bara när JS och rörelse är tillåtet. */}
+        <script dangerouslySetInnerHTML={{ __html: `if(!matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.classList.add("reveal-ready")` }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -88,6 +91,7 @@ export default async function RootLayout({
       </head>
       <body className={`antialiased overflow-x-hidden ${robotoFlex.variable}`}>
         <LenisProvider>
+          <ScrollReveal />
           <ConditionalNoise />
           <Header showJournal={showJournal} />
           <main>{children}</main>

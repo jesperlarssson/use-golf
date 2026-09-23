@@ -388,3 +388,88 @@ body {
   background-size: 180px 180px;
 }
 @media (forced-colors: active) { .site-grain { display: none; } }
+
+/* ── Rörelse ──────────────────────────────────────────────
+   Lugn, mjuk ease-in-out genom hela sidan. */
+:root { --ease-soft: cubic-bezier(.45, 0, .2, 1); }
+
+/* Hero: bilden landar långsamt, texten reser sig rad för rad. */
+@keyframes heroSettle { from { scale: 1.05; } to { scale: 1; } }
+@keyframes heroRise { from { opacity: 0; translate: 0 8px; } to { opacity: 1; translate: none; } }
+@keyframes heroFade { from { opacity: 0; } to { opacity: 1; } }
+
+.hero-media { animation: heroSettle 2.2s var(--ease-soft) both; }
+.hero-shade { animation: heroFade 1.2s ease-out both; }
+.hero-copy > * { animation: heroRise 1.4s var(--ease-soft) both; }
+.hero-copy > :nth-child(1) { animation-delay: 100ms; }
+.hero-copy > :nth-child(2) { animation-delay: 170ms; }
+.hero-copy > :nth-child(3) { animation-delay: 240ms; }
+.hero-copy > :nth-child(4) { animation-delay: 310ms; }
+
+/* Diskret parallax när heron scrollas bort (progressiv förbättring). */
+@supports (animation-timeline: scroll()) {
+  @keyframes heroDrift { to { translate: 0 5vh; } }
+  @keyframes heroLift { to { opacity: .6; translate: 0 -1vh; } }
+  .hero-parallax { animation: heroDrift linear both; animation-timeline: scroll(root); animation-range: 0 100svh; }
+  .hero-copy-scroll { animation: heroLift linear both; animation-timeline: scroll(root); animation-range: 0 90svh; }
+}
+
+/* Scroll-reveal: aktiveras av ScrollReveal + reveal-ready på <html>. */
+[data-reveal]:not(.reveal-done) {
+  transition:
+    opacity 1.2s var(--ease-soft) var(--reveal-delay, 0ms),
+    translate 1.4s var(--ease-soft) var(--reveal-delay, 0ms);
+}
+.reveal-ready [data-reveal]:not(.is-revealed) { opacity: 0; translate: 0 8px; }
+
+/* Bilder avtäcks nerifrån. Klippningen ligger på bilden, inte behållaren, så att IntersectionObserver ser behållaren. */
+[data-reveal="image"]:not(.reveal-done) img {
+  transition:
+    opacity 1.2s var(--ease-soft) var(--reveal-delay, 0ms),
+    scale 1.8s var(--ease-soft) var(--reveal-delay, 0ms),
+    clip-path 1.4s var(--ease-soft) var(--reveal-delay, 0ms);
+}
+.reveal-ready [data-reveal="image"]:not(.is-revealed) { opacity: 1; translate: none; }
+.reveal-ready [data-reveal="image"]:not(.is-revealed) img { opacity: 0; clip-path: inset(12% 0 0 0); scale: 1.03; }
+
+
+/* FAQ: mjuk öppning där webbläsaren stöder det. */
+@supports selector(::details-content) {
+  details { interpolate-size: allow-keywords; }
+  details::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition: block-size .6s var(--ease-soft), content-visibility .6s allow-discrete;
+  }
+  details[open]::details-content { block-size: auto; }
+}
+
+/* Mobilens boka-knapp: flytande, dyker upp efter heron. */
+.mobile-booking {
+  transition: translate .8s var(--ease-soft), opacity .6s var(--ease-soft);
+}
+.mobile-booking:not(.is-shown) { translate: 0 calc(100% + 24px); opacity: 0; }
+.mobile-booking:not(.is-shown) * { pointer-events: none; }
+.mobile-booking-button {
+  box-shadow: 0 0 0 1px rgb(255 255 255 / .12), 0 14px 32px -12px rgb(20 26 18 / .55), 0 4px 10px -4px rgb(20 26 18 / .3);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+  backdrop-filter: blur(12px) saturate(1.2);
+}
+
+/* Mobilmeny: panelen rullas ner som en gardin, innehållet följer rad för rad. */
+@keyframes menuCurtainIn { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0); } }
+@keyframes menuItemIn { from { opacity: 0; translate: 0 6px; } to { opacity: 1; translate: none; } }
+@keyframes menuOut { to { opacity: 0; translate: 0 -4px; } }
+@keyframes menuBackdropIn { from { opacity: 0; } }
+
+.mobile-menu[open] { animation: menuCurtainIn .8s var(--ease-soft) both; }
+.mobile-menu[open]::backdrop { animation: menuBackdropIn .6s var(--ease-soft) both; }
+.mobile-menu[open] .menu-item { animation: menuItemIn .9s var(--ease-soft) both; animation-delay: calc(200ms + var(--i, 0) * 60ms); }
+.mobile-menu.is-closing { animation: menuOut .4s var(--ease-soft) both; }
+.mobile-menu.is-closing::backdrop { animation: menuBackdropIn .4s var(--ease-soft) reverse both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-menu[open], .mobile-menu[open]::backdrop, .mobile-menu[open] .menu-item, .mobile-menu.is-closing { animation: none; }
+  .hero-media, .hero-shade, .hero-copy > *, .hero-parallax, .hero-copy-scroll { animation: none; }
+  .mobile-booking:not(.is-shown) { translate: none; }
+}

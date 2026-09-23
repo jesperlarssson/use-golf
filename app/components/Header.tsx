@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 
 const navigation = [
   { href: "/bokning", label: "Spela" },
@@ -16,14 +16,21 @@ export default function Header({ showJournal = false }: { showJournal?: boolean 
   const visibleNavigation = navigation.filter(item => item.href !== "/events" || showJournal);
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [menuClosing, setMenuClosing] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [showBooking, setShowBooking] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
   const toggle = useRef<HTMLButtonElement>(null);
   const hidden = pathname.startsWith("/studio") || pathname === "/pre-access" || pathname.startsWith("/bli-medlem");
   const light = pathname === "/" && !scrolled;
+  const bookingVisible = showBooking && pathname !== "/bokning";
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 24);
+      // Visa den flytande boka-knappen först när heroens egna knappar har passerat.
+      setShowBooking(window.scrollY > window.innerHeight * 0.55);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -57,6 +64,18 @@ export default function Header({ showJournal = false }: { showJournal?: boolean 
     };
   }, [menuOpen]);
 
+  // Låt stängningsanimationen spela klart innan dialogen stängs.
+  const closeMenu = () => {
+    if (menuClosing) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return setMenuOpen(false);
+    setMenuClosing(true);
+    window.setTimeout(() => {
+      setMenuOpen(false);
+      setMenuClosing(false);
+    }, 400);
+  };
+  const stagger = (index: number) => ({ "--i": index } as CSSProperties);
+
   if (hidden) return null;
 
   return <>
@@ -70,10 +89,10 @@ export default function Header({ showJournal = false }: { showJournal?: boolean 
         </div>
       </div>
     </header>
-    <dialog ref={dialog} id="mobile-menu" aria-label="Huvudmeny" onCancel={() => setMenuOpen(false)} onClose={() => setMenuOpen(false)} className="fixed inset-0 m-0 h-[100dvh] max-h-none w-full max-w-none bg-[var(--brand-primary)] p-6 text-[var(--foreground)] backdrop:bg-black/40" onClick={e => { if (e.target === e.currentTarget) setMenuOpen(false); }}>
-      <div className="flex items-center justify-between"><span className="font-logo text-2xl">USE GOLF</span><button autoFocus type="button" className="min-h-11 px-3 text-sm" onClick={() => setMenuOpen(false)} aria-label="Stäng meny">Stäng ✕</button></div>
-      <nav aria-label="Mobilmeny" className="mt-12"><ul>{visibleNavigation.map(item => <li key={item.href} className="border-b border-black/15"><Link href={item.href} onClick={() => setMenuOpen(false)} aria-current={pathname === item.href ? "page" : undefined} className="block py-5 text-3xl tracking-tight">{item.label}</Link></li>)}</ul><Link href="/bokning" onClick={() => setMenuOpen(false)} className="cta-sweep mt-8 flex min-h-14 items-center justify-center bg-[var(--brand-olive-900)] px-6 text-white">Boka nu</Link><Link href="/kontakt" onClick={() => setMenuOpen(false)} className="mt-6 inline-flex min-h-11 items-center underline underline-offset-4">Kontakt & hitta hit</Link></nav>
+    <dialog ref={dialog} id="mobile-menu" aria-label="Huvudmeny" onCancel={e => { e.preventDefault(); closeMenu(); }} onClose={() => setMenuOpen(false)} className={`mobile-menu fixed inset-0 m-0 h-[100dvh] max-h-none w-full max-w-none bg-[var(--brand-primary)] p-6 text-[var(--foreground)] backdrop:bg-black/40 ${menuClosing ? "is-closing" : ""}`} onClick={e => { if (e.target === e.currentTarget) closeMenu(); }}>
+      <div className="menu-item flex items-center justify-between" style={stagger(0)}><span className="font-logo text-2xl">USE GOLF</span><button autoFocus type="button" className="min-h-11 px-3 text-sm" onClick={closeMenu} aria-label="Stäng meny">Stäng ✕</button></div>
+      <nav aria-label="Mobilmeny" className="mt-12"><ul>{visibleNavigation.map((item, index) => <li key={item.href} className="menu-item border-b border-black/15" style={stagger(index + 1)}><Link href={item.href} onClick={closeMenu} aria-current={pathname === item.href ? "page" : undefined} className="block py-5 text-3xl tracking-tight">{item.label}</Link></li>)}</ul><Link href="/bokning" onClick={closeMenu} style={stagger(visibleNavigation.length + 1)} className="menu-item cta-sweep mt-8 flex min-h-14 items-center justify-center bg-[var(--brand-olive-900)] px-6 text-white">Boka nu</Link><Link href="/kontakt" onClick={closeMenu} style={stagger(visibleNavigation.length + 2)} className="menu-item mt-6 inline-flex min-h-11 items-center underline underline-offset-4">Kontakt & hitta hit</Link></nav>
     </dialog>
-    <div className="mobile-booking fixed inset-x-0 bottom-0 z-40 border-t border-black/10 bg-[var(--brand-primary)] px-4 pt-3 pb-[max(.75rem,env(safe-area-inset-bottom))] lg:hidden"><Link href="/bokning" className="cta-sweep flex min-h-12 items-center justify-center gap-8 bg-[var(--brand-olive-900)] text-sm font-medium text-white">Boka nu</Link></div>
+    <div className={`mobile-booking pointer-events-none fixed inset-x-0 bottom-0 z-40 px-4 pb-[max(1rem,env(safe-area-inset-bottom))] lg:hidden ${bookingVisible ? "is-shown" : ""}`}><Link href="/bokning" tabIndex={bookingVisible ? undefined : -1} aria-hidden={!bookingVisible} className="mobile-booking-button cta-sweep pointer-events-auto flex min-h-13 items-center justify-center gap-8 bg-[var(--brand-olive-900)]/95 text-sm font-medium text-white">Boka nu</Link></div>
   </>;
 }
