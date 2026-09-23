@@ -7,13 +7,13 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 const navigation = [
   { href: "/bokning", label: "Spela" },
   { href: "/foretag", label: "Företag & event" },
+  { href: "/hander-hos-oss", label: "Händer hos oss" },
   { href: "/medlemskap", label: "Medlemskap" },
-  { href: "/events", label: "Aktuellt" },
   { href: "/om", label: "Om USE" },
 ];
 
-export default function Header({ showJournal = false }: { showJournal?: boolean }) {
-  const visibleNavigation = navigation.filter(item => item.href !== "/events" || showJournal);
+export default function Header() {
+  const visibleNavigation = navigation;
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [menuClosing, setMenuClosing] = useState(false);

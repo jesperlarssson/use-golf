@@ -43,7 +43,7 @@ export default function HomePage() {
         </div>
         <div className="grid gap-8 md:grid-cols-2">
           {[
-            { image: "/images/swing/2.png", title: "Din nästa runda börjar här.", label: "Spela på USE", text: "Sex TrackMan-simulatorer, banor från hela världen och golf året runt. Välkommen oavsett nivå.", href: "/bokning", cta: "Boka simulator" },
+            { image: "/images/invigning/hero.png", title: "Din nästa runda börjar här.", label: "Spela på USE", text: "Sex TrackMan-simulatorer, banor från hela världen och golf året runt. Välkommen oavsett nivå.", href: "/bokning", cta: "Boka simulator" },
             { image: "/images/people/9.png", title: "Samla teamet. Vi ordnar resten.", label: "Företag & event", text: "After work, kundkväll eller hela USE för er själva. Golf, mat och dryck i ett upplägg som passar er.", href: "/foretag", cta: "Utforska företagsevent" },
           ].map(item => <Link key={item.href} href={item.href} data-reveal className="group block">
             <div data-reveal="image" className="relative mb-7 aspect-[4/3] overflow-hidden after:pointer-events-none after:absolute after:inset-0 after:z-10 after:border-4 after:border-[var(--brand-secondary)] after:content-['']"><Image src={item.image} alt={item.label} fill sizes="(max-width: 767px) 100vw, 50vw" className="object-cover transition-transform duration-500 motion-safe:group-hover:scale-[1.025]" /></div>

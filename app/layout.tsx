@@ -1,4 +1,3 @@
-import { hasPublishedJournal } from "@/lib/journalAvailability";
 import type { Metadata } from "next";
 import "./globals.css";
 import Header from "./components/Header";
@@ -76,7 +75,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const showJournal = await hasPublishedJournal();
   return (
     <html lang="sv" suppressHydrationWarning>
       <head>
@@ -93,7 +91,7 @@ export default async function RootLayout({
         <LenisProvider>
           <ScrollReveal />
           <ConditionalNoise />
-          <Header showJournal={showJournal} />
+          <Header />
           <main>{children}</main>
           <Footer />
         </LenisProvider>

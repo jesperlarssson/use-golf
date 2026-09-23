@@ -8,7 +8,7 @@ const instagram = "https://www.instagram.com/use__golf/";
 const photos = [
   { src: "/images/people/9.png", alt: "Vänner som umgås hos USE" },
   { src: "/images/lokalen/1.png", alt: "Lounge och golf hos USE" },
-  { src: "/images/swing/2.png", alt: "Golfspel i TrackMan-simulator" },
+  { src: "/images/swing/1.png", alt: "Golfspel i TrackMan-simulator" },
   { src: "/hero/1.png", alt: "En inblick i USE Golf i Nya Hovås" },
 ];
 

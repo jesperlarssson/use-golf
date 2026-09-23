@@ -4,15 +4,11 @@ import { albaEnabled } from "@/lib/bookingLinks";
 import type { Metadata } from "next";
 import FullBleed from "@/components/ui/FullBleed";
 import { Heading, Text, Lead } from "@/components/ui/Typography";
-import { defaultPricingData, dayLabels, type DayType, type PricingData, defaultUserPasses, type UserPassType } from "@/lib/prices";
-import { getUserPasses, getPricingData } from "@/sanity/lib/pricingQueries";
+import { defaultPricingData, dayLabels, type DayType, type PricingData } from "@/lib/prices";
+import { getPricingData } from "@/sanity/lib/pricingQueries";
 
 export default async function MedlemsvillkorPage() {
   const membershipPricing = await getMembershipPricing();
-  // Hämta User Passes från Sanity, använd fallback om Sanity-data inte finns
-  const sanityUserPasses = await getUserPasses();
-  const userPassesToUse = sanityUserPasses || defaultUserPasses;
-  
   // Hämta Pricing Data från Sanity, använd fallback om Sanity-data inte finns
   const sanityPricingData = await getPricingData();
   const pricingDataToUse: PricingData = sanityPricingData || defaultPricingData;
@@ -160,6 +156,7 @@ export default async function MedlemsvillkorPage() {
           <div>
             <div className="space-y-4">
               <h2 className="text-2xl font-normal tracking-tight sm:text-3xl">5. Prislista – Simulatorbokning</h2>
+              <Text>Priserna nedan gäller under högsäsong. Aktuella priser för respektive tid ser du alltid i bokningen.</Text>
 
             {(Object.entries(pricingDataToUse) as [DayType, typeof pricingDataToUse[DayType]][]).map(([dayType, timeSlots]) => (
               <div key={dayType} className="space-y-2">
@@ -187,55 +184,10 @@ export default async function MedlemsvillkorPage() {
             </div>
           </div>
 
-          {/* 6. Spelpass – Förbetalda spelpotter */}
-          <div>
-            <div className="space-y-4">
-              <h2 className="text-2xl font-normal tracking-tight sm:text-3xl">6. User Passes – Förbetalda spelpotter</h2>
-            <Text>Tre nivåer av spelpass för dig som spelar ofta och vill få mer värde för pengarna.</Text>
-            <div className="overflow-x-auto">
-              <table className="w-full border-2 border-black/20 bg-[var(--brand-primary)] text-sm">
-                <thead>
-                  <tr className="bg-[#293329] text-[var(--brand-primary)] uppercase tracking-wide">
-                    <th className="px-3 py-2 text-left">Pass</th>
-                    <th className="px-3 py-2 text-left">Insättning</th>
-                    <th className="px-3 py-2 text-left">Spelvärde</th>
-                    <th className="px-3 py-2 text-left">Bonus / Rabatt</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {(['small', 'medium', 'large'] as UserPassType[]).map((passType) => {
-                    const pass = userPassesToUse[passType];
-                    return (
-                      <tr key={passType} className="border-t border-black/20/40">
-                        <td className="px-3 py-2 font-semibold">{pass.name} User</td>
-                        <td className="px-3 py-2">{pass.price.toLocaleString('sv-SE')} kr</td>
-                        <td className="px-3 py-2">{pass.playValue.toLocaleString('sv-SE')} kr</td>
-                        <td className="px-3 py-2">+{pass.bonusPercent} %</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-            <h3 className="text-xl font-normal tracking-tight">Villkor för spelpass</h3>
-            <ul className="list-disc pl-5 space-y-2">
-              <li>Du behöver inte vara medlem för att kunna fylla och använda din spelpott.</li>
-              <li>Gäller alla tider, alla dagar.</li>
-              <li>{albaEnabled ? "För spelvärde som köpts i det tidigare bokningssystemet, kontakta oss för information om kvarvarande saldo och användning." : "Spelvärdet laddas på ditt konto i Sweetspot."}</li>
-              <li>Giltigt i <strong>12 månader</strong> från inköpsdatum.</li>
-              <li>Ej personligt – kan användas för flera spelare på samma bokning.</li>
-              <li>Kan <strong>inte</strong> kombineras med medlemsrabatten på 10 %.</li>
-              <li>Vid stående bokningar under säsong måste samtliga spelare vara medlemmar.</li>
-              <li>Spelpotten används som betalning för de bokade tiderna.</li>
-              <li>De första <strong>två veckorna</strong> gäller ordinarie pris. Från och med <strong>tredje veckan</strong> tillkommer en <strong>bokningsavgift på 50 kr/h och simulator</strong> för stående tider.</li>
-            </ul>
-            </div>
-          </div>
-
-          {/* 7. Företagspaket & Partnernivåer */}
+          {/* 6. Företagspaket & Partnernivåer */}
           <div>
             <div className="space-y-6">
-              <h2 className="text-2xl font-normal tracking-tight sm:text-3xl">7. Partnernivåer</h2>
+              <h2 className="text-2xl font-normal tracking-tight sm:text-3xl">6. Partnernivåer</h2>
             <Text>
               USE Golf erbjuder företag möjligheten att synas, spela och nätverka på ett unikt sätt. Våra partnerpaket kombinerar exklusiv speltid i våra TrackMan-simulatorer med exponering, förmåner och skräddarsydda företagsupplevelser.
             </Text>
