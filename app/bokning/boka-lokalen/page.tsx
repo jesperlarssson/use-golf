@@ -7,15 +7,13 @@ import BokaLokalenCalculator from "@/components/ui/BokaLokalenCalculator";
 import Image from "next/image";
 import FadeIn from "@/components/ui/FadeIn";
 import SectionHeader from "@/components/ui/SectionHeader";
-import { getClosures, getVenueBookingPricing } from "@/sanity/lib/pricingQueries";
+import { getClosures } from "@/sanity/lib/pricingQueries";
 import { pageMetadata } from "@/lib/seo";
 
 export default async function BokaLokalenPage() {
   // Hämta stängningsdatum från Sanity
   const closures = await getClosures();
   
-  // Hämta venue booking pricing från Sanity
-  const venuePricing = await getVenueBookingPricing();
   return (
     <FullBleed>
       {/* Hero Banner */}
@@ -56,7 +54,7 @@ export default async function BokaLokalenPage() {
                       <span className="text-[var(--brand-primary)] mt-1 text-lg">•</span>
                       <div>
                         <strong className="text-[var(--brand-primary)] block">Exklusiv tillgång</strong>
-                        <p className="text-sm text-[var(--brand-primary)]/80 mt-1">Hela lokalen för er själva i minst 2 timmar.</p>
+                        <p className="text-sm text-[var(--brand-primary)]/80 mt-1">Hela lokalen för er själva i tre timmar.</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
@@ -97,8 +95,8 @@ export default async function BokaLokalenPage() {
               <FadeIn>
                 <SectionHeader
                   label="Paket"
-                  heading="Take over"
-                  description="En tillfälle för att få ut så mycket som möjligt av vår upplevelse. Vi hjälper er att ta fram det perfekta upplägget. Mat och dryck enligt önskemål."
+                  heading="Corporate Golf Night"
+                  description="En färdig företagskväll med golf, tävling och umgänge. Mat och dryck tillkommer."
                   align="left"
                   maxWidth="full"
                   variant="small"
@@ -110,18 +108,17 @@ export default async function BokaLokalenPage() {
                   <div className="space-y-4 border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] p-6">
                     <Heading as={4} className="text-lg font-semibold text-[var(--brand-secondary)]">Ingår i paketet:</Heading>
                     <ul className="list-disc pl-5 space-y-2 text-sm">
-                      <li>Exklusiv tillgång till hela lokalen i minst 2 timmar</li>
+                      <li>Exklusiv tillgång till hela lokalen i tre timmar</li>
                       <li>6 TrackMan-simulatorer för spel, tävling eller fri träning</li>
-                      <li>Möjlighet att lägga till mat, dryck och tävlingsupplägg</li>
+                      <li>Eventvärd, färdigt tävlingsupplägg, leaderboard, final och prisutdelning</li>
                       <li>Personal på plats under hela eventet</li>
-                      <li>Förslag på upplägg, spelform och priser ingår</li>
+                      <li>Låneklubbor ingår alltid</li>
                     </ul>
                   </div>
                   <div className="space-y-4 border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] p-6">
                     <Heading as={4} className="text-lg font-semibold text-[var(--brand-secondary)]">Tillval:</Heading>
                     <ul className="list-disc pl-5 space-y-2 text-sm">
                       <li>Förtäring (t.ex. wraps, dryck)</li>
-                      <li>Tävling & prisbord</li>
                       <li>Företagsprofilering i simulatorer eller lokalen</li>
                     </ul>
                   </div>
@@ -136,15 +133,15 @@ export default async function BokaLokalenPage() {
               <FadeIn>
                 <SectionHeader
                   label="Förfrågan"
-                  heading="Estimera pris och förfrågan"
-                  description="Använd kalkylatorn nedan för att få en uppskattning av kostnaden för ditt event."
+                  heading="Planera er företagskväll"
+                  description="Utgå från Corporate Golf Night. Välj datum, antal deltagare och tillval och skicka en förfrågan."
                   align="left"
                   maxWidth="full"
                   variant="small"
                 />
               </FadeIn>
               <FadeIn delay={0.1}>
-                <BokaLokalenCalculator closures={closures} venuePricing={venuePricing} />
+                <BokaLokalenCalculator closures={closures} />
               </FadeIn>
             </div>
           </Section>
