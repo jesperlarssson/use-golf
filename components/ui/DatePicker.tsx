@@ -67,7 +67,11 @@ export default function DatePicker({ selectedDate, onDateSelect, minDate, closur
     today.setHours(0, 0, 0, 0);
     
     if (date < today) return true;
-    if (minDate && date < minDate) return true;
+    if (minDate) {
+      const minimum = new Date(minDate);
+      minimum.setHours(0, 0, 0, 0);
+      if (date < minimum) return true;
+    }
     
     // Stängda datum är också disabled
     const { isClosed } = isDateClosed(day);
@@ -110,7 +114,7 @@ export default function DatePicker({ selectedDate, onDateSelect, minDate, closur
   };
 
   return (
-    <div className="border-2 border-[var(--brand-secondary)] bg-[var(--brand-primary)] p-4">
+    <div className="border border-black/20 bg-[var(--brand-primary)] p-3 sm:p-4">
       {/* Header med månad och år */}
       <div className="flex items-center justify-between mb-4">
         <button
@@ -121,7 +125,7 @@ export default function DatePicker({ selectedDate, onDateSelect, minDate, closur
         >
           ←
         </button>
-        <h3 className="text-lg font-semibold text-[var(--brand-secondary)] uppercase tracking-wide">
+        <h3 className="text-base font-medium text-[var(--brand-olive-900)]">
           {MONTHS[currentMonth]} {currentYear}
         </h3>
         <button
@@ -171,11 +175,13 @@ export default function DatePicker({ selectedDate, onDateSelect, minDate, closur
               type="button"
               onClick={() => handleDayClick(day)}
               disabled={disabled}
+              aria-pressed={selected}
+              aria-label={`${day} ${MONTHS[currentMonth].toLowerCase()} ${currentYear}${isClosed ? `, stängt: ${closureTitle}` : ""}`}
               title={isClosed ? `Stängt: ${closureTitle}` : undefined}
               className={`
                 aspect-square border-2 transition relative
                 ${selected
-                  ? "bg-[var(--brand-secondary)] text-[var(--brand-primary)] border-[var(--brand-secondary)]"
+                  ? "bg-[var(--brand-olive-900)] text-[var(--brand-primary)] border-[var(--brand-olive-900)]"
                   : isClosed
                   ? "bg-red-50 border-red-300 text-red-700"
                   : "border-transparent hover:border-[var(--brand-secondary)]/40"

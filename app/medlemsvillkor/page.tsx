@@ -6,6 +6,7 @@ import FullBleed from "@/components/ui/FullBleed";
 import { Heading, Text, Lead } from "@/components/ui/Typography";
 import { defaultPricingData, dayLabels, type DayType, type PricingData } from "@/lib/prices";
 import { getPricingData } from "@/sanity/lib/pricingQueries";
+import { corporateNight, businessPartner, formatCorporatePrice } from "@/lib/corporateOffers";
 import { pageMetadata } from "@/lib/seo";
 
 export default async function MedlemsvillkorPage() {
@@ -102,48 +103,19 @@ export default async function MedlemsvillkorPage() {
           <div>
             <div className="space-y-4">
               <h2 className="text-2xl font-normal tracking-tight sm:text-3xl">4. Företagsevent & Gruppspel</h2>
-            <Text>Alla företagsevent bokas för <strong>hela lokalen (6 simulatorer)</strong> med en <strong>minsta speltid på 2 timmar</strong>. I bokningen ingår:</Text>
+            <Text>Corporate Golf Night ger er <strong>hela lokalen (6 simulatorer) i tre timmar</strong>. I paketet ingår:</Text>
             <ul className="list-disc pl-5 space-y-2">
-              <li>Förberedelse och uppstart av eventet</li>
-              <li>Hjälp med tävlingsupplägg, loggor och presentationer</li>
-              <li>Uppvärmning och introduktion för spelare</li>
+              <li>Eventvärd och färdigt tävlingsupplägg</li>
+              <li>Leaderboard, final och prisutdelning</li>
+              <li>Låneklubbor, som alltid ingår vid företagsevent</li>
             </ul>
-            <h3 className="text-xl font-normal tracking-tight">Priser (från)</h3>
-            <div className="overflow-x-auto">
-              <table className="w-full border-2 border-black/20 bg-[var(--brand-primary)] text-sm">
-                <thead>
-                  <tr className="bg-[#293329] text-[var(--brand-primary)] uppercase tracking-wide">
-                    <th className="px-3 py-2 text-left">Period</th>
-                    <th className="px-3 py-2 text-left">Hela lokalen (minst 2 h)</th>
-                    <th className="px-3 py-2 text-left">Extra timmar</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="border-t border-black/20/40">
-                    <td className="px-3 py-2">Måndag–Tisdag</td>
-                    <td className="px-3 py-2">från 16 000 kr</td>
-                    <td className="px-3 py-2">3 600 kr/h</td>
-                  </tr>
-                  <tr className="border-t border-black/20/40">
-                    <td className="px-3 py-2">Onsdag–Torsdag</td>
-                    <td className="px-3 py-2">från 20 000 kr</td>
-                    <td className="px-3 py-2">3 600 kr/h</td>
-                  </tr>
-                  <tr className="border-t border-black/20/40">
-                    <td className="px-3 py-2">Fredag–Söndag</td>
-                    <td className="px-3 py-2">från 24 000 kr</td>
-                    <td className="px-3 py-2">3 600 kr/h</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <h3 className="text-xl font-normal tracking-tight">Tillval</h3>
+            <h3 className="text-xl font-normal tracking-tight">Företagspaket</h3>
             <ul className="list-disc pl-5 space-y-2">
-              <li>Snackspaket – på förfrågan</li>
-              <li>Matpaket – på förfrågan</li>
-              <li>Dryck – enligt meny på plats</li>
+              <li>Corporate Golf Night: <strong>{formatCorporatePrice(corporateNight.price)} exkl. moms</strong>.</li>
+              <li>Business Partner: <strong>{formatCorporatePrice(businessPartner.price)} exkl. moms</strong>. En Corporate Golf Night, 40 timmars golf, prioriterad företagsbokning och partnerexponering på hemsidan, i lokalen och på simulatorerna ingår.</li>
             </ul>
-            <Text className="mt-2">När ni bokar hela lokalen står vi för att sätta upp eventet, skapa tävlingar och koordinera upplevelsen för era spelare.</Text>
+            <Text>Mat, dryck och extra tid tillkommer enligt offert. Kontakta oss för partnerpaketets giltighetstid och bokningsvillkor för golftimmarna.</Text>
+            <Text><a href="/foretag" className="underline underline-offset-4">Se företagspaketen och planera ert event.</a></Text>
             <h3 className="text-xl font-normal tracking-tight">Bokningsinformation</h3>
             <ul className="list-disc pl-5 space-y-2">
               <li>Paketet måste bokas för hela sällskapet.</li>

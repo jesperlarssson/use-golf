@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { company, name, email, phone, date, start, message, hp, type, guests, partnerLevel, subject: subjectFromClient } = body || {};
+    const { company, name, email, phone, date, dateFlexible, start, message, hp, type, guests, packageName, partnerLevel, subject: subjectFromClient } = body || {};
 
     // Honeypot
     if (typeof hp === "string" && hp.trim() !== "") {
@@ -50,7 +50,9 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: false, error: "Invalid email" }, { status: 400 });
     }
 
-    if (type === "event" && (!Number.isInteger(guests) || guests < 1 || typeof phone !== "string" || !phone.trim() || typeof date !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(date) || !Number.isFinite(Date.parse(date)))) {
+    const validDate = typeof date === "string" && /^\d{4}-\d{2}-\d{2}$/.test(date) && Number.isFinite(Date.parse(date)) && new Date(date).toISOString().slice(0, 10) === date;
+    const flexibleDate = dateFlexible === true && (date === "" || date == null);
+    if (type === "event" && (!Number.isSafeInteger(guests) || guests < 1 || typeof phone !== "string" || !phone.trim() || (!validDate && !flexibleDate))) {
       return NextResponse.json({ ok: false, error: "Ange antal personer, telefon och önskat datum." }, { status: 400 });
     }
 
@@ -69,6 +71,7 @@ export async function POST(req: NextRequest) {
     const subject = subjectFromClient || `Förfrågan (${typeLabel}): ${company || name}`;
     const htmlLines = [
       type ? `<p><strong>Ärende:</strong> ${escapeHtml(type)}</p>` : "",
+      packageName ? `<p><strong>Erbjudande:</strong> ${escapeHtml(packageName)}</p>` : "",
       partnerLevel ? `<p><strong>Partnernivå:</strong> ${escapeHtml(partnerLevel)}</p>` : "",
       `<p><strong>Företag:</strong> ${escapeHtml(company)}</p>`,
       `<p><strong>Kontaktperson:</strong> ${escapeHtml(name)}</p>`,
@@ -76,6 +79,7 @@ export async function POST(req: NextRequest) {
       phone ? `<p><strong>Telefon:</strong> ${escapeHtml(phone)}</p>` : "",
       guests ? `<p><strong>Antal personer:</strong> ${escapeHtml(guests)}</p>` : "",
       date ? `<p><strong>Önskat datum:</strong> ${escapeHtml(date)}</p>` : "",
+      type === "event" && flexibleDate ? `<p><strong>Önskat datum:</strong> Inte bestämt</p>` : "",
       start ? `<p><strong>Starttid:</strong> ${escapeHtml(start)}</p>` : "",
       `<p><strong>Önskemål/beskrivning:</strong></p>`,
       `<p>${escapeHtml(message).replace(/\n/g, "<br/>")}</p>`,
