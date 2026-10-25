@@ -54,7 +54,6 @@ export default function HanderHosOssPage() {
             <li className="border-b border-white/25 py-4"><strong className="font-medium text-white">Ny bana varannan vecka.</strong> Varje omgång pågår i två veckor.</li>
             <li className="border-b border-white/25 py-4"><strong className="font-medium text-white">Obegränsat antal försök.</strong> Spela så många rundor du vill under omgången. Ditt bästa resultat räknas och avgör din placering.</li>
             <li className="border-b border-white/25 py-4"><strong className="font-medium text-white">TrackMan Handicap krävs.</strong> Du behöver ett registrerat TrackMan Handicap för att delta.</li>
-            <li className="border-b border-white/25 py-4"><strong className="font-medium text-white">Spelas netto.</strong> Resultatet räknas utifrån ditt TrackMan Handicap.</li>
             <li className="border-b border-white/25 py-4"><strong className="font-medium text-white">Välj din tee.</strong> Spela från den tee som passar dig och ditt spel.</li>
             <li className="border-b border-white/25 py-4"><strong className="font-medium text-white">Samla poäng.</strong> Din placering i varje omgång ger poäng till säsongens totala Order of Merit.</li>
           </ul>
