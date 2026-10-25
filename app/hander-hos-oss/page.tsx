@@ -57,8 +57,8 @@ export default function HanderHosOssPage() {
             <li className="border-b border-white/25 py-4"><strong className="font-medium text-white">Välj din tee.</strong> Spela från den tee som passar dig och ditt spel.</li>
             <li className="border-b border-white/25 py-4"><strong className="font-medium text-white">Samla poäng.</strong> Din placering i varje omgång ger poäng till säsongens totala Order of Merit.</li>
           </ul>
-          <h3 className="mt-10 text-xl font-normal tracking-tight">Två klasser. En hel säsong att spela om.</h3>
-          <p className="mt-4 max-w-lg text-sm leading-relaxed text-white/80">Poängen från omgångarna läggs ihop under säsongen. Vid säsongens slut koras en vinnare i bruttoklassen och en i nettoklassen, utifrån den totala poängställningen i respektive klass.</p>
+          <h3 className="mt-10 text-xl font-normal tracking-tight">En hel säsong att spela om.</h3>
+          <p className="mt-4 max-w-lg text-sm leading-relaxed text-white/80">Poängen från omgångarna läggs ihop under säsongen. Vid säsongens slut koras en vinnare i nettoklassen, utifrån den totala poängställningen.</p>
           <p className="mt-4 max-w-lg text-sm leading-relaxed text-white/80">Alla USE Golf-medlemmar är välkomna, oavsett handicap eller spelnivå. Vi hjälper dig gärna att komma igång!</p>
           <div className="mt-9 flex flex-wrap items-center gap-4">
             <a href={albaEventsUrl} className="cta-sweep inline-flex min-h-14 items-center justify-center bg-[var(--brand-primary)] px-7 text-sm text-[var(--foreground)] transition-colors">Se aktuella event hos Alba</a>
