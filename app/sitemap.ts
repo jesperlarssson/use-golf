@@ -7,6 +7,7 @@ const routes: { path: string; priority: number; changeFrequency: MetadataRoute.S
   { path: "/bokning", priority: 0.9, changeFrequency: "monthly" },
   { path: "/foretag", priority: 0.9, changeFrequency: "monthly" },
   { path: "/hander-hos-oss", priority: 0.8, changeFrequency: "weekly" },
+  { path: "/mat-och-dryck", priority: 0.8, changeFrequency: "monthly" },
   { path: "/medlemskap", priority: 0.8, changeFrequency: "monthly" },
   { path: "/kontakt", priority: 0.7, changeFrequency: "yearly" },
   { path: "/om", priority: 0.6, changeFrequency: "yearly" },

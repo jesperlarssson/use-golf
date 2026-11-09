@@ -9,7 +9,7 @@ const navigation = [
   { href: "/bokning", label: "Spela" },
   { href: "/foretag", label: "Företag & event" },
   { href: "/hander-hos-oss", label: "Händer hos oss" },
-  { href: "/medlemskap", label: "Medlemskap" },
+  { href: "/mat-och-dryck", label: "Mat & dryck" },
   { href: "/om", label: "Om USE" },
 ];
 

@@ -2,19 +2,20 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import EditorialHero from "@/components/ui/EditorialHero";
+import { bookingLinks } from "@/lib/bookingLinks";
 import { pageMetadata } from "@/lib/seo";
 
 const albaEventsUrl = "https://albaplay.com/sv/venue/use-golf-2/events";
 
 export const metadata: Metadata = pageMetadata({
   title: "Händer hos oss",
-  description: "Spela Medlemsgolfen – Order of Merit, starta torsdagen med The Breakfast Club eller kom på AfterWork Golf. Se aktuella aktiviteter hos USE Golf i Nya Hovås, Göteborg.",
+  description: "Välj bland tre serier i Medlemsgolfen, starta torsdagen med The Breakfast Club eller kom på AfterWork Golf. Se aktuella aktiviteter hos USE Golf i Nya Hovås, Göteborg.",
   path: "/hander-hos-oss",
 });
 
 export default function HanderHosOssPage() {
   return <>
-    <EditorialHero label="Händer hos oss" title="Varje vecka på USE." description="Samla poäng i Medlemsgolfen, börja torsdagen med golf och frukost eller runda av veckan med AfterWork Golf. Hitta din nästa runda hos oss." image="/images/people/5.png" imageAlt="Gäster som umgås med ett glas vin hos USE Golf">
+    <EditorialHero label="Händer hos oss" title="Varje vecka på USE." description="Spela individuellt eller i par i Medlemsgolfen, börja torsdagen med golf och frukost eller runda av veckan med AfterWork Golf. Hitta din nästa runda hos oss." image="/images/people/5.png" imageAlt="Gäster som umgås med ett glas vin hos USE Golf">
       <a href={albaEventsUrl} className="cta-sweep inline-flex min-h-14 items-center justify-center gap-10 bg-[var(--brand-primary)] px-7 text-sm text-[var(--foreground)] transition-colors">Se aktuella event hos Alba</a>
     </EditorialHero>
 
@@ -46,22 +47,18 @@ export default function HanderHosOssPage() {
       <div className="mx-auto grid max-w-screen-2xl items-center gap-12 px-6 py-20 sm:px-10 md:grid-cols-2 lg:gap-20 lg:px-16 lg:py-28">
         <div data-reveal="image" className="relative aspect-[4/5] overflow-hidden after:pointer-events-none after:absolute after:inset-0 after:z-10 after:border-4 after:border-[var(--brand-secondary)] after:content-['']"><Image src="/images/invigning/DSC06600.jpg" alt="En spelare som slår ut i en TrackMan-simulator hos USE" fill sizes="(max-width: 767px) 100vw, 50vw" className="object-cover" /></div>
         <div data-reveal>
-          <p className="mb-5 text-xs uppercase tracking-[.2em] text-white/75">Ny bana varannan vecka · För medlemmar</p>
-          <h2 id="medlemsgolf-heading" className="max-w-lg text-balance text-4xl font-normal leading-[1.1] tracking-[-.035em] md:text-5xl">Medlemsgolfen – Order of Merit.</h2>
-          <p className="mt-7 max-w-lg text-base leading-relaxed text-white/80">Utmana andra medlemmar, upptäck nya banor och samla poäng under säsongen. Medlemsgolfen är vårt seriespel där varje omgång pågår i två veckor – med gott om tid att förbättra ditt resultat och klättra i tabellen.</p>
-          <h3 className="mt-10 text-xl font-normal tracking-tight">Så fungerar det</h3>
-          <ul className="mt-4 max-w-lg border-t border-white/25 text-sm leading-relaxed text-white/80">
-            <li className="border-b border-white/25 py-4"><strong className="font-medium text-white">Ny bana varannan vecka.</strong> Varje omgång pågår i två veckor.</li>
-            <li className="border-b border-white/25 py-4"><strong className="font-medium text-white">Obegränsat antal försök.</strong> Spela så många rundor du vill under omgången. Ditt bästa resultat räknas och avgör din placering.</li>
-            <li className="border-b border-white/25 py-4"><strong className="font-medium text-white">TrackMan Handicap krävs.</strong> Du behöver ett registrerat TrackMan Handicap för att delta.</li>
-            <li className="border-b border-white/25 py-4"><strong className="font-medium text-white">Välj din tee.</strong> Spela från den tee som passar dig och ditt spel.</li>
-            <li className="border-b border-white/25 py-4"><strong className="font-medium text-white">Samla poäng.</strong> Din placering i varje omgång ger poäng till säsongens totala Order of Merit.</li>
+          <p className="mb-5 text-xs uppercase tracking-[.2em] text-white/75">Seriespel · För medlemmar</p>
+          <h2 id="medlemsgolf-heading" className="max-w-lg text-balance text-4xl font-normal leading-[1.1] tracking-[-.035em] md:text-5xl">Medlemsgolfen.</h2>
+          <p className="mt-7 max-w-lg text-base leading-relaxed text-white/80">Första omgången pågår hela november. Därefter är varje omgång två veckor lång. Spela så många rundor du vill under omgången – din bästa runda räknas.</p>
+          <h3 className="mt-8 text-xl font-normal tracking-tight">Välj serie i TrackMan</h3>
+          <ul className="mt-4 max-w-lg border-t border-white/25 text-base leading-relaxed">
+            <li className="border-b border-white/25 py-3">USE Golf – Seriespel | Individuell</li>
+            <li className="border-b border-white/25 py-3">USE Golf – Jr. Seriespel | Individuell (10–14 år)</li>
+            <li className="border-b border-white/25 py-3">USE Golf – Seriespel | 2-manna Bästboll</li>
           </ul>
-          <h3 className="mt-10 text-xl font-normal tracking-tight">En hel säsong att spela om.</h3>
-          <p className="mt-4 max-w-lg text-sm leading-relaxed text-white/80">Poängen från omgångarna läggs ihop under säsongen. Vid säsongens slut koras en vinnare i nettoklassen, utifrån den totala poängställningen.</p>
-          <p className="mt-4 max-w-lg text-sm leading-relaxed text-white/80">Alla USE Golf-medlemmar är välkomna, oavsett handicap eller spelnivå. Vi hjälper dig gärna att komma igång!</p>
+          <p className="mt-6 max-w-lg text-base leading-relaxed text-white/80">Boka själv en simulatortid som passar dig. På plats väljer du din serie i TrackMan. Du behöver ett registrerat TrackMan Handicap för att delta.</p>
           <div className="mt-9 flex flex-wrap items-center gap-4">
-            <a href={albaEventsUrl} className="cta-sweep inline-flex min-h-14 items-center justify-center bg-[var(--brand-primary)] px-7 text-sm text-[var(--foreground)] transition-colors">Se aktuella event hos Alba</a>
+            <a href={bookingLinks.simulator} className="cta-sweep inline-flex min-h-14 items-center justify-center bg-[var(--brand-primary)] px-7 text-sm text-[var(--foreground)] transition-colors">Boka simulator</a>
             <Link href="/medlemskap" className="inline-flex min-h-11 items-center px-3 text-sm underline underline-offset-4">Bli medlem</Link>
           </div>
         </div>
